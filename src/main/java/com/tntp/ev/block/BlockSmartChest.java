@@ -11,6 +11,7 @@ public class BlockSmartChest extends BlockContainer {
 
   public BlockSmartChest() {
     super(Material.iron);
+    this.setBlockName("blockSmartChest");
   }
 
   @Override
