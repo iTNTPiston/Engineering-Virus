@@ -22,7 +22,7 @@ public class ProgramConvert implements IProgram {
     int error = 0;
     for (int i = 0; i < disk.diskSize(); i++) {
       VirtualItemStack vis = disk.getStackAt(i);
-      if (vis != null) {
+      if (vis != null && !vis.isData()) {
         ItemStack stack = vis.getItemStack();
         for (int j = 0; j < inv.getSizeInventory() && stack.stackSize > 0; j++) {
           ItemStack s = inv.getStackInSlot(j);

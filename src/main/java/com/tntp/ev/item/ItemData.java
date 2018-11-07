@@ -1,5 +1,7 @@
 package com.tntp.ev.item;
 
-public class ItemData {
+import net.minecraft.item.Item;
+
+public class ItemData extends Item {
 
 }
