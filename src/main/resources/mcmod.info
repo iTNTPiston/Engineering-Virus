@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "engineeringvirus",
+  "name": "Engineering Virus",
+  "description": "A Minecraft mod with complicated network and programs. Kill virus to make your network better!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/iTNTPiston/Engineering-Virus",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["iTNTPiston"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
