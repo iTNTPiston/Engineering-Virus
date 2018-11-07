@@ -1,5 +1,7 @@
 package com.tntp.ev.item;
 
-public class ItemByteCoin {
+import net.minecraft.item.Item;
+
+public class ItemByteCoin extends Item {
 
 }

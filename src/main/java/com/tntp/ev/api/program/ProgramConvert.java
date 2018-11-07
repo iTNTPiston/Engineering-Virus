@@ -10,7 +10,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 /**
- * Converts VirtualItemStack and ItemStack
+ * Converts VirtualItemStack to ItemStack
  * 
  * @author iTNTPiston
  *
@@ -50,7 +50,7 @@ public class ProgramConvert implements IProgram {
 
   @Override
   public int authority() {
-    return 1;
+    return 6;
   }
 
 }
