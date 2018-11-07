@@ -1,4 +1,4 @@
-package com.tntp.ev.api.program;
+package com.tntp.ev.program;
 
 import com.tntp.ev.api.IDisk;
 import com.tntp.ev.api.IMemory;
