@@ -1,5 +1,7 @@
 package com.tntp.ev.block;
 
+import com.tntp.ev.tileentity.TileSmartChest;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -12,9 +14,8 @@ public class BlockSmartChest extends BlockContainer {
   }
 
   @Override
-  public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-    // TODO Auto-generated method stub
-    return null;
+  public TileEntity createNewTileEntity(World world, int meta) {
+    return new TileSmartChest(18);
   }
 
 }
