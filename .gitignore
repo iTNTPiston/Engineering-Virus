@@ -1,1 +1,8 @@
-/bin/
+config/
+mods/
+saves/
+options.txt
+usernamecache.json
+resourcepacks/
+logs/
+bin/
