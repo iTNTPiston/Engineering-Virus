@@ -1,8 +1,8 @@
 package com.tntp.ev.program;
 
-import com.tntp.ev.api.IDisk;
-import com.tntp.ev.api.IMemory;
-import com.tntp.ev.api.IProgram;
+import com.tntp.ev.api.digital.IDisk;
+import com.tntp.ev.api.digital.IMemory;
+import com.tntp.ev.api.digital.IProgram;
 import com.tntp.ev.init.EVItems;
 import com.tntp.ev.util.RandomUtil;
 

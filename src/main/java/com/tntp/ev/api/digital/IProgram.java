@@ -1,4 +1,4 @@
-package com.tntp.ev.api;
+package com.tntp.ev.api.digital;
 
 import net.minecraft.inventory.IInventory;
 

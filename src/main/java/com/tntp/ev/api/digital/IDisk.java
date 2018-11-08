@@ -1,4 +1,4 @@
-package com.tntp.ev.api;
+package com.tntp.ev.api.digital;
 
 import com.tntp.ev.virtual.VirtualItemStack;
 

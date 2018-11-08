@@ -10,9 +10,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = EngineeringVirus.MODID, version = EngineeringVirus.VERSION)
 public class EngineeringVirus {
   public static final String MODID = "engineeringvirus";
-  public static final String VERSION = "1.0";
+  public static final String VERSION = "1.7.10-1.0.0";
   @SidedProxy(clientSide = "com.tntp.ev.core.ClientProxy", serverSide = "com.tntp.ev.core.Proxy")
-  public Proxy proxy;
+  public static Proxy proxy;
 
   @EventHandler
   public void preInit(FMLPreInitializationEvent event) {
