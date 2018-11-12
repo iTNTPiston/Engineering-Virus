@@ -1,4 +1,4 @@
-package com.tntp.ev.gui;
+package com.tntp.mnm.gui;
 
 public class GuiNetworkMainframe {
 

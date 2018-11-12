@@ -1,7 +1,7 @@
-package com.tntp.ev.core;
+package com.tntp.mnm.core;
 
-import com.tntp.ev.init.EVBlocks;
-import com.tntp.ev.init.EVItems;
+import com.tntp.mnm.init.EVBlocks;
+import com.tntp.mnm.init.EVItems;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;

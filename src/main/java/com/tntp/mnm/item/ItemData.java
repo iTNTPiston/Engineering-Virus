@@ -1,4 +1,4 @@
-package com.tntp.ev.item;
+package com.tntp.mnm.item;
 
 import net.minecraft.item.Item;
 

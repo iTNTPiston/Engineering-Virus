@@ -1,4 +1,4 @@
-package com.tntp.ev.api.power;
+package com.tntp.mnm.api.power;
 
 public interface ITileBattery extends ITileWire {
   public int getMaxEnergy();

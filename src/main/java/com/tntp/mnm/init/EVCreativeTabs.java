@@ -1,4 +1,4 @@
-package com.tntp.ev.init;
+package com.tntp.mnm.init;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

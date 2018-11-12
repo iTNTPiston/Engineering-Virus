@@ -1,6 +1,6 @@
-package com.tntp.ev.block;
+package com.tntp.mnm.block;
 
-import com.tntp.ev.tileentity.TileSmartChest;
+import com.tntp.mnm.tileentity.TileSmartChest;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

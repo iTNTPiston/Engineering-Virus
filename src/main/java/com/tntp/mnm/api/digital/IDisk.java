@@ -1,6 +1,6 @@
-package com.tntp.ev.api.digital;
+package com.tntp.mnm.api.digital;
 
-import com.tntp.ev.virtual.VirtualItemStack;
+import com.tntp.mnm.virtual.VirtualItemStack;
 
 import net.minecraft.item.ItemStack;
 

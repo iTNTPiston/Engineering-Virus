@@ -1,4 +1,4 @@
-package com.tntp.ev.util;
+package com.tntp.mnm.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

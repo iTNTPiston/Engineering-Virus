@@ -1,4 +1,4 @@
-package com.tntp.ev.util;
+package com.tntp.mnm.util;
 
 import java.security.SecureRandom;
 import java.util.Random;

@@ -1,13 +1,13 @@
-package com.tntp.ev.tileentity;
+package com.tntp.mnm.tileentity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.tntp.ev.api.power.IElectron;
-import com.tntp.ev.api.power.ITileBattery;
-import com.tntp.ev.api.power.ITileResistor;
-import com.tntp.ev.api.power.ITileWire;
+import com.tntp.mnm.api.power.IElectron;
+import com.tntp.mnm.api.power.ITileBattery;
+import com.tntp.mnm.api.power.ITileResistor;
+import com.tntp.mnm.api.power.ITileWire;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

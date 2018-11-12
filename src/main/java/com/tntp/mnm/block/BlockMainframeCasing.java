@@ -1,4 +1,4 @@
-package com.tntp.ev.block;
+package com.tntp.mnm.block;
 
 import net.minecraft.block.material.Material;
 

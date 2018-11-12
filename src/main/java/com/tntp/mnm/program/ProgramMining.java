@@ -1,10 +1,10 @@
-package com.tntp.ev.program;
+package com.tntp.mnm.program;
 
-import com.tntp.ev.api.digital.IDisk;
-import com.tntp.ev.api.digital.IMemory;
-import com.tntp.ev.api.digital.IProgram;
-import com.tntp.ev.init.EVItems;
-import com.tntp.ev.util.RandomUtil;
+import com.tntp.mnm.api.digital.IDisk;
+import com.tntp.mnm.api.digital.IMemory;
+import com.tntp.mnm.api.digital.IProgram;
+import com.tntp.mnm.init.EVItems;
+import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

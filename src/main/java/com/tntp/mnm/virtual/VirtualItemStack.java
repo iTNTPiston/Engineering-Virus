@@ -1,6 +1,6 @@
-package com.tntp.ev.virtual;
+package com.tntp.mnm.virtual;
 
-import com.tntp.ev.item.ItemData;
+import com.tntp.mnm.item.ItemData;
 
 import net.minecraft.item.ItemStack;
 

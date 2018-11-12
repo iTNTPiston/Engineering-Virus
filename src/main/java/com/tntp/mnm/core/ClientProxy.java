@@ -1,4 +1,4 @@
-package com.tntp.ev.core;
+package com.tntp.mnm.core;
 
 public class ClientProxy extends Proxy {
 

@@ -1,7 +1,7 @@
-package com.tntp.ev.tileentity;
+package com.tntp.mnm.tileentity;
 
-import com.tntp.ev.api.power.IElectron;
-import com.tntp.ev.api.power.ITileResistor;
+import com.tntp.mnm.api.power.IElectron;
+import com.tntp.mnm.api.power.ITileResistor;
 
 import net.minecraft.nbt.NBTTagCompound;
 

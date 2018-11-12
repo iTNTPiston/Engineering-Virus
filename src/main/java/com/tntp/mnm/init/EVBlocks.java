@@ -1,10 +1,10 @@
-package com.tntp.ev.init;
+package com.tntp.mnm.init;
 
-import com.tntp.ev.block.BlockMainframeCasing;
-import com.tntp.ev.block.BlockMainframeCasingFramed;
-import com.tntp.ev.block.BlockSmartChest;
-import com.tntp.ev.tileentity.TileSmartChest;
-import com.tntp.ev.util.DebugUtil;
+import com.tntp.mnm.block.BlockMainframeCasing;
+import com.tntp.mnm.block.BlockMainframeCasingFramed;
+import com.tntp.mnm.block.BlockSmartChest;
+import com.tntp.mnm.tileentity.TileSmartChest;
+import com.tntp.mnm.util.DebugUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;

@@ -1,4 +1,4 @@
-package com.tntp.ev.tileentity;
+package com.tntp.mnm.tileentity;
 
 /**
  * Network Mainframe controller

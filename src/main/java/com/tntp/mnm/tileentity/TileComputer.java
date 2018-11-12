@@ -1,8 +1,8 @@
-package com.tntp.ev.tileentity;
+package com.tntp.mnm.tileentity;
 
-import com.tntp.ev.api.digital.IDisk;
-import com.tntp.ev.api.digital.IMemory;
-import com.tntp.ev.api.digital.IProcessor;
+import com.tntp.mnm.api.digital.IDisk;
+import com.tntp.mnm.api.digital.IMemory;
+import com.tntp.mnm.api.digital.IProcessor;
 
 import net.minecraft.tileentity.TileEntity;
 

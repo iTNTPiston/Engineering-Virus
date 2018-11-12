@@ -1,4 +1,4 @@
-package com.tntp.ev.util;
+package com.tntp.mnm.util;
 
 public class ConstUtil {
   public static int D_D_MY = 0;

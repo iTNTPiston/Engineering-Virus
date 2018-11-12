@@ -1,7 +1,7 @@
-package com.tntp.ev.block;
+package com.tntp.mnm.block;
 
-import com.tntp.ev.core.EngineeringVirus;
-import com.tntp.ev.init.EVCreativeTabs;
+import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.init.EVCreativeTabs;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,7 +18,7 @@ public class SBlockEV extends Block {
     super(mat);
     this.setBlockName(regName);
     this.setCreativeTab(EVCreativeTabs.instance);
-    this.setBlockTextureName(EngineeringVirus.MODID + ":" + regName);
+    this.setBlockTextureName(MNMMod.MODID + ":" + regName);
   }
 
 }

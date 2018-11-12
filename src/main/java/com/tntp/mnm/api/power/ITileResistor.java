@@ -1,4 +1,4 @@
-package com.tntp.ev.api.power;
+package com.tntp.mnm.api.power;
 
 public interface ITileResistor extends ITileWire {
   public int getPower();

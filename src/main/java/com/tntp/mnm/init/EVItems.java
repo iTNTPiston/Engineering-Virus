@@ -1,6 +1,6 @@
-package com.tntp.ev.init;
+package com.tntp.mnm.init;
 
-import com.tntp.ev.item.ItemByteCoin;
+import com.tntp.mnm.item.ItemByteCoin;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;

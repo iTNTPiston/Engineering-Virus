@@ -1,4 +1,4 @@
-package com.tntp.ev.api.digital;
+package com.tntp.mnm.api.digital;
 
 import net.minecraft.nbt.NBTTagCompound;
 

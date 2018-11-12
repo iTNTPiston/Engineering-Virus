@@ -1,13 +1,13 @@
-package com.tntp.ev.tileentity;
+package com.tntp.mnm.tileentity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import com.tntp.ev.api.power.ElectronTypes;
-import com.tntp.ev.api.power.IElectron;
-import com.tntp.ev.api.power.ITileWire;
-import com.tntp.ev.util.ConstUtil;
-import com.tntp.ev.util.RandomUtil;
+import com.tntp.mnm.api.power.ElectronTypes;
+import com.tntp.mnm.api.power.IElectron;
+import com.tntp.mnm.api.power.ITileWire;
+import com.tntp.mnm.util.ConstUtil;
+import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

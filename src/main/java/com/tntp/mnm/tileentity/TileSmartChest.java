@@ -1,4 +1,4 @@
-package com.tntp.ev.tileentity;
+package com.tntp.mnm.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

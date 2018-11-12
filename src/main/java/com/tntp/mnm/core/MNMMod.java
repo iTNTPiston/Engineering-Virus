@@ -1,4 +1,4 @@
-package com.tntp.ev.core;
+package com.tntp.mnm.core;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -7,11 +7,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = EngineeringVirus.MODID, version = EngineeringVirus.VERSION)
-public class EngineeringVirus {
-  public static final String MODID = "engineeringvirus";
+@Mod(modid = MNMMod.MODID, version = MNMMod.VERSION)
+public class MNMMod {
+  public static final String MODID = "metalnetworkmainframe";
   public static final String VERSION = "1.7.10-1.0.0";
-  @SidedProxy(clientSide = "com.tntp.ev.core.ClientProxy", serverSide = "com.tntp.ev.core.Proxy")
+  @SidedProxy(clientSide = "com.tntp.mnm.core.ClientProxy", serverSide = "com.tntp.mnm.core.Proxy")
   public static Proxy proxy;
 
   @EventHandler
