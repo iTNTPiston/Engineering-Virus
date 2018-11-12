@@ -1,5 +1,7 @@
 package com.tntp.ev.init;
 
+import com.tntp.ev.block.BlockMainframeCasing;
+import com.tntp.ev.block.BlockMainframeCasingFramed;
 import com.tntp.ev.block.BlockSmartChest;
 import com.tntp.ev.tileentity.TileSmartChest;
 import com.tntp.ev.util.DebugUtil;
@@ -10,11 +12,15 @@ import net.minecraft.block.Block;
 
 @ObjectHolder("engineeringvirus")
 public class EVBlocks {
-  public static final Block blockSmartChest = null;
+  public static final Block blockMainframeCasing = null;
 
   public static void loadBlocks() {
     DebugUtil.log.info("Loading Blocks");
-    GameRegistry.registerBlock(new BlockSmartChest(), "blockSmartChest");
-    GameRegistry.registerTileEntity(TileSmartChest.class, "tileSmartChest");
+    GameRegistry.registerBlock(new BlockMainframeCasing(), "blockMainframeCasing");
+    GameRegistry.registerBlock(new BlockMainframeCasingFramed(), "blockMainframeCasingFramed");
+
+    // GameRegistry.registerBlock(new BlockSmartChest(), "blockSmartChest");
+    // GameRegistry.registerTileEntity(TileSmartChest.class, "tileSmartChest");
   }
+
 }

@@ -1,5 +1,6 @@
 package com.tntp.ev.block;
 
+import com.tntp.ev.core.EngineeringVirus;
 import com.tntp.ev.init.EVCreativeTabs;
 
 import net.minecraft.block.Block;
@@ -17,6 +18,7 @@ public class SBlockEV extends Block {
     super(mat);
     this.setBlockName(regName);
     this.setCreativeTab(EVCreativeTabs.instance);
+    this.setBlockTextureName(EngineeringVirus.MODID + ":" + regName);
   }
 
 }
