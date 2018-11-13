@@ -19,6 +19,8 @@ public class STileHeatNode extends STile implements IHeatNode {
   private boolean rescaned;
   private HeatPipe[] in;
   private HeatPipe[] out;
+  private int ek;
+  private int maxEk;
 
   public STileHeatNode() {
     in = new HeatPipe[6];
@@ -38,7 +40,32 @@ public class STileHeatNode extends STile implements IHeatNode {
       } else {
         rescanCD--;
       }
+      if (this instanceof IHeatSource)
+        workAsSource();
     }
+  }
+
+  public void workAsSource() {
+    boolean worked = false;
+    for (int i = 0; i < 6; i++) {
+      if (out[i] != null) {
+        IHeatNode targetSink = out[i].getEnd(worldObj);
+        if (targetSink instanceof IHeatSink) {
+          if (transferToSink((IHeatSink) targetSink)) {
+            worked = true;
+            ((TileEntity) targetSink).markDirty();
+          }
+        } else {
+          rescanCD = 0;
+        }
+      }
+    }
+    if (worked)
+      markDirty();
+  }
+
+  public boolean transferToSink(IHeatSink sink) {
+    return false;
   }
 
   public void rescan() {
@@ -145,6 +172,9 @@ public class STileHeatNode extends STile implements IHeatNode {
     }
     tag.setTag("heatpipe_in", inList);
     tag.setTag("heatpipe_out", outList);
+
+    tag.setInteger("ek", ek);
+    tag.setInteger("ek_max", maxEk);
   }
 
   public void readFromNBT(NBTTagCompound tag) {
@@ -170,6 +200,29 @@ public class STileHeatNode extends STile implements IHeatNode {
       int index = pipe.getByte("index");
       out[index] = p;
     }
+
+    ek = tag.getInteger("ek");
+    maxEk = tag.getInteger("ek_max");
+  }
+
+  @Override
+  public int getEK() {
+    return ek;
+  }
+
+  @Override
+  public int getMaxEK() {
+    return maxEk;
+  }
+
+  @Override
+  public void setEK(int ek) {
+    this.ek = Math.min(ek, getMaxEK());
+  }
+
+  @Override
+  public void setMaxEK(int ek) {
+    maxEk = ek;
   }
 
 }
