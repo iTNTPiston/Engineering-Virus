@@ -1,6 +1,7 @@
 package com.tntp.mnm.block;
 
 import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -24,7 +25,7 @@ public class BlockHeatCollectorFirewall extends SBlock implements ITileEntityPro
   public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy,
       float zz) {
     if (!world.isRemote) {
-      player.openGui(MNMMod.MODID, 0, world, x, y, z);
+      player.openGui(MNMMod.MODID, MNMGuis.getGuiID("GuiHeat"), world, x, y, z);
     }
     return true;
   }

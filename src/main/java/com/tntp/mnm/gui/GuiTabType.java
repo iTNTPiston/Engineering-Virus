@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 
 public enum GuiTabType {
-  NULL(null, 1, 1, 1), HEAT(new ItemStack(MNMItems.itemWrench), 0.5f, 0.2f, 0f);
+  NULL(null, 1, 1, 1), HEAT(new ItemStack(MNMItems.itemWrench), 1f, 0.7f, 0.5f);
   @SideOnly(Side.CLIENT)
   private static final RenderItem itemRender = new RenderItem();
   @SideOnly(Side.CLIENT)

@@ -23,7 +23,7 @@ public class MNMGuis {
   }
 
   public static void loadGuis() {
-    assignGuiID("GuiMain");
+    assignGuiID("GuiHeat");
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 
   }

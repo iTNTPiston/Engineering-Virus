@@ -217,7 +217,7 @@ public class STileHeatNode extends STile implements IHeatNode {
 
   @Override
   public void setEK(int ek) {
-    this.ek = Math.min(ek, getMaxEK());
+    this.ek = ek;
   }
 
   @Override
