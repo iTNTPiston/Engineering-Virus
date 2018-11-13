@@ -1,4 +1,9 @@
+itemGroup.metalnetworkmainframe=Metal Network Mainframe
 tile.blockCentralProcessor.name=Central Processor
 tile.blockHeatCollectorFirewall.name=Firewall Heat Collector
-tile.blockHeatCollectorFirewall.tooltip_0=2 EK/t, +1 EK/t for each
-tile.blockHeatCollectorFirewall.tooltip_1=adjacent 3x1x3 Firewall (Max 8)
+tile.blockHeatCollectorFirewall.tooltip_0=§c4§r EK/t, §c+2§r EK/t for each
+tile.blockHeatCollectorFirewall.tooltip_1=Adjacent 3x1x3 Firewall (Max 8)
+tile.blockHeatEngineFirewall.name=Firewall Heat Engine
+tile.blockHeatEngineFirewall.tooltip_0=§c10§r EK -> §a1§r MZ
+tile.blockHeatEngineFirewall.tooltip_1=Max §a2§r MZ/t §a3§r MZ/t
+tile.blockHeatEngineFirewall.tooltip_2=When surrounded by 3x1x3 Firewall

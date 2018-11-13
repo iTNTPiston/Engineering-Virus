@@ -7,7 +7,7 @@ public class MNMCreativeTabs extends CreativeTabs {
   public static final MNMCreativeTabs instance = new MNMCreativeTabs();
 
   public MNMCreativeTabs() {
-    super("ev");
+    super("metalnetworkmainframe");
   }
 
   @Override
