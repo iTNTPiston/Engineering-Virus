@@ -9,8 +9,9 @@ import com.tntp.mnm.api.ek.IHeatConnector;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class STileHeatNode extends TileEntity implements IHeatNode {
+public class STileHeatNode extends STile implements IHeatNode {
   private static int RESCAN = 200;
+  private int rescanTotal;
   private int rescanCD;
   private boolean rescaned;
   private HeatPipe[] in;
@@ -19,12 +20,13 @@ public class STileHeatNode extends TileEntity implements IHeatNode {
   public STileHeatNode() {
     in = new HeatPipe[6];
     out = new HeatPipe[6];
+    rescanTotal = RESCAN;
   }
 
   public void updateEntity() {
     if (worldObj != null && !worldObj.isRemote) {
       if (rescaned) {
-        rescanCD = RESCAN;
+        rescanCD = rescanTotal;
         rescaned = false;
       }
       if (rescanCD == 0) {

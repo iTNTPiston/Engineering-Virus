@@ -8,6 +8,6 @@ import net.minecraft.tileentity.TileEntity;
  * @author iTNTPiston
  *
  */
-public class STileEV extends TileEntity {
+public class STile extends TileEntity {
 
 }
