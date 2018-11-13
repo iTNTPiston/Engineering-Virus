@@ -12,7 +12,7 @@ public class EVCreativeTabs extends CreativeTabs {
 
   @Override
   public Item getTabIconItem() {
-    return EVItems.itemByteCoin;
+    return MNMItems.itemByteCoin;
   }
 
 }

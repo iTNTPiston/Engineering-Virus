@@ -12,9 +12,9 @@ import net.minecraft.block.material.Material;
  * @author iTNTPiston
  *
  */
-public class SBlockEV extends Block {
+public class SBlock extends Block {
 
-  protected SBlockEV(Material mat, String regName) {
+  public SBlock(Material mat, String regName) {
     super(mat);
     this.setBlockName(regName);
     this.setCreativeTab(EVCreativeTabs.instance);

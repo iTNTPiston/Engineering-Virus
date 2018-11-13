@@ -5,8 +5,8 @@ import com.tntp.mnm.item.ItemByteCoin;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder("engineeringvirus")
-public class EVItems {
+@ObjectHolder("metalnetworkmainframe")
+public class MNMItems {
   public static final ItemByteCoin itemByteCoin = null;
 
   public static void loadItems() {

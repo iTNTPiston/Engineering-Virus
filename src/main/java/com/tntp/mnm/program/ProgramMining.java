@@ -3,7 +3,7 @@ package com.tntp.mnm.program;
 import com.tntp.mnm.api.digital.IDisk;
 import com.tntp.mnm.api.digital.IMemory;
 import com.tntp.mnm.api.digital.IProgram;
-import com.tntp.mnm.init.EVItems;
+import com.tntp.mnm.init.MNMItems;
 import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.inventory.IInventory;
@@ -34,7 +34,7 @@ public class ProgramMining implements IProgram {
           if (!disk.canAccess(this)) {
             error--;
           } else {
-            boolean b = disk.writeItemStack(new ItemStack(EVItems.itemByteCoin));
+            boolean b = disk.writeItemStack(new ItemStack(MNMItems.itemByteCoin));
             if (!b) {
               error += 16;
             }
