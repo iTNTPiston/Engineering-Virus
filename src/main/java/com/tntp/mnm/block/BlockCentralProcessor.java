@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockCentralProcessor extends SBlockModelSpecial {
+public class BlockCentralProcessor extends SBlockModelSpecial implements ITileEntityProvider {
 
   public BlockCentralProcessor() {
     super(Material.iron, "blockCentralProcessor");
@@ -22,9 +22,9 @@ public class BlockCentralProcessor extends SBlockModelSpecial {
     return false;
   }
 
-//  @Override
-//  public TileEntity createNewTileEntity(World world, int meta) {
-//    return new TileCentralProcessor();
-//  }
+  @Override
+  public TileEntity createNewTileEntity(World world, int meta) {
+    return new TileCentralProcessor();
+  }
 
 }
