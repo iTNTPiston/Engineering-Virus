@@ -1,11 +1,11 @@
 [
 {
-  "modid": "engineeringvirus",
-  "name": "Engineering Virus",
+  "modid": "metalnetworkmainframe",
+  "name": "Metal Network Mainframe",
   "description": "A Minecraft mod with complicated network and programs. Kill virus to make your network better!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/iTNTPiston/Engineering-Virus",
+  "url": "https://github.com/iTNTPiston/MetalNetworkMainframe",
   "updateUrl": "",
   "authorList": ["iTNTPiston"],
   "credits": "",

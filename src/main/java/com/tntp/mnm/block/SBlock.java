@@ -1,8 +1,11 @@
 package com.tntp.mnm.block;
 
 import com.tntp.mnm.core.MNMMod;
-import com.tntp.mnm.init.EVCreativeTabs;
+import com.tntp.mnm.init.MNMCreativeTabs;
+import com.tntp.mnm.util.UniversalUtil;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -17,8 +20,13 @@ public class SBlock extends Block {
   public SBlock(Material mat, String regName) {
     super(mat);
     this.setBlockName(regName);
-    this.setCreativeTab(EVCreativeTabs.instance);
+    this.setCreativeTab(MNMCreativeTabs.instance);
     this.setBlockTextureName(MNMMod.MODID + ":" + regName);
+  }
+
+  @SideOnly(Side.CLIENT)
+  public Object[] getTooltipArgs() {
+    return UniversalUtil.EMPTY_OBJ_ARRAY;
   }
 
 }

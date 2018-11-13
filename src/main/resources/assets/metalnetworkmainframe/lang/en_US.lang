@@ -1,0 +1,4 @@
+tile.blockCentralProcessor.name=Central Processor
+tile.blockHeatCollectorFirewall.name=Firewall Heat Collector
+tile.blockHeatCollectorFirewall.tooltip_0=2 EK/t, +1 EK/t for each
+tile.blockHeatCollectorFirewall.tooltip_1=adjacent 3x1x3 Firewall (Max 8)
