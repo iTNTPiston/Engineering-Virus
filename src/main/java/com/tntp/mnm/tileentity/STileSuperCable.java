@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import com.tntp.mnm.api.power.ElectronTypes;
 import com.tntp.mnm.api.power.IElectron;
 import com.tntp.mnm.api.power.ITileWire;
-import com.tntp.mnm.util.ConstUtil;
+import com.tntp.mnm.util.DirUtil;
 import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -49,12 +49,12 @@ public class STileSuperCable extends STileSuperWire {
 
   @Override
   public int[] getOutputSides() {
-    return ConstUtil.D_ALL;
+    return DirUtil.D_ALL;
   }
 
   @Override
   public int[] getInputSides() {
-    return ConstUtil.D_ALL;
+    return DirUtil.D_ALL;
   }
 
   @Override

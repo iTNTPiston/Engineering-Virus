@@ -1,6 +1,6 @@
 package com.tntp.mnm.util;
 
-public class ConstUtil {
+public class DirUtil {
   public static int D_D_MY = 0;
   public static int D_U_PY = 1;
   public static int D_N_MZ = 2;
