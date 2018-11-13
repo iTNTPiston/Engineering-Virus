@@ -3,6 +3,7 @@ package com.tntp.mnm.init;
 import com.tntp.mnm.model.SimpleObjRenderer;
 import com.tntp.mnm.model.WaveObjRenderer;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
@@ -12,6 +13,8 @@ public class MNMRender {
     WaveObjRenderer cp = getWaveObjRenderer("MNM_CP");
     int i = simple.registerWaveObj(cp);
     simple.bindWaveObj(MNMBlocks.blockCentralProcessor, 0, i);
+
+    RenderingRegistry.registerBlockHandler(simple);
   }
 
   public static WaveObjRenderer getWaveObjRenderer(String name) {
