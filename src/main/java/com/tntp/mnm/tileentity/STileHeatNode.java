@@ -1,13 +1,16 @@
 package com.tntp.mnm.tileentity;
 
+import com.tntp.mnm.api.ek.HeatPipe;
+import com.tntp.mnm.api.ek.IHeatConnector;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
-import com.tntp.mnm.api.ek.HeatPipe;
-import com.tntp.mnm.api.ek.IHeatConnector;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.util.Constants.NBT;
 
 public class STileHeatNode extends STile implements IHeatNode {
   private static int RESCAN = 200;
@@ -114,6 +117,59 @@ public class STileHeatNode extends STile implements IHeatNode {
       }
     }
     return false;
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    tag.setInteger("rescan_total", rescanTotal);
+    tag.setInteger("rescan_cd", rescanCD);
+    tag.setBoolean("rescaned", rescaned);
+    NBTTagList inList = new NBTTagList();
+    for (int i = 0; i < 6; i++) {
+      if (in[i] != null) {
+        NBTTagCompound pipe = new NBTTagCompound();
+        pipe.setByte("index", (byte) i);
+        in[i].writeToNBT(pipe);
+        inList.appendTag(pipe);
+      }
+    }
+    NBTTagList outList = new NBTTagList();
+    for (int i = 0; i < 6; i++) {
+      if (out[i] != null) {
+        NBTTagCompound pipe = new NBTTagCompound();
+        pipe.setByte("index", (byte) i);
+        out[i].writeToNBT(pipe);
+        outList.appendTag(pipe);
+      }
+    }
+    tag.setTag("heatpipe_in", inList);
+    tag.setTag("heatpipe_out", outList);
+  }
+
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    rescanTotal = tag.getInteger("rescan_total");
+    rescanCD = tag.getInteger("rescan_cd");
+    rescaned = tag.getBoolean("rescaned");
+    NBTTagList inList = tag.getTagList("heatpipe_in", NBT.TAG_COMPOUND);
+    in = new HeatPipe[6];
+    for (int i = 0; i < inList.tagCount(); i++) {
+      NBTTagCompound pipe = inList.getCompoundTagAt(i);
+      HeatPipe p = new HeatPipe(0, 0, 0);
+      p.readFromNBT(pipe);
+      int index = pipe.getByte("index");
+      in[index] = p;
+    }
+    NBTTagList outList = tag.getTagList("heatpipe_out", NBT.TAG_COMPOUND);
+    out = new HeatPipe[6];
+    for (int i = 0; i < outList.tagCount(); i++) {
+      NBTTagCompound pipe = outList.getCompoundTagAt(i);
+      HeatPipe p = new HeatPipe(0, 0, 0);
+      p.readFromNBT(pipe);
+      int index = pipe.getByte("index");
+      out[index] = p;
+    }
   }
 
 }
