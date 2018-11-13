@@ -5,16 +5,19 @@ import com.tntp.mnm.model.WaveObjRenderer;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.obj.Vertex;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
 public class MNMRender {
   public static void loadRenderers() {
+    SimpleObjRenderer.id = RenderingRegistry.getNextAvailableRenderId();
     SimpleObjRenderer simple = new SimpleObjRenderer();
     WaveObjRenderer cp = getWaveObjRenderer("MNM_CP");
     int i = simple.registerWaveObj(cp);
     simple.bindWaveObj(MNMBlocks.blockCentralProcessor, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
+
   }
 
   public static WaveObjRenderer getWaveObjRenderer(String name) {
@@ -22,7 +25,13 @@ public class MNMRender {
   }
 
   public static WavefrontObject getWaveObj(String name) {
-    return new WavefrontObject(MNMResources.getResource("models/" + name + ".obj"));
+    WavefrontObject obj = new WavefrontObject(MNMResources.getResource("models/" + name + ".obj"));
+    for (Vertex v : obj.vertices) {
+      v.x = v.x / 16f;
+      v.y = v.y / 16f;
+      v.z = v.z / 16f;
+    }
+    return obj;
   }
 
   public static ResourceLocation getTexture(String name) {

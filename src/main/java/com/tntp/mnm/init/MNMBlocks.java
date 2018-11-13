@@ -1,5 +1,6 @@
 package com.tntp.mnm.init;
 
+import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockMainframeCasing;
 import com.tntp.mnm.block.BlockMainframeCasingFramed;
 import com.tntp.mnm.block.BlockNetworkMainframe;
@@ -22,6 +23,7 @@ public class MNMBlocks {
     DebugUtil.log.info("Loading Blocks");
     GameRegistry.registerBlock(new BlockNetworkMainframe(false), "blockNetworkMainframeOff");
     GameRegistry.registerBlock(new BlockNetworkMainframe(true), "blockNetworkMainframeOn");
+    GameRegistry.registerBlock(new BlockCentralProcessor(), "blockCentralProcessor");
     // GameRegistry.registerBlock(new BlockMainframeCasing(),
     // "blockMainframeCasing");
     // GameRegistry.registerBlock(new BlockMainframeCasingFramed(),

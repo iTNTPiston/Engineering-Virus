@@ -10,12 +10,15 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 @SideOnly(Side.CLIENT)
 public class SimpleObjRenderer implements ISimpleBlockRenderingHandler {
   private ArrayList<WaveObjRenderer> list = new ArrayList<WaveObjRenderer>();
   private HashMap<String, HashMap<Integer, Integer>> blockToModel = new HashMap<String, HashMap<Integer, Integer>>();
+  public static int id;
 
   public int registerWaveObj(WaveObjRenderer obj) {
     int i = list.size();
@@ -35,38 +38,49 @@ public class SimpleObjRenderer implements ISimpleBlockRenderingHandler {
 
   }
 
-  public boolean renderBlock(Block block, int x, int y, int z, int metadata, int modelId, RenderBlocks renderer) {
-    GL11.glPushMatrix();
+  public WaveObjRenderer getRendererFor(Block block, int metadata, int modelId) {
     WaveObjRenderer obj;
-    if (modelId < 0) {
-      String key = block.getUnlocalizedName();
-      HashMap<Integer, Integer> metaMap = blockToModel.get(key);
-      if (metaMap == null)
-        return false;
-      Integer m = metaMap.get(metadata);
-      if (m == null) {
-        modelId = metaMap.get(0);
-      } else {
-        modelId = metadata;
-      }
+    String key = block.getUnlocalizedName();
+    HashMap<Integer, Integer> metaMap = blockToModel.get(key);
+    if (metaMap == null)
+      return null;
+    Integer m = metaMap.get(metadata);
+    if (m == null) {
+      modelId = metaMap.get(0);
+    } else {
+      modelId = m;
     }
     obj = list.get(modelId);
-
-    obj.render(x, y, z);
-    GL11.glPopMatrix();
-    return true;
+    return obj;
   }
 
   @Override
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-    renderBlock(block, 0, 0, 0, metadata, modelId, renderer);
-
+    WaveObjRenderer obj = getRendererFor(block, metadata, modelId);
+    if (obj != null) {
+      GL11.glPushMatrix();
+      // GL11.glTranslatef(x, y, z);
+      obj.render();
+      GL11.glPopMatrix();
+    }
   }
 
   @Override
   public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
       RenderBlocks renderer) {
-    return renderBlock(block, x, y, z, world.getBlockMetadata(x, y, z), modelId, renderer);
+    WaveObjRenderer obj = getRendererFor(block, world.getBlockMetadata(x, y, z), modelId);
+    if (obj == null) {
+      return false;
+    } else {
+      Tessellator tes = Tessellator.instance;
+      tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
+      tes.setColorOpaque_F(1, 1, 1);
+      tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
+      IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, 0);
+      obj.tessellate(tes, icon, renderer.hasOverrideBlockTexture());
+      tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
+      return true;
+    }
   }
 
   @Override
@@ -76,7 +90,7 @@ public class SimpleObjRenderer implements ISimpleBlockRenderingHandler {
 
   @Override
   public int getRenderId() {
-    return 1;
+    return id;
   }
 
 }

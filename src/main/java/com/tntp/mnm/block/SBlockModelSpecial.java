@@ -1,5 +1,7 @@
 package com.tntp.mnm.block;
 
+import com.tntp.mnm.model.SimpleObjRenderer;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
@@ -11,7 +13,7 @@ public class SBlockModelSpecial extends SBlock {
   }
 
   public int getRenderType() {
-    return 1;
+    return SimpleObjRenderer.id;
   }
 
 }
