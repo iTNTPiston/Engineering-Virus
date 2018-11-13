@@ -6,6 +6,7 @@ import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.DirUtil;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSource {
   private static int BASE = 4, BOOST = 2, MAX = 1000;
@@ -50,6 +51,18 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
     } else {
       return false;
     }
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    tag.setInteger("ek_rate", rate);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    rate = tag.getInteger("ek_rate");
   }
 
 }

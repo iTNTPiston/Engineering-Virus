@@ -1,16 +1,22 @@
 package com.tntp.mnm.core;
 
 import com.tntp.mnm.init.MNMBlocks;
+import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.init.MNMItems;
 
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class Proxy {
+
   public void preInit(FMLPreInitializationEvent event) {
     MNMBlocks.loadBlocks();
     MNMItems.loadItems();
+    MNMGuis.loadGuis();
   }
 
   public void init(FMLInitializationEvent event) {

@@ -9,6 +9,7 @@ import com.tntp.mnm.block.BlockNetworkMainframe;
 import com.tntp.mnm.block.BlockSmartChest;
 import com.tntp.mnm.item.ItemBlockTooltip;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
+import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileSmartChest;
 import com.tntp.mnm.util.DebugUtil;
 
@@ -30,17 +31,17 @@ public class MNMBlocks {
     DebugUtil.log.info("Loading Blocks");
     GameRegistry.registerBlock(new BlockFirewall(), "blockFirewall");
     GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), ItemBlockTooltip.class, "blockHeatCollectorFirewall");
+    GameRegistry.registerTileEntity(TileHeatCollectorFirewall.class, "tileHeatCollectorFirewall");
     GameRegistry.registerBlock(new BlockNetworkMainframe(false), "blockNetworkMainframeOff");
     GameRegistry.registerBlock(new BlockNetworkMainframe(true), "blockNetworkMainframeOn");
     GameRegistry.registerBlock(new BlockCentralProcessor(), "blockCentralProcessor");
     GameRegistry.registerTileEntity(TileCentralProcessor.class, "tileCentralProcessor");
+
     // GameRegistry.registerBlock(new BlockMainframeCasing(),
     // "blockMainframeCasing");
     // GameRegistry.registerBlock(new BlockMainframeCasingFramed(),
     // "blockMainframeCasingFramed");
 
-    // GameRegistry.registerBlock(new BlockSmartChest(), "blockSmartChest");
-    // GameRegistry.registerTileEntity(TileSmartChest.class, "tileSmartChest");
   }
 
 }

@@ -1,7 +1,11 @@
 package com.tntp.mnm.block;
 
+import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
+
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -13,8 +17,16 @@ public class BlockHeatCollectorFirewall extends SBlock implements ITileEntityPro
 
   @Override
   public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-    // TODO Auto-generated method stub
-    return null;
+    return new TileHeatCollectorFirewall();
+  }
+
+  @Override
+  public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy,
+      float zz) {
+    if (!world.isRemote) {
+      player.openGui(MNMMod.MODID, 0, world, x, y, z);
+    }
+    return true;
   }
 
 }
