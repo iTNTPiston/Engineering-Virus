@@ -7,3 +7,10 @@ tile.blockHeatEngineFirewall.name=Firewall Heat Engine
 tile.blockHeatEngineFirewall.tooltip_0=§c10§r EK -> §a1§r MZ
 tile.blockHeatEngineFirewall.tooltip_1=Max §a2§r MZ/t §a3§r MZ/t
 tile.blockHeatEngineFirewall.tooltip_2=When surrounded by 3x1x3 Firewall
+
+mnm.gui.format.heat=Heat Stored: 
+mnm.gui.format.heat_value=%d / %d EK
+mnm.gui.format.heat_gen=Heat Generation: 
+mnm.gui.format.heat_gen_value=%d EK/t
+
+mnm.gui.label.heat=Heat

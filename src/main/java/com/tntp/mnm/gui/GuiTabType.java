@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 
 public enum GuiTabType {
-  NULL(null, 1, 1, 1), HEAT(new ItemStack(MNMItems.itemWrench), 1f, 0.7f, 0.5f);
+  HEAT(new ItemStack(MNMItems.itemWrench), "mnm.gui.label.heat", 1f, 0.7f, 0.5f);
   @SideOnly(Side.CLIENT)
   private static final RenderItem itemRender = new RenderItem();
   @SideOnly(Side.CLIENT)
@@ -23,32 +23,49 @@ public enum GuiTabType {
   @SideOnly(Side.CLIENT)
   private static final TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
   private ItemStack icon;
+  private String label;
   private float r;
   private float g;
   private float b;
 
-  GuiTabType(ItemStack icon, float r, float g, float b) {
+  GuiTabType(ItemStack icon, String label, float r, float g, float b) {
     this.icon = icon;
+    this.label = label;
     this.r = r;
     this.g = g;
     this.b = b;
   }
 
+  public static boolean isOnTab(int tabLocation, int mx, int my) {
+    int tabX = tabLocation > 2 ? 148 : 0;
+    int tabY = (tabLocation % 3) * 28;
+    return mx >= tabX && mx <= tabX + 28 && my >= tabY && my <= tabY + 28;
+  }
+
+  public String getUnlocalizedLabel() {
+    return label;
+  }
+
+  @SideOnly(Side.CLIENT)
+  public void setColorToTab() {
+    GL11.glColor4f(r, g, b, 1);
+  }
+
   @SideOnly(Side.CLIENT)
   public void drawTab(GuiContainer gui, int tabLocation, int left, int top) {
-    if (this != NULL) {
-      GL11.glColor4f(r, g, b, 1.0F);
-      int tabX = tabLocation > 2 ? 148 : 0;
-      int tabY = (tabLocation % 3) * 28;
-      gui.drawTexturedModalRect(left + tabX, top + tabY, 0, 0, 28, 28);
-      GL11.glColor4f(1f, 1f, 1f, 1.0F);
-      if (icon != null) {
-        RenderHelper.enableGUIStandardItemLighting();
-        itemRender.zLevel = 200.0F;
-        itemRender.renderItemAndEffectIntoGUI(fontRenderer, textureManager, icon, 5 + left + tabX, 5 + top + tabY);
-        itemRender.renderItemOverlayIntoGUI(fontRenderer, textureManager, icon, 5 + left + tabX, 5 + top + tabY);
-        itemRender.zLevel = 0.0F;
-      }
+
+    GL11.glColor4f(r, g, b, 1.0F);
+    int tabX = tabLocation > 2 ? 148 : 0;
+    int tabY = (tabLocation % 3) * 28;
+    gui.drawTexturedModalRect(left + tabX, top + tabY, 0, 0, 28, 28);
+    GL11.glColor4f(1f, 1f, 1f, 1.0F);
+    if (icon != null) {
+      RenderHelper.enableGUIStandardItemLighting();
+      itemRender.renderItemAndEffectIntoGUI(fontRenderer, textureManager, icon, 5 + left + tabX, 5 + top + tabY);
+      itemRender.renderItemOverlayIntoGUI(fontRenderer, textureManager, icon, 5 + left + tabX, 5 + top + tabY);
+      GL11.glEnable(GL11.GL_BLEND);
+      RenderHelper.disableStandardItemLighting();
     }
   }
+
 }

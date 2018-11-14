@@ -23,6 +23,16 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
     return side == DirUtil.D_U_PY;
   }
 
+  public void updateEntity() {
+    super.updateEntity();
+    if (worldObj != null && !worldObj.isRemote) {
+      if (rate > 0) {
+        setEK(Math.min(getEK() + rate, getMaxEK()));
+        markDirty();
+      }
+    }
+  }
+
   @Override
   public void rescan() {
     super.rescan();
