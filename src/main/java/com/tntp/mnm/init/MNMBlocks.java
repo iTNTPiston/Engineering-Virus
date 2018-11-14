@@ -1,5 +1,6 @@
 package com.tntp.mnm.init;
 
+import com.tntp.mnm.block.BlockAuxiliaryComputingUnit;
 import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
@@ -26,6 +27,7 @@ public class MNMBlocks {
   public static final Block blockNetworkMainframeOn = null;
   public static final Block blockNetworkMainframeOff = null;
   public static final Block blockCentralProcessor = null;
+  public static final Block blockAuxiliaryComputingUnit = null;
 
   public static void loadBlocks() {
     DebugUtil.log.info("Loading Blocks");
@@ -36,7 +38,7 @@ public class MNMBlocks {
     GameRegistry.registerBlock(new BlockNetworkMainframe(true), "blockNetworkMainframeOn");
     GameRegistry.registerBlock(new BlockCentralProcessor(), "blockCentralProcessor");
     GameRegistry.registerTileEntity(TileCentralProcessor.class, "tileCentralProcessor");
-
+    GameRegistry.registerBlock(new BlockAuxiliaryComputingUnit(), "blockAuxiliaryComputingUnit");
     // GameRegistry.registerBlock(new BlockMainframeCasing(),
     // "blockMainframeCasing");
     // GameRegistry.registerBlock(new BlockMainframeCasingFramed(),

@@ -1,0 +1,407 @@
+# Blender MTL File: 'MNM_ACU.blend'
+# Material Count: 43
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.002
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.003
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.004
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.005
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.006
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.007
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.008
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl Material.009
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.009
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.011
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.012
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.013
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.014
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.015
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.016
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.017
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.018
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.019
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.020
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.021
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.022
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.023
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.024
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.025
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.026
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.027
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.028
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.029
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.030
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.031
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.032
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.033
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.034
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.035
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.036
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.037
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.038
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.039
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.040
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png
+
+newmtl None_MNM_ACU.png.041
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\models\MNM_ACU.png

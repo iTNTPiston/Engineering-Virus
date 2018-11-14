@@ -11,10 +11,14 @@ import net.minecraftforge.client.model.obj.WavefrontObject;
 public class MNMRender {
   public static void loadRenderers() {
     SimpleObjRenderer.id = RenderingRegistry.getNextAvailableRenderId();
+
     SimpleObjRenderer simple = new SimpleObjRenderer();
-    WaveObjRenderer cp = getWaveObjRenderer("MNM_CP");
-    int i = simple.registerWaveObj(cp);
+
+    int i = simple.registerWaveObj(getWaveObjRenderer("MNM_CP"));
     simple.bindWaveObj(MNMBlocks.blockCentralProcessor, 0, i);
+
+    i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
+    simple.bindWaveObj(MNMBlocks.blockAuxiliaryComputingUnit, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 
