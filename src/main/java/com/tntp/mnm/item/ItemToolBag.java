@@ -1,5 +1,7 @@
 package com.tntp.mnm.item;
 
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 
 import com.tntp.mnm.core.MNMMod;
@@ -20,6 +22,18 @@ public class ItemToolBag extends SItem {
   private int limit;
   private IIcon left;
   private IIcon right;
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+    NBTTagCompound tag = stack.getTagCompound();
+    if (tag != null && tag.hasKey("MNM|ToolBag")) {
+      NBTTagCompound toolBag = tag.getCompoundTag("MNM|ToolBag");
+      int lim = toolBag.getInteger("limit");
+      int size = toolBag.getTagList("tools", NBT.TAG_COMPOUND).tagCount();
+      tooltip.add(size + " / " + lim);
+    }
+  }
 
   public ItemToolBag(String regName, int lim) {
     super(regName);
