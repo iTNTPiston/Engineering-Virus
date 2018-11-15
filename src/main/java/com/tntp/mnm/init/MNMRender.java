@@ -1,5 +1,6 @@
 package com.tntp.mnm.init;
 
+import com.tntp.mnm.model.PipeRenderer;
 import com.tntp.mnm.model.SimpleObjRenderer;
 import com.tntp.mnm.model.WaveObjRenderer;
 
@@ -19,6 +20,13 @@ public class MNMRender {
 
     i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
     simple.bindWaveObj(MNMBlocks.blockAuxiliaryComputingUnit, 0, i);
+
+    WavefrontObject heatPipe = getWaveObj("MNM_HP");
+    WavefrontObject heatPipeExt = getWaveObj("MNM_HP_EXT");
+    ResourceLocation heatPipeTex = getTexture("MNM_HP");
+    PipeRenderer heatPipeRender = new PipeRenderer(heatPipe, heatPipeExt, heatPipeTex);
+    i = simple.registerWaveObj(heatPipeRender);
+    simple.bindWaveObj(MNMBlocks.blockHeatPipe, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 

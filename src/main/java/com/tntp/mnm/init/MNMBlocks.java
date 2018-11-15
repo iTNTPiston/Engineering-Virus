@@ -4,6 +4,7 @@ import com.tntp.mnm.block.BlockAuxiliaryComputingUnit;
 import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
+import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.block.BlockMainframeCasing;
 import com.tntp.mnm.block.BlockMainframeCasingFramed;
 import com.tntp.mnm.block.BlockNetworkMainframe;
@@ -35,6 +36,8 @@ public class MNMBlocks {
     GameRegistry.registerBlock(new BlockFirewall(), "blockFirewall");
     GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), ItemBlockTooltip.class, "blockHeatCollectorFirewall");
     GameRegistry.registerTileEntity(TileHeatCollectorFirewall.class, "tileHeatCollectorFirewall");
+    GameRegistry.registerBlock(new BlockHeatPipe(), "blockHeatPipe");
+
     GameRegistry.registerBlock(new BlockNetworkMainframe(false), "blockNetworkMainframeOff");
     GameRegistry.registerBlock(new BlockNetworkMainframe(true), "blockNetworkMainframeOn");
     GameRegistry.registerBlock(new BlockCentralProcessor(), "blockCentralProcessor");

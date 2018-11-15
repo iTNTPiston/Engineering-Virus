@@ -58,10 +58,7 @@ public class SimpleObjRenderer implements ISimpleBlockRenderingHandler {
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
     WaveObjRenderer obj = getRendererFor(block, metadata, modelId);
     if (obj != null) {
-      GL11.glPushMatrix();
-      // GL11.glTranslatef(x, y, z);
-      obj.render();
-      GL11.glPopMatrix();
+      obj.renderInventoryBlock(block, metadata, modelId, renderer);
     }
   }
 
@@ -69,18 +66,7 @@ public class SimpleObjRenderer implements ISimpleBlockRenderingHandler {
   public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
       RenderBlocks renderer) {
     WaveObjRenderer obj = getRendererFor(block, world.getBlockMetadata(x, y, z), modelId);
-    if (obj == null) {
-      return false;
-    } else {
-      Tessellator tes = Tessellator.instance;
-      tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
-      tes.setColorOpaque_F(1, 1, 1);
-      tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-      IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, 0);
-      obj.tessellate(tes, icon, renderer.hasOverrideBlockTexture());
-      tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
-      return true;
-    }
+    return obj == null ? false : obj.renderWorldBlock(world, x, y, z, block, modelId, renderer);
   }
 
   @Override
