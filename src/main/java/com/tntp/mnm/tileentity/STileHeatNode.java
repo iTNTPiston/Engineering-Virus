@@ -1,16 +1,18 @@
 package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.api.ek.HeatPipe;
-import com.tntp.mnm.api.ek.IHeatConnector;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
+import com.tntp.mnm.block.BlockHeatPipe;
+import com.tntp.mnm.init.MNMBlocks;
 
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.common.util.Constants.NBT;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class STileHeatNode extends STile implements IHeatNode {
   private static int RESCAN = 200;
@@ -109,11 +111,14 @@ public class STileHeatNode extends STile implements IHeatNode {
     int comingFrom = outSide ^ 1;
     boolean successful = false;
     if (worldObj.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
-      TileEntity te = worldObj.getTileEntity(pipe.x, pipe.y, pipe.z);
-      if (te instanceof IHeatConnector) {
-        successful = ((IHeatConnector) te).forwardPipe(pipe, comingFrom, toSink);
-      } else if ((toSink && te instanceof IHeatSink) || (!toSink && te instanceof IHeatSource)) {
-        successful = ((IHeatNode) te).connectPipe(pipe, comingFrom, toSink);
+      Block b = worldObj.getBlock(pipe.x, pipe.y, pipe.z);
+      if (b == MNMBlocks.blockHeatPipe) {
+        successful = BlockHeatPipe.forwardPipe(worldObj, pipe, comingFrom, toSink);
+      } else {
+        TileEntity te = worldObj.getTileEntity(pipe.x, pipe.y, pipe.z);
+        if ((toSink && te instanceof IHeatSink) || (!toSink && te instanceof IHeatSource)) {
+          successful = ((IHeatNode) te).connectPipe(pipe, comingFrom, toSink);
+        }
       }
     }
     if (successful)

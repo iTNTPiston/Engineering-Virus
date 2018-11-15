@@ -22,6 +22,7 @@ import net.minecraft.block.Block;
 public class MNMBlocks {
   public static final Block blockFirewall = null;
   public static final Block blockHeatCollectorFirewall = null;
+  public static final Block blockHeatPipe = null;
 
   public static final Block blockMainframeCasing = null;
   public static final Block blockNetworkMainframeOn = null;
