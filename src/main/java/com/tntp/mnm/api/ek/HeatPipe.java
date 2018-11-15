@@ -1,11 +1,8 @@
 package com.tntp.mnm.api.ek;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 
 public class HeatPipe {
   public int x;

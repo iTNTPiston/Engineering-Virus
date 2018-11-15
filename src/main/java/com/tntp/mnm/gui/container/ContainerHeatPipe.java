@@ -1,7 +1,5 @@
 package com.tntp.mnm.gui.container;
 
-import com.tntp.mnm.api.ek.HeatPipe;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 

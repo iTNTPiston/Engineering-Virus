@@ -5,14 +5,10 @@ import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatPipe;
-import com.tntp.mnm.block.BlockMainframeCasing;
-import com.tntp.mnm.block.BlockMainframeCasingFramed;
 import com.tntp.mnm.block.BlockNetworkMainframe;
-import com.tntp.mnm.block.BlockSmartChest;
 import com.tntp.mnm.item.ItemBlockTooltip;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
-import com.tntp.mnm.tileentity.TileSmartChest;
 import com.tntp.mnm.util.DebugUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;

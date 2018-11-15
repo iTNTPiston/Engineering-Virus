@@ -2,8 +2,6 @@ package com.tntp.mnm.item;
 
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.util.KeyUtil;
 

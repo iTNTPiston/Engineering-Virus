@@ -7,7 +7,6 @@ import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 public class GuiHeatPipe extends GuiMain {
@@ -34,12 +33,6 @@ public class GuiHeatPipe extends GuiMain {
     GL11.glDisable(GL11.GL_DEPTH_TEST);
     this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.title.heat_pipe"), 36, 8, 0);
   }
-
-//  protected void drawGuiContainerBackgroundLayer(float f, int mx, int my) {
-//    super.drawGuiContainerBackgroundLayer(f, mx, my);
-//    
-//    
-//  }
 
   protected void drawItemStack(ItemStack stack, int x, int y, int mx, int my) {
     if (stack != null) {

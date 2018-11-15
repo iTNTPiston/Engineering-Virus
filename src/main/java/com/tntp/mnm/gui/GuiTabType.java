@@ -15,7 +15,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -100,8 +99,6 @@ public enum GuiTabType {
     if (icon != null) {
       itemRender().zLevel = 100.0F;
       RenderHelper.enableGUIStandardItemLighting();
-      // GL11.glDisable(GL11.GL_DEPTH_TEST);
-      // GL11.glDisable(GL11.GL_BLEND);
       itemRender().renderItemAndEffectIntoGUI(fontRenderer(), textureManager(), icon, 5 + tabX, 5 + tabY);
       itemRender().renderItemOverlayIntoGUI(fontRenderer(), textureManager(), icon, 5 + tabX, 5 + tabY);
       GL11.glEnable(GL11.GL_BLEND);

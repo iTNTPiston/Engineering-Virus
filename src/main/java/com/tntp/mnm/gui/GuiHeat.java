@@ -3,12 +3,10 @@ package com.tntp.mnm.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
-import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.gui.container.ContainerHeat;
 import com.tntp.mnm.init.MNMResources;
 import com.tntp.mnm.util.LocalUtil;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
