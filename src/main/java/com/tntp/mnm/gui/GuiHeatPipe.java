@@ -30,6 +30,8 @@ public class GuiHeatPipe extends GuiMain {
     drawItemStack(middle, 60, 40, mx, my);
     drawItemStack(endRight, 100, 40, mx, my);
     GL11.glColor4f(1f, 1f, 1f, 1.0F);
+    GL11.glDisable(GL11.GL_LIGHTING);
+    GL11.glDisable(GL11.GL_DEPTH_TEST);
     this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.title.heat_pipe"), 36, 8, 0);
   }
 
@@ -49,7 +51,7 @@ public class GuiHeatPipe extends GuiMain {
       GL11.glEnable(GL11.GL_BLEND);
       RenderHelper.disableStandardItemLighting();
       if (mx >= x + guiLeft && mx <= x + guiLeft + 16 && my >= y + guiTop && my <= y + guiTop + 16) {
-        drawHighlightRect(x + guiLeft, y + guiTop);
+        drawHighlightRect(x, y);
         tooltips.add(stack.getDisplayName());
         tooltipX = mx - guiLeft;
         tooltipY = my - guiTop;

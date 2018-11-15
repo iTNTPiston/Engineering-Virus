@@ -14,3 +14,5 @@ mnm.gui.format.heat_gen=Heat Generation:
 mnm.gui.format.heat_gen_value=%d EK/t
 
 mnm.gui.label.heat=Heat
+
+mnm.gui.title.heat_pipe=Heat Pipe Connection
