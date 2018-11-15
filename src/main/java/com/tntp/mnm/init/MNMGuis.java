@@ -24,6 +24,7 @@ public class MNMGuis {
 
   public static void loadGuis() {
     assignGuiID("GuiHeat");
+    assignGuiID("GuiHeatPipe");
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 
   }

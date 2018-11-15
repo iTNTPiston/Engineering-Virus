@@ -19,9 +19,9 @@ public class GuiMain extends GuiContainer {
   private GuiTabType[] tabs;
   private String[] tabGui;
 
-  private int tooltipX;
-  private int tooltipY;
-  private List<String> tooltips;
+  protected int tooltipX;
+  protected int tooltipY;
+  protected List<String> tooltips;
 
   public GuiMain(Container container) {
     super(container);
@@ -40,24 +40,25 @@ public class GuiMain extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     super.drawGuiContainerForegroundLayer(mx, my);
-    tooltips.clear();
+    for (int i = 0; i < 6; i++) {
+      if (tabs[i] != null) {
+        this.mc.getTextureManager().bindTexture(background);
+        tabs[i].drawTab(this, i);
+      }
+    }
     for (int i = 0; i < 6; i++) {
       if (tabs[i] != null && GuiTabType.isOnTab(i, mx - guiLeft, my - guiTop)) {
         tooltips.add(LocalUtil.localize(tabs[i].getUnlocalizedLabel()));
-        tooltipX = mx;
-        tooltipY = my;
+        tooltipX = mx - guiLeft;
+        tooltipY = my - guiTop;
       }
     }
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
-    for (int i = 0; i < 6; i++) {
-      if (tabs[i] != null) {
-        this.mc.getTextureManager().bindTexture(background);
-        tabs[i].drawTab(this, i, guiLeft, guiTop);
-      }
-    }
+    tooltips.clear();
+
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(background);
     this.drawTexturedModalRect(guiLeft + 28, guiTop, 28, 0, xSize - 56, 84);

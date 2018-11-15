@@ -1,5 +1,7 @@
 package com.tntp.mnm.tileentity;
 
+import javax.annotation.Nonnull;
+
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.api.ek.IHeatSink;
@@ -11,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -79,7 +82,9 @@ public class STileHeatNode extends STile implements IHeatNode {
             out[i] = null;
           } else {
             if (out[i] == null) {
-              out[i] = findHeatNode(i, true);
+              HeatPipe p = new HeatPipe(xCoord, yCoord, zCoord);
+              if (findHeatNode(p, i, 1, worldObj) != -1)
+                out[i] = p;
             }
           }
         }
@@ -90,7 +95,9 @@ public class STileHeatNode extends STile implements IHeatNode {
             in[i] = null;
           } else {
             if (in[i] == null) {
-              in[i] = findHeatNode(i, false);
+              HeatPipe p = new HeatPipe(xCoord, yCoord, zCoord);
+              if (findHeatNode(p, i, 2, worldObj) != -1)
+                in[i] = p;
             }
           }
         }
@@ -105,26 +112,26 @@ public class STileHeatNode extends STile implements IHeatNode {
    * @param findSink
    * @param pipe
    */
-  private HeatPipe findHeatNode(int outSide, boolean toSink) {
+  public static int findHeatNode(@Nonnull HeatPipe pipe, int outSide, int toSink, World world) {
     ForgeDirection direction = ForgeDirection.getOrientation(outSide);
-    HeatPipe pipe = new HeatPipe(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
+    pipe.x = pipe.x + direction.offsetX;
+    pipe.y = pipe.y + direction.offsetY;
+    pipe.z = pipe.z + direction.offsetZ;
+
     int comingFrom = outSide ^ 1;
-    boolean successful = false;
-    if (worldObj.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
-      Block b = worldObj.getBlock(pipe.x, pipe.y, pipe.z);
+    int endOutSide = -1;
+    if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
+      Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
       if (b == MNMBlocks.blockHeatPipe) {
-        successful = BlockHeatPipe.forwardPipe(worldObj, pipe, comingFrom, toSink);
+        endOutSide = BlockHeatPipe.forwardPipe(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, toSink);
       } else {
-        TileEntity te = worldObj.getTileEntity(pipe.x, pipe.y, pipe.z);
-        if ((toSink && te instanceof IHeatSink) || (!toSink && te instanceof IHeatSource)) {
-          successful = ((IHeatNode) te).connectPipe(pipe, comingFrom, toSink);
+        TileEntity te = world.getTileEntity(pipe.x, pipe.y, pipe.z);
+        if (te instanceof IHeatNode) {
+          endOutSide = ((IHeatNode) te).connectPipe(pipe, comingFrom, toSink);
         }
       }
     }
-    if (successful)
-      return pipe;
-    else
-      return null;
+    return endOutSide;
   }
 
   @Override
@@ -137,18 +144,27 @@ public class STileHeatNode extends STile implements IHeatNode {
     return out;
   }
 
+  /**
+   * 
+   */
   @Override
-  public boolean connectPipe(HeatPipe pipe, int comingFrom, boolean toSink) {
-    if (toSink) {
-      if (((IHeatSink) this).isSinkSide(comingFrom)) {
-        return true;
-      }
-    } else {
-      if (((IHeatSource) this).isSourceSide(comingFrom)) {
-        return true;
+  public int connectPipe(HeatPipe pipe, int comingFrom, int toSink) {
+    boolean sink = (toSink & 1) == 1;
+    boolean source = (toSink & 2) == 2;
+
+    if (sink) {
+      if (this instanceof IHeatSink) {
+        if (((IHeatSink) this).isSinkSide(comingFrom))
+          return comingFrom ^ 1;
       }
     }
-    return false;
+    if (source) {
+      if (this instanceof IHeatSource) {
+        if (((IHeatSource) this).isSourceSide(comingFrom))
+          return comingFrom ^ 1;
+      }
+    }
+    return -1;
   }
 
   @Override
@@ -228,6 +244,11 @@ public class STileHeatNode extends STile implements IHeatNode {
   @Override
   public void setMaxEK(int ek) {
     maxEk = ek;
+  }
+
+  @Override
+  public String getInventoryName() {
+    return getBlockType().getLocalizedName();
   }
 
 }

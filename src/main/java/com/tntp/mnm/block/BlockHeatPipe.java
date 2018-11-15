@@ -82,12 +82,19 @@ public class BlockHeatPipe extends SBlockModelSpecial {
     }
   }
 
-  public static boolean forwardPipe(World world, HeatPipe pipe, int comingFrom, boolean toSink) {
-
+  public static int forwardPipe(World world, int startX, int startY, int startZ, HeatPipe pipe, int comingFrom,
+      int toSink) {
+    if (pipe.x == startX && pipe.y == startY && pipe.z == startZ)
+      return -1;
+    if (startX == Integer.MAX_VALUE) {
+      startX = pipe.x;
+      startY = pipe.y;
+      startZ = pipe.z;
+    }
     int meta = world.getBlockMetadata(pipe.x, pipe.y, pipe.z);
     int sideCode = metaToSide(meta);
     if (!isConnected(sideCode, comingFrom)) {
-      return false;
+      return -1;
     }
     comingFrom = otherSide(sideCode, comingFrom);
     forwardPipe(pipe, comingFrom);
@@ -95,15 +102,15 @@ public class BlockHeatPipe extends SBlockModelSpecial {
     if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
       Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
       if (b == MNMBlocks.blockHeatPipe) {
-        return forwardPipe(world, pipe, comingFrom, toSink);
+        return forwardPipe(world, startX, startY, startZ, pipe, comingFrom, toSink);
       } else {
         TileEntity te = world.getTileEntity(pipe.x, pipe.y, pipe.z);
-        if ((toSink && te instanceof IHeatSink) || (!toSink && te instanceof IHeatSource)) {
+        if (te instanceof IHeatNode) {
           return ((IHeatNode) te).connectPipe(pipe, comingFrom, toSink);
         }
       }
     }
-    return false;
+    return -1;
 
   }
 
@@ -200,7 +207,6 @@ public class BlockHeatPipe extends SBlockModelSpecial {
       foundSide++;
     }
     if (foundSide == 2) {
-      System.out.println("Pipe [" + x + "," + y + "," + z + "] connectTo " + (sideCode >> 4) + " " + (sideCode & 15));
       int meta = sideToMeta(sideCode);
       if (meta != world.getBlockMetadata(x, y, z))
         world.setBlockMetadataWithNotify(x, y, z, sideToMeta(sideCode), flag);

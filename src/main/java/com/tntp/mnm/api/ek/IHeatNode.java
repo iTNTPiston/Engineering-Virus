@@ -13,5 +13,7 @@ public interface IHeatNode {
 
   public HeatPipe[] getOut();
 
-  public boolean connectPipe(HeatPipe pipe, int comingFrom, boolean toSink);
+  public int connectPipe(HeatPipe pipe, int comingFrom, int toSink);
+
+  public String getInventoryName();
 }

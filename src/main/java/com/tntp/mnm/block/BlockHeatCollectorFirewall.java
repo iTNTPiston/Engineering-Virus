@@ -21,13 +21,14 @@ public class BlockHeatCollectorFirewall extends SBlock implements ITileEntityPro
     return new TileHeatCollectorFirewall();
   }
 
-  @Override
-  public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy,
-      float zz) {
-    if (!world.isRemote) {
-      player.openGui(MNMMod.MODID, MNMGuis.getGuiID("GuiHeat"), world, x, y, z);
-    }
-    return true;
-  }
+  // @Override
+  // public boolean onBlockActivated(World world, int x, int y, int z,
+  // EntityPlayer player, int side, float xx, float yy,
+  // float zz) {
+  // if (!world.isRemote) {
+  // player.openGui(MNMMod.MODID, MNMGuis.getGuiID("GuiHeat"), world, x, y, z);
+  // }
+  // return false;
+  // }
 
 }
