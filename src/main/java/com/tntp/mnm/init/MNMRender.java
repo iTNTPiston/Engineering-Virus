@@ -1,7 +1,8 @@
 package com.tntp.mnm.init;
 
+import com.tntp.mnm.model.ItemRenderingHelper;
 import com.tntp.mnm.model.PipeRenderer;
-import com.tntp.mnm.model.SimpleObjRenderer;
+import com.tntp.mnm.model.SimpleBlockRenderingHelper;
 import com.tntp.mnm.model.WaveObjRenderer;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -11,9 +12,9 @@ import net.minecraftforge.client.model.obj.WavefrontObject;
 
 public class MNMRender {
   public static void loadRenderers() {
-    SimpleObjRenderer.id = RenderingRegistry.getNextAvailableRenderId();
+    SimpleBlockRenderingHelper.id = RenderingRegistry.getNextAvailableRenderId();
 
-    SimpleObjRenderer simple = new SimpleObjRenderer();
+    SimpleBlockRenderingHelper simple = new SimpleBlockRenderingHelper();
 
     int i = simple.registerWaveObj(getWaveObjRenderer("MNM_CP"));
     simple.bindWaveObj(MNMBlocks.blockCentralProcessor, 0, i);
@@ -29,6 +30,10 @@ public class MNMRender {
     simple.bindWaveObj(MNMBlocks.blockHeatPipe, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
+
+    ItemRenderingHelper itemRender = ItemRenderingHelper.instance;
+    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_MS"));
+    itemRender.bindWaveObj(MNMItems.itemMeterStick, i);
 
   }
 

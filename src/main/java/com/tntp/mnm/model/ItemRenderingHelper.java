@@ -1,0 +1,67 @@
+package com.tntp.mnm.model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.lwjgl.opengl.GL11;
+
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
+
+public class ItemRenderingHelper implements IItemRenderer {
+  public static final ItemRenderingHelper instance = new ItemRenderingHelper();
+  private ArrayList<WaveObjRenderer> list;
+  private HashMap<String, Integer> itemToRenderer;
+
+  private ItemRenderingHelper() {
+    list = new ArrayList<WaveObjRenderer>();
+    itemToRenderer = new HashMap<String, Integer>();
+  }
+
+  public int registerWaveObj(WaveObjRenderer obj) {
+    int i = list.size();
+    list.add(obj);
+    return i;
+  }
+
+  public void bindWaveObj(Item i, int model) {
+    String key = i.getUnlocalizedName();
+    itemToRenderer.put(key, model);
+    MinecraftForgeClient.registerItemRenderer(i, this);
+  }
+
+  public WaveObjRenderer getRenderer(ItemStack stack) {
+    WaveObjRenderer obj = list.get(itemToRenderer.get(stack.getItem().getUnlocalizedName(stack)));
+    return obj;
+  }
+
+  @Override
+  public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+    return true;
+  }
+
+  @Override
+  public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    return true;
+  }
+
+  @Override
+  public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+    switch (type) {
+    case INVENTORY:
+      renderInventoryItem(item, (RenderBlocks) data[0]);
+    }
+  }
+
+  public void renderInventoryItem(ItemStack stack, RenderBlocks render) {
+    WaveObjRenderer obj = getRenderer(stack);
+    GL11.glPushMatrix();
+    GL11.glRotatef(45, 1, 0, 0);
+    obj.render();
+    GL11.glPopMatrix();
+  }
+
+}
