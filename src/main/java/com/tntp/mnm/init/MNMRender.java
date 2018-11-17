@@ -32,7 +32,7 @@ public class MNMRender {
     RenderingRegistry.registerBlockHandler(simple);
 
     ItemRenderingHelper itemRender = ItemRenderingHelper.instance;
-    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_MS"));
+    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_MS2"));
     itemRender.bindWaveObj(MNMItems.itemMeterStick, i);
 
   }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
@@ -53,13 +54,24 @@ public class ItemRenderingHelper implements IItemRenderer {
     switch (type) {
     case INVENTORY:
       renderInventoryItem(item, (RenderBlocks) data[0]);
+      break;
+    case ENTITY:
+      renderEntityItem(item, (RenderBlocks) data[0], (EntityItem) data[1]);
     }
   }
 
   public void renderInventoryItem(ItemStack stack, RenderBlocks render) {
     WaveObjRenderer obj = getRenderer(stack);
     GL11.glPushMatrix();
-    GL11.glRotatef(45, 1, 0, 0);
+    GL11.glRotatef(30, 0, 1, 0);
+    GL11.glRotatef(45, 0, 0, 1);
+    obj.render();
+    GL11.glPopMatrix();
+  }
+
+  public void renderEntityItem(ItemStack stack, RenderBlocks render, EntityItem entity) {
+    WaveObjRenderer obj = getRenderer(stack);
+    GL11.glPushMatrix();
     obj.render();
     GL11.glPopMatrix();
   }
