@@ -52,8 +52,8 @@ public enum GuiTabType {
   }
 
   public static boolean isOnTab(int tabLocation, int mx, int my) {
-    int tabX = tabLocation > 2 ? 148 : 0;
-    int tabY = (tabLocation % 3) * 28;
+    int tabX = 176 + tabLocation / 4;
+    int tabY = (tabLocation & 3) * 28;
     return mx >= tabX && mx <= tabX + 28 && my >= tabY && my <= tabY + 28;
   }
 
@@ -91,9 +91,9 @@ public enum GuiTabType {
   public void drawTab(GuiContainer gui, int tabLocation) {
 
     GL11.glColor4f(r, g, b, 1.0F);
-    int tabX = tabLocation > 2 ? 148 : 0;
-    int tabY = (tabLocation % 3) * 28;
-    gui.drawTexturedModalRect(tabX, tabY, 0, 0, 28, 28);
+    int tabX = 176 + tabLocation / 4;
+    int tabY = (tabLocation & 3) * 28;
+    gui.drawTexturedModalRect(tabX, tabY, 176, 0, 28, 28);
     GL11.glColor4f(1f, 1f, 1f, 1.0F);
     ItemStack icon = getIconStack();
     if (icon != null) {

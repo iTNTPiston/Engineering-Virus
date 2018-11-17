@@ -15,7 +15,7 @@ public class GuiHeatPipe extends GuiMain {
   private ItemStack endRight;
 
   public GuiHeatPipe(ContainerHeatPipe container) {
-    super(container);
+    super(container, "mnm.gui.title.heat_pipe");
     endLeft = container.getNode1();
     endRight = container.getNode2();
     middle = new ItemStack(MNMBlocks.blockHeatPipe);
@@ -28,10 +28,7 @@ public class GuiHeatPipe extends GuiMain {
     drawItemStack(endLeft, 28, 40, mx, my);
     drawItemStack(middle, 60, 40, mx, my);
     drawItemStack(endRight, 100, 40, mx, my);
-    GL11.glColor4f(1f, 1f, 1f, 1.0F);
-    GL11.glDisable(GL11.GL_LIGHTING);
-    GL11.glDisable(GL11.GL_DEPTH_TEST);
-    this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.title.heat_pipe"), 36, 8, 0);
+    RenderHelper.enableGUIStandardItemLighting();
   }
 
   protected void drawItemStack(ItemStack stack, int x, int y, int mx, int my) {

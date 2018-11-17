@@ -74,6 +74,7 @@ public class STileHeatNode extends STile implements IHeatNode {
   }
 
   public void rescan() {
+    // only server side
     if (!rescaned) {
       rescaned = true;
       if (this instanceof IHeatSource) {
@@ -248,7 +249,7 @@ public class STileHeatNode extends STile implements IHeatNode {
 
   @Override
   public String getInventoryName() {
-    return getBlockType().getLocalizedName();
+    return getBlockType().getUnlocalizedName() + ".name";
   }
 
 }

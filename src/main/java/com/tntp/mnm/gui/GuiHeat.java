@@ -16,14 +16,13 @@ public class GuiHeat extends GuiMain {
   IHeatNode heatNode;
 
   public GuiHeat(IInventory player, IHeatNode tile) {
-    super(new ContainerHeat(player, tile));
+    super(new ContainerHeat(player, tile), tile.getInventoryName());
     heatNode = tile;
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     super.drawGuiContainerForegroundLayer(mx, my);
-    this.fontRendererObj.drawString(heatNode.getInventoryName(), 36, 8, 0);
     this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.format.heat"), 36, 40, 0);
     this.fontRendererObj
         .drawString(LocalUtil.localize("mnm.gui.format.heat_value", heatNode.getEK(), heatNode.getMaxEK()), 36, 55, 0);

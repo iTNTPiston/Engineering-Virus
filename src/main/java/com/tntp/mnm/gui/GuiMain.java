@@ -15,7 +15,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiMain extends GuiContainer {
   private static final ResourceLocation background = MNMResources.getResource("textures/guis/guiMain.png");
-
+  private static final int MAX_TABS = 8;
+  private String unlocalizedTitle;
   private GuiTabType[] tabs;
   private String[] tabGui;
 
@@ -23,13 +24,14 @@ public class GuiMain extends GuiContainer {
   protected int tooltipY;
   protected List<String> tooltips;
 
-  public GuiMain(Container container) {
+  public GuiMain(Container container, String title) {
     super(container);
     xSize = 176;
-    ySize = 172;
-    tabs = new GuiTabType[6];
-    tabGui = new String[6];
+    ySize = 205;
+    tabs = new GuiTabType[MAX_TABS];
+    tabGui = new String[MAX_TABS];
     tooltips = new ArrayList<String>();
+    unlocalizedTitle = title;
   }
 
   public void setTabAt(int i, GuiTabType tab, String gui) {
@@ -40,29 +42,32 @@ public class GuiMain extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     super.drawGuiContainerForegroundLayer(mx, my);
-    for (int i = 0; i < 6; i++) {
+    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    this.fontRendererObj.drawString(LocalUtil.localize(unlocalizedTitle), 8, 6, 0);
+    for (int i = 0; i < MAX_TABS; i++) {
       if (tabs[i] != null) {
         this.mc.getTextureManager().bindTexture(background);
         tabs[i].drawTab(this, i);
       }
     }
-    for (int i = 0; i < 6; i++) {
+    RenderHelper.enableGUIStandardItemLighting();
+    for (int i = 0; i < MAX_TABS; i++) {
       if (tabs[i] != null && GuiTabType.isOnTab(i, mx - guiLeft, my - guiTop)) {
         tooltips.add(LocalUtil.localize(tabs[i].getUnlocalizedLabel()));
         tooltipX = mx - guiLeft;
         tooltipY = my - guiTop;
       }
     }
+
   }
 
   @Override
   protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
     tooltips.clear();
-
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(background);
-    this.drawTexturedModalRect(guiLeft + 28, guiTop, 28, 0, xSize - 56, 84);
-    this.drawTexturedModalRect(guiLeft, guiTop + 84, 0, 84, xSize, ySize - 84);
+    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, 117);
+    this.drawTexturedModalRect(guiLeft, guiTop + 117, 0, 117, xSize, ySize - 117);
   }
 
   public void drawScreen(int mx, int my, float p_73863_3_) {
@@ -82,6 +87,35 @@ public class GuiMain extends GuiContainer {
   protected void drawGuiContainerTopLayer(int mx, int my) {
     if (!tooltips.isEmpty()) {
       drawHoveringText(tooltips, tooltipX, tooltipY, fontRendererObj);
+    }
+  }
+
+  public boolean hideItemPanel(int x, int y, int w, int h) {
+    int minX = guiLeft + 176;
+    int minY = guiTop;
+    for (int i = 0; i < MAX_TABS; i++) {
+      if (tabs[i] == null)
+        break;
+      int tabX = minX + i / 4;
+      int tabY = minY + (i & 3) * 28;
+      if (withIn(tabX, 28, x, w) || withIn(tabY, 28, y, h))
+        return true;
+    }
+    return false;
+  }
+
+  public boolean withIn(int c1, int w1, int c2, int w2) {
+    return (c2 >= c1 && c2 <= c1 + w1) || (c2 + w2 >= c1 && c2 + w2 <= c1 + w1);
+  }
+
+  protected void mouseClicked(int x, int y, int button) {
+    super.mouseClicked(x, y, button);
+    for (int i = 0; i < MAX_TABS; i++) {
+      if (tabs[i] == null)
+        break;
+      if (GuiTabType.isOnTab(i, x - guiLeft, y - guiTop)) {
+
+      }
     }
   }
 

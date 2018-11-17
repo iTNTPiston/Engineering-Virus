@@ -13,11 +13,11 @@ public abstract class SContainer extends Container {
     machineSlots = slots;
     for (int k = 0; k < 3; k++) {
       for (int j = 0; j < 9; j++) {
-        this.addSlotToContainer(new Slot(playerInventory, j + 9 + k * 9, 8 + j * 18, 90 + k * 18));
+        this.addSlotToContainer(new Slot(playerInventory, j + 9 + k * 9, 8 + j * 18, 123 + k * 18));
       }
     }
     for (int j = 0; j < 9; j++) {
-      this.addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 148));
+      this.addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 181));
     }
   }
 

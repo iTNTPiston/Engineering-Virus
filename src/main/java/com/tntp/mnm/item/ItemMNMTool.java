@@ -10,6 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ItemMNMTool extends SItem {
+  // meterstick (heat pipe)
+  // common wrench (machine progress, machine structure)
+  // common screw driver(machine config)
+  // heat resistive wrench(heat, heat pipe) adjust heat pipe
+  // heat resistive screw driver(heat distributor)
+  // thermometer (heat)
   private int guiCapabilities;
 
   public ItemMNMTool(String regName, GuiTabType... guiCap) {
@@ -27,7 +33,6 @@ public class ItemMNMTool extends SItem {
       int flag = tab.flag();
       if ((cap & flag) == flag) {
         String id = tab.getGuiString(stack, world, x, y, z);
-        System.out.println(id);
         if (id != null)
           gui.setTabAt(i++, tab, id);
       }
