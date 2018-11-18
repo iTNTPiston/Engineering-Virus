@@ -36,7 +36,6 @@ public class IGuiMainHandler implements INEIGuiHandler {
   @Override
   public boolean hideItemPanelSlot(GuiContainer gui, int x, int y, int w, int h) {
     if (gui instanceof GuiMain) {
-      System.out.println(1);
       return ((GuiMain) gui).hideItemPanel(x, y, w, h);
     }
     return false;

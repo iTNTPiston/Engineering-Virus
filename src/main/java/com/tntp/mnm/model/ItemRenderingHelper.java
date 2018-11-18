@@ -62,6 +62,11 @@ public class ItemRenderingHelper implements IItemRenderer {
       break;
     case EQUIPPED:
       renderThirdPersonItem(item, (RenderBlocks) data[0], (EntityLivingBase) data[1]);
+      break;
+    case EQUIPPED_FIRST_PERSON:
+      renderFirstPersonItem(item, (RenderBlocks) data[0], (EntityLivingBase) data[1]);
+      break;
+    default:
     }
   }
 
@@ -90,6 +95,16 @@ public class ItemRenderingHelper implements IItemRenderer {
     GL11.glRotatef(45, 0, 1, 0);
     GL11.glRotatef(105, 1, 0, 0);
     GL11.glTranslatef(0, -0.7f, 0);
+    obj.render();
+    GL11.glPopMatrix();
+  }
+
+  public void renderFirstPersonItem(ItemStack stack, RenderBlocks render, EntityLivingBase entity) {
+    WaveObjRenderer obj = getRenderer(stack);
+    GL11.glPushMatrix();
+    GL11.glTranslatef(0, 0.9f, 0);
+    GL11.glRotatef(45, 0, 1, 0);
+    GL11.glTranslatef(0, 0, 1);
     obj.render();
     GL11.glPopMatrix();
   }

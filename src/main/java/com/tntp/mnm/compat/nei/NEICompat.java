@@ -11,7 +11,6 @@ public class NEICompat implements ICompat {
   @Override
   @Optional.Method(modid = "NotEnoughItems")
   public void load(boolean clientSide) {
-    System.out.println(1);
     if (clientSide) {
       API.registerNEIGuiHandler(new IGuiMainHandler());
     }

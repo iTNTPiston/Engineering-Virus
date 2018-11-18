@@ -98,7 +98,7 @@ public class GuiMain extends GuiContainer {
         break;
       int tabX = minX + i / 4;
       int tabY = minY + (i & 3) * 28;
-      if (withIn(tabX, 28, x, w) || withIn(tabY, 28, y, h))
+      if (withIn(tabX, 28, x, w) && withIn(tabY, 28, y, h))
         return true;
     }
     return false;
