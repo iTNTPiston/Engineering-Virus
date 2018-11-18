@@ -1,5 +1,6 @@
 package com.tntp.mnm.util;
 
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.model.obj.Vertex;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -21,8 +22,8 @@ public class RenderUtil {
     if (vObj == null) {
       vObj = new Vertex(0, 0, 0);
     }
-    float cos = (float) Math.cos(rad);
-    float sin = (float) Math.sin(rad);
+    float cos = (float) MathHelper.cos(rad);
+    float sin = (float) MathHelper.sin(rad);
     if (axis == ForgeDirection.EAST) {
       vObj.x = v.x;
       vObj.y = cos * v.y - sin * v.z;
