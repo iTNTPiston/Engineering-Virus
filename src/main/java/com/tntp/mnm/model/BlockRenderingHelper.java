@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
 @SideOnly(Side.CLIENT)
-public class SimpleBlockRenderingHelper implements ISimpleBlockRenderingHandler {
+public class BlockRenderingHelper implements ISimpleBlockRenderingHandler {
   private ArrayList<WaveObjRenderer> list = new ArrayList<WaveObjRenderer>();
   private HashMap<String, HashMap<Integer, Integer>> blockToModel = new HashMap<String, HashMap<Integer, Integer>>();
   public static int id;

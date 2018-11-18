@@ -2,7 +2,7 @@ package com.tntp.mnm.init;
 
 import com.tntp.mnm.model.ItemRenderingHelper;
 import com.tntp.mnm.model.PipeRenderer;
-import com.tntp.mnm.model.SimpleBlockRenderingHelper;
+import com.tntp.mnm.model.BlockRenderingHelper;
 import com.tntp.mnm.model.WaveObjRenderer;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -12,9 +12,9 @@ import net.minecraftforge.client.model.obj.WavefrontObject;
 
 public class MNMRender {
   public static void loadRenderers() {
-    SimpleBlockRenderingHelper.id = RenderingRegistry.getNextAvailableRenderId();
+    BlockRenderingHelper.id = RenderingRegistry.getNextAvailableRenderId();
 
-    SimpleBlockRenderingHelper simple = new SimpleBlockRenderingHelper();
+    BlockRenderingHelper simple = new BlockRenderingHelper();
 
     int i = simple.registerWaveObj(getWaveObjRenderer("MNM_CP"));
     simple.bindWaveObj(MNMBlocks.blockCentralProcessor, 0, i);

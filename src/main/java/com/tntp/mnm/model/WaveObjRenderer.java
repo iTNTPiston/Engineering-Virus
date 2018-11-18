@@ -35,8 +35,6 @@ public class WaveObjRenderer {
   }
 
   public void render() {
-    // OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1,
-    // 0);
     bindTexture();
     obj.renderAll();
   }
