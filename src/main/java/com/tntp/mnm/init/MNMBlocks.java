@@ -34,7 +34,7 @@ public class MNMBlocks {
   public static void loadBlocks() {
     DebugUtil.log.info("Loading Blocks");
     GameRegistry.registerBlock(new BlockFirewall(), "blockFirewall");
-    GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), ItemBlockTooltip.class, "blockHeatCollectorFirewall");
+    GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), "blockHeatCollectorFirewall");
     GameRegistry.registerTileEntity(TileHeatCollectorFirewall.class, "tileHeatCollectorFirewall");
     GameRegistry.registerBlock(new BlockGeoThermalSmelter(), "blockGeoThermalSmelter");
     GameRegistry.registerTileEntity(TileGeoThermalSmelter.class, "tileGeoThermalSmelter");
