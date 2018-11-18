@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemMNMTool extends SItemSpecialModel {
+public class SItemTool extends SItemSpecialModel {
   // meterstick (heat pipe)
   // common wrench (machine progress, machine structure)
   // common screw driver(machine config)
@@ -18,7 +18,7 @@ public class ItemMNMTool extends SItemSpecialModel {
   // thermometer (heat)
   private int guiCapabilities;
 
-  public ItemMNMTool(String regName, GuiTabType... guiCap) {
+  public SItemTool(String regName, GuiTabType... guiCap) {
     super(regName);
     this.setMaxStackSize(1);
     guiCapabilities = 0;

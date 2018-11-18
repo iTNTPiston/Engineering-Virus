@@ -1,5 +1,9 @@
 package com.tntp.mnm.gui;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.gui.container.ContainerHeatPipe;
@@ -25,37 +29,11 @@ public class GuiHeatPipe extends GuiMain {
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     super.drawGuiContainerForegroundLayer(mx, my);
     GL11.glColor4f(1f, 1f, 1f, 1.0F);
-    drawItemStack(endLeft, 28, 40, mx, my);
-    drawItemStack(middle, 60, 40, mx, my);
-    drawItemStack(endRight, 100, 40, mx, my);
+    List<String> empty = Collections.emptyList();
+    drawItemStack(endLeft, 28, 40, mx, my, empty);
+    drawItemStack(middle, 60, 40, mx, my, empty);
+    drawItemStack(endRight, 100, 40, mx, my, empty);
     RenderHelper.enableGUIStandardItemLighting();
   }
 
-  protected void drawItemStack(ItemStack stack, int x, int y, int mx, int my) {
-    if (stack != null) {
-      RenderHelper.enableGUIStandardItemLighting();
-      GL11.glDisable(GL11.GL_BLEND);
-      GL11.glEnable(GL11.GL_DEPTH_TEST);
-      itemRender.renderItemAndEffectIntoGUI(fontRendererObj, this.mc.getTextureManager(), stack, x, y);
-      itemRender.renderItemOverlayIntoGUI(fontRendererObj, this.mc.getTextureManager(), stack, x, y);
-      GL11.glEnable(GL11.GL_BLEND);
-      RenderHelper.disableStandardItemLighting();
-      if (mx >= x + guiLeft && mx <= x + guiLeft + 16 && my >= y + guiTop && my <= y + guiTop + 16) {
-        drawHighlightRect(x, y);
-        tooltips.add(stack.getDisplayName());
-        tooltipX = mx - guiLeft;
-        tooltipY = my - guiTop;
-      }
-    }
-  }
-
-  protected void drawHighlightRect(int x, int y) {
-    GL11.glDisable(GL11.GL_LIGHTING);
-    GL11.glDisable(GL11.GL_DEPTH_TEST);
-    GL11.glColorMask(true, true, true, false);
-    this.drawGradientRect(x, y, x + 16, y + 16, -2130706433, -2130706433);
-    GL11.glColorMask(true, true, true, true);
-    GL11.glEnable(GL11.GL_LIGHTING);
-    GL11.glEnable(GL11.GL_DEPTH_TEST);
-  }
 }

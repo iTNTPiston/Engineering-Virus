@@ -2,13 +2,14 @@ package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
+import com.tntp.mnm.gui.marker.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.DirUtil;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSource {
+public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSource, ITileStructure {
   private static int BASE = 4, BOOST = 2, MAX = 1000;
   private int rate;
 
@@ -73,6 +74,11 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
   public void readFromNBT(NBTTagCompound tag) {
     super.readFromNBT(tag);
     rate = tag.getInteger("ek_rate");
+  }
+
+  @Override
+  public String getStructureGui() {
+    return "GuiStructureHeatCollectorFirewall";
   }
 
 }

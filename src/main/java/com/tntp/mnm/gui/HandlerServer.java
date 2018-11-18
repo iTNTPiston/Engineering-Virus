@@ -5,6 +5,7 @@ import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.gui.container.ContainerHeat;
 import com.tntp.mnm.gui.container.ContainerHeatPipe;
+import com.tntp.mnm.gui.container.ContainerStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.tileentity.STileHeatNode;
@@ -51,6 +52,8 @@ public class HandlerServer implements IGuiHandler {
         }
         return new ContainerHeatPipe(player.inventory, end0, end1);
       }
+    } else if (MNMGuis.getGui(ID).startsWith("GuiStructure")) {
+      return new ContainerStructure(player.inventory);
     }
     return null;
   }
