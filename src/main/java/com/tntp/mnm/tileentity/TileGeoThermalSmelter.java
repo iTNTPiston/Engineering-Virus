@@ -7,6 +7,7 @@ import com.tntp.mnm.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHeatSink {
@@ -26,14 +27,18 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {
       int nextProgress = 0;
+      int isWorking = 0;
       if (formed) {
         if (hasEnoughEK()) {
           if (canContinueSmelting()) {
             nextProgress = currentProgress + 1;
             setEK(getEK() - getRate());
+            isWorking = 8;
           }
         }
       }
+      int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & isWorking;
+      worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 3);
       if (currentProgress != nextProgress) {
         currentProgress = nextProgress;
         markDirty();
@@ -48,7 +53,7 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
   @Override
   public boolean isSinkSide(int side) {
     if (worldObj != null) {
-      return worldObj.getBlockMetadata(xCoord, yCoord, zCoord) == (side ^ 1);
+      return (worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & 7) == (side ^ 1);
     }
     return false;
   }
@@ -59,6 +64,7 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     formed = false;
     boosted = false;
     int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+    meta &= 7;
     ForgeDirection back = ForgeDirection.getOrientation(meta ^ 1);
     ForgeDirection side = ForgeDirection.getOrientation(7 - meta);
     Block mid = worldObj.getBlock(xCoord + back.offsetX, yCoord, zCoord + back.offsetZ);
@@ -191,6 +197,24 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
 
   public void setBoosted(boolean b) {
     boosted = b;
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    tag.setInteger("current_progress", currentProgress);
+    tag.setInteger("total_progress", totalProgress);
+    tag.setBoolean("boosted", boosted);
+    tag.setBoolean("formed", formed);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    currentProgress = tag.getInteger("current_progress");
+    totalProgress = tag.getInteger("total_progress");
+    boosted = tag.getBoolean("boosted");
+    formed = tag.getBoolean("formed");
   }
 
 }

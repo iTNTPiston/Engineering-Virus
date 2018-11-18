@@ -3,6 +3,7 @@ package com.tntp.mnm.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
+import com.tntp.mnm.gui.marker.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMItems;
 
@@ -15,12 +16,13 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public enum GuiTabType {
-  HEAT("mnm.gui.label.heat", 1f, 0.7f, 0.5f), HEAT_PIPE("mnm.gui.label.heat_pipe", 1f, 0.8f, 0.7f);
+  HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f);
   @SideOnly(Side.CLIENT)
   private static RenderItem itemRender;
   @SideOnly(Side.CLIENT)
@@ -34,7 +36,7 @@ public enum GuiTabType {
   private float b;
 
   GuiTabType(String label, float r, float g, float b) {
-    this.label = label;
+    this.label = "mnm.gui.label." + label;
     this.r = r;
     this.g = g;
     this.b = b;
@@ -46,9 +48,11 @@ public enum GuiTabType {
       return new ItemStack(MNMItems.itemWrench);
     case HEAT_PIPE:
       return new ItemStack(MNMBlocks.blockHeatPipe);
-
+    case STRUCTURE:
+      return new ItemStack(MNMItems.itemMeterStick);
+    default:
+      return new ItemStack(Items.apple);
     }
-    return null;
   }
 
   public static boolean isOnTab(int tabLocation, int mx, int my) {
@@ -78,6 +82,10 @@ public enum GuiTabType {
       if (block == MNMBlocks.blockHeatPipe)
         name = "GuiHeatPipe";
       break;
+    case STRUCTURE:
+      if (tile instanceof ITileStructure)
+        name = ((ITileStructure) tile).getStructureGui();
+      break;
     }
     return name;
   }
@@ -88,11 +96,16 @@ public enum GuiTabType {
   }
 
   @SideOnly(Side.CLIENT)
-  public void drawTab(GuiContainer gui, int tabLocation) {
+  public void drawTab(GuiContainer gui, int tabLocation, int mx, int my) {
 
     GL11.glColor4f(r, g, b, 1.0F);
     int tabX = 176 + tabLocation / 4;
     int tabY = (tabLocation & 3) * 28;
+
+    if (isOnTab(tabLocation, mx, my)) {
+      tabX -= 20;
+    }
+
     gui.drawTexturedModalRect(tabX, tabY, 176, 0, 28, 28);
     GL11.glColor4f(1f, 1f, 1f, 1.0F);
     ItemStack icon = getIconStack();

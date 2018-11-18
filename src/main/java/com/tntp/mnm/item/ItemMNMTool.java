@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemMNMTool extends SItem {
+public class ItemMNMTool extends SItemSpecialModel {
   // meterstick (heat pipe)
   // common wrench (machine progress, machine structure)
   // common screw driver(machine config)

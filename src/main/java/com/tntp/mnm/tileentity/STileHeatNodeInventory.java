@@ -5,6 +5,9 @@ import com.tntp.mnm.util.UniversalUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants.NBT;
 
 /**
  * Super class for GerThermalSmelter and HeatDistributor
@@ -101,6 +104,41 @@ public class STileHeatNodeInventory extends STileHeatNode implements ISidedInven
   @Override
   public boolean canExtractItem(int slot, ItemStack stack, int side) {
     return false;// EK tiles do not support automation
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    NBTTagList items = new NBTTagList();
+
+    for (int i = 0; i < inventory.length; ++i) {
+      if (inventory[i] != null) {
+        NBTTagCompound item = new NBTTagCompound();
+        item.setByte("Slot", (byte) i);
+        inventory[i].writeToNBT(item);
+        items.appendTag(item);
+      }
+    }
+
+    tag.setTag("Items", items);
+    tag.setInteger("inventory_size", inventory.length);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    NBTTagList items = tag.getTagList("Items", NBT.TAG_COMPOUND);
+    int size = tag.getInteger("inventory_size");
+    inventory = new ItemStack[size];
+
+    for (int i = 0; i < items.tagCount(); ++i) {
+      NBTTagCompound item = items.getCompoundTagAt(i);
+      int j = item.getByte("Slot") & 255;
+
+      if (j >= 0 && j < inventory.length) {
+        inventory[j] = ItemStack.loadItemStackFromNBT(item);
+      }
+    }
   }
 
 }

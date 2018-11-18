@@ -47,7 +47,7 @@ public class GuiMain extends GuiContainer {
     for (int i = 0; i < MAX_TABS; i++) {
       if (tabs[i] != null) {
         this.mc.getTextureManager().bindTexture(background);
-        tabs[i].drawTab(this, i);
+        tabs[i].drawTab(this, i, mx, my);
       }
     }
     RenderHelper.enableGUIStandardItemLighting();

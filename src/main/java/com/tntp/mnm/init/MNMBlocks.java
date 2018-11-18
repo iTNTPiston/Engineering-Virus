@@ -2,12 +2,15 @@ package com.tntp.mnm.init;
 
 import com.tntp.mnm.block.BlockAuxiliaryComputingUnit;
 import com.tntp.mnm.block.BlockCentralProcessor;
+import com.tntp.mnm.block.BlockChimney;
 import com.tntp.mnm.block.BlockFirewall;
+import com.tntp.mnm.block.BlockGeoThermalSmelter;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.block.BlockNetworkMainframe;
 import com.tntp.mnm.item.ItemBlockTooltip;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
+import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.util.DebugUtil;
 
@@ -33,6 +36,9 @@ public class MNMBlocks {
     GameRegistry.registerBlock(new BlockFirewall(), "blockFirewall");
     GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), ItemBlockTooltip.class, "blockHeatCollectorFirewall");
     GameRegistry.registerTileEntity(TileHeatCollectorFirewall.class, "tileHeatCollectorFirewall");
+    GameRegistry.registerBlock(new BlockGeoThermalSmelter(), "blockGeoThermalSmelter");
+    GameRegistry.registerTileEntity(TileGeoThermalSmelter.class, "tileGeoThermalSmelter");
+    GameRegistry.registerBlock(new BlockChimney(), "blockChimney");
     GameRegistry.registerBlock(new BlockHeatPipe(), "blockHeatPipe");
 
     GameRegistry.registerBlock(new BlockNetworkMainframe(false), "blockNetworkMainframeOff");
