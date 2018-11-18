@@ -7,6 +7,7 @@ import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.UniversalUtil;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
@@ -91,11 +92,11 @@ public class PipeRenderer extends WaveObjRenderer {
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-    GL11.glPushMatrix();
-    GL11.glEnable(GL11.GL_BLEND);
+    // GL11.glEnable(GL11.GL_BLEND);
+    // OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1,
+    // 0);
     render();
     renderExtensionFor(2, 3);
-    GL11.glPopMatrix();
   }
 
   public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,

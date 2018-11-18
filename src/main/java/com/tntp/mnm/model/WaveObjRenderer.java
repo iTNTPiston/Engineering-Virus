@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
@@ -34,6 +35,8 @@ public class WaveObjRenderer {
   }
 
   public void render() {
+    // OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1,
+    // 0);
     bindTexture();
     obj.renderAll();
   }
@@ -73,9 +76,7 @@ public class WaveObjRenderer {
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-    GL11.glPushMatrix();
     render();
-    GL11.glPopMatrix();
   }
 
   public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,

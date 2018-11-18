@@ -72,6 +72,8 @@ public class ItemRenderingHelper implements IItemRenderer {
   public void renderEntityItem(ItemStack stack, RenderBlocks render, EntityItem entity) {
     WaveObjRenderer obj = getRenderer(stack);
     GL11.glPushMatrix();
+    GL11.glRotatef(90, 0, 0, 1);
+    GL11.glTranslatef(1, 0, 0);
     obj.render();
     GL11.glPopMatrix();
   }
