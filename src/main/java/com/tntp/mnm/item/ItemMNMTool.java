@@ -30,6 +30,8 @@ public class ItemMNMTool extends SItemSpecialModel {
   public void setGuiTabsWithCapability(ItemStack stack, World world, int x, int y, int z, GuiMain gui, int cap) {
     int i = 0;
     for (GuiTabType tab : GuiTabType.values()) {
+      if (i >= 8)
+        break;
       int flag = tab.flag();
       if ((cap & flag) == flag) {
         String id = tab.getGuiString(stack, world, x, y, z);
