@@ -103,7 +103,7 @@ public enum GuiTabType {
     int tabY = (tabLocation & 3) * 28;
 
     if (isOnTab(tabLocation, mx, my)) {
-      tabX -= 20;
+      tabX -= 6;
     }
 
     gui.drawTexturedModalRect(tabX, tabY, 176, 0, 28, 28);
