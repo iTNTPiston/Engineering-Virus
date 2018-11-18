@@ -5,14 +5,19 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.init.MNMResources;
+import com.tntp.mnm.network.MNMNetwork;
+import com.tntp.mnm.network.MSPlayerGui;
 import com.tntp.mnm.util.LocalUtil;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 public class GuiMain extends GuiContainer {
   private static final ResourceLocation background = MNMResources.getResource("textures/guis/guiMain.png");
@@ -25,7 +30,11 @@ public class GuiMain extends GuiContainer {
   protected int tooltipY;
   protected List<String> tooltips;
 
-  public GuiMain(Container container, String title) {
+  protected int openGuiX;
+  protected int openGuiY;
+  protected int openGuiZ;
+
+  public GuiMain(Container container, String title, int x, int y, int z) {
     super(container);
     xSize = 176;
     ySize = 205;
@@ -33,6 +42,9 @@ public class GuiMain extends GuiContainer {
     tabGui = new String[MAX_TABS];
     tooltips = new ArrayList<String>();
     unlocalizedTitle = title;
+    openGuiX = x;
+    openGuiY = y;
+    openGuiZ = z;
   }
 
   public void setTabAt(int i, GuiTabType tab, String gui) {
@@ -115,7 +127,10 @@ public class GuiMain extends GuiContainer {
       if (tabs[i] == null)
         break;
       if (GuiTabType.isOnTab(i, x - guiLeft, y - guiTop)) {
-
+        World clientWorld = Minecraft.getMinecraft().theWorld;
+        String guiID = tabs[i].getGuiString(null, clientWorld, openGuiX, openGuiY, openGuiZ);
+        if (guiID != null)
+          MNMNetwork.network.sendToServer(new MSPlayerGui(MNMGuis.getGuiID(guiID), openGuiX, openGuiY, openGuiZ));
       }
     }
   }

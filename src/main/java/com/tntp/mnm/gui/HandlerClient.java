@@ -24,7 +24,7 @@ public class HandlerClient extends HandlerServer {
     TileEntity tile = world.getTileEntity(x, y, z);
     if (ID == MNMGuis.getGuiID("GuiHeat")) {
       if (tile instanceof IHeatNode) {
-        gui = new GuiHeat(player.inventory, (IHeatNode) tile);
+        gui = new GuiHeat(player.inventory, (IHeatNode) tile, x, y, z);
       }
     } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
       Block b = world.getBlock(x, y, z);
@@ -50,12 +50,12 @@ public class HandlerClient extends HandlerServer {
             end1 = new ItemStack(te.getBlockType());
           }
         }
-        gui = new GuiHeatPipe(new ContainerHeatPipe(player.inventory, end0, end1));
+        gui = new GuiHeatPipe(new ContainerHeatPipe(player.inventory, end0, end1), x, y, z);
       }
     } else if (ID == MNMGuis.getGuiID("GuiStructureHeatCollectorFirewall")) {
       if (tile instanceof TileHeatCollectorFirewall) {
         gui = new GuiStructureHeatCollectorFirewall(player.inventory,
-            ((TileHeatCollectorFirewall) tile).getInventoryName());
+            ((TileHeatCollectorFirewall) tile).getInventoryName(), x, y, z);
       }
     }
     if (gui != null) {

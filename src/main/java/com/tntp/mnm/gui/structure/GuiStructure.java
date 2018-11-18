@@ -28,8 +28,8 @@ public abstract class GuiStructure extends GuiMain {
     String tooltip;
   }
 
-  public GuiStructure(IInventory player, String title) {
-    super(new ContainerStructure(player), title);
+  public GuiStructure(IInventory player, String title, int x, int y, int z) {
+    super(new ContainerStructure(player), title, x, y, z);
     structure = new Structure[5][5][5];
     icons = new ArrayList<Structure>();
     setupStructure();

@@ -15,8 +15,8 @@ public class GuiHeat extends GuiMain {
 
   IHeatNode heatNode;
 
-  public GuiHeat(IInventory player, IHeatNode tile) {
-    super(new ContainerHeat(player, tile), tile.getInventoryName());
+  public GuiHeat(IInventory player, IHeatNode tile, int x, int y, int z) {
+    super(new ContainerHeat(player, tile), tile.getInventoryName(), x, y, z);
     heatNode = tile;
   }
 

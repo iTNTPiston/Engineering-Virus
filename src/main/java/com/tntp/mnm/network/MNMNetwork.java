@@ -16,7 +16,7 @@ public class MNMNetwork {
   public static void loadMessages(boolean clientSide) {
 
     // regMS all messages received on server side
-    // regMS(MSUnivMacPowerButton.class);
+    regMS(MSPlayerGui.class);
     if (clientSide) {
       // regMCC all messages received on client side
       // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());

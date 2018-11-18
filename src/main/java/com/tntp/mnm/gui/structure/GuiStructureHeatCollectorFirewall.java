@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 
 public class GuiStructureHeatCollectorFirewall extends GuiStructure {
 
-  public GuiStructureHeatCollectorFirewall(IInventory player, String title) {
-    super(player, title);
+  public GuiStructureHeatCollectorFirewall(IInventory player, String title, int x, int y, int z) {
+    super(player, title, x, y, z);
   }
 
   @Override

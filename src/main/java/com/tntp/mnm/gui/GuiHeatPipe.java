@@ -18,8 +18,8 @@ public class GuiHeatPipe extends GuiMain {
   private ItemStack middle;
   private ItemStack endRight;
 
-  public GuiHeatPipe(ContainerHeatPipe container) {
-    super(container, "mnm.gui.title.heat_pipe");
+  public GuiHeatPipe(ContainerHeatPipe container, int x, int y, int z) {
+    super(container, "mnm.gui.title.heat_pipe", x, y, z);
     endLeft = container.getNode1();
     endRight = container.getNode2();
     middle = new ItemStack(MNMBlocks.blockHeatPipe);
