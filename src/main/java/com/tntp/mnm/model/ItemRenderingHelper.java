@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -73,9 +74,14 @@ public class ItemRenderingHelper implements IItemRenderer {
     WaveObjRenderer obj = getRenderer(stack);
     GL11.glPushMatrix();
     GL11.glRotatef(90, 0, 0, 1);
-    GL11.glTranslatef(1, 0, 0);
+    GL11.glTranslatef(1 / 4f, 0, 0);
     obj.render();
     GL11.glPopMatrix();
+  }
+
+  public void renderThirdPersonItem(ItemStack stack, RenderBlocks render, EntityLiving entity) {
+    WaveObjRenderer obj = getRenderer(stack);
+    obj.render();
   }
 
 }
