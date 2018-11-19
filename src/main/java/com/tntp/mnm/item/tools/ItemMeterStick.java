@@ -6,7 +6,7 @@ import com.tntp.mnm.item.SItemTool;
 public class ItemMeterStick extends SItemTool {
 
   public ItemMeterStick() {
-    super("itemMeterStick");
+    super("itemMeterStick", GuiTabType.STRUCTURE);
   }
 
 }

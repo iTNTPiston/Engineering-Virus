@@ -35,6 +35,6 @@ public class GuiStructureHeatCollectorFirewall extends GuiStructure {
   }
 
   protected List<String> getMainTooltip(List<String> emptyList) {
-    return LocalUtil.localizeList("mnm.gui.struct.heat_collector.main");
+    return LocalUtil.localizeList("mnm.gui.struct.heat_collector.main_");
   }
 }
