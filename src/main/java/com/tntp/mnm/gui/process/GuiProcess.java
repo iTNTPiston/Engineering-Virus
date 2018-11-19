@@ -1,4 +1,6 @@
-package com.tntp.mnm.gui;
+package com.tntp.mnm.gui.process;
+
+import com.tntp.mnm.gui.SGui;
 
 import net.minecraft.inventory.Container;
 
