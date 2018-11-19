@@ -2,8 +2,8 @@ itemGroup.metalnetworkmainframe=Metal Network Mainframe
 tile.blockCentralProcessor.name=Central Processor
 tile.blockHeatCollectorFirewall.name=Firewall Heat Collector
 tile.blockHeatEngineFirewall.name=Firewall Heat Engine
-tile.blockHeatEngineFirewall.tooltip_0=§c10§r EK -> §a1§r MZ
-tile.blockHeatEngineFirewall.tooltip_1=Max §a2§r MZ/t §a3§r MZ/t
+tile.blockHeatEngineFirewall.tooltip_0=10 EK -> 1 MZ
+tile.blockHeatEngineFirewall.tooltip_1=Max 2 MZ/t 3 MZ/t
 tile.blockHeatEngineFirewall.tooltip_2=When surrounded by 3x1x3 Firewall
 
 mnm.gui.format.heat=Heat Stored: 
@@ -15,6 +15,14 @@ mnm.gui.label.heat=Heat
 
 mnm.gui.title.heat_pipe=Heat Pipe Connection
 
-mnm.gui.struct.heat_collector.main_0=§c4§r EK/t, §c+2§r EK/t for each
-mnm.gui.struct.heat_collector.main_1=Optional Firewall (Max 8)
+mnm.gui.struct.heat_collector.main_0=§74 EK/t, +2 EK/t for each
+mnm.gui.struct.heat_collector.main_1=§7Optional Firewall (Max 8)
 mnm.gui.struct.heat_collector.boost=§7Optional
+
+mnm.gui.struct.geo_thermal_smelter.main_0=§7Smelt up to 4 items together using EK
+mnm.gui.struct.geo_thermal_smelter.main_1=§7The second layer and the chimney is optional for speed-boost
+mnm.gui.struct.geo_thermal_smelter.main_2=§7Normal Speed: 400t at 20 EK/t
+mnm.gui.struct.geo_thermal_smelter.main_3=§7Boosted Speed: 240t at 40 EK/t
+
+mnm.gui.struct.geo_thermal_smelter.down_pipe=§7EK Input
+mnm.gui.struct.geo_thermal_smelter.top_pipe=§7Must be up-down

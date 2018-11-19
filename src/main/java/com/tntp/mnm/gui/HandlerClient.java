@@ -4,11 +4,13 @@ import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.gui.container.ContainerHeatPipe;
+import com.tntp.mnm.gui.structure.GuiStructureGeoThermalSmelter;
 import com.tntp.mnm.gui.structure.GuiStructureHeatCollectorFirewall;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.tileentity.STileHeatNode;
+import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 
 import net.minecraft.block.Block;
@@ -56,6 +58,11 @@ public class HandlerClient extends HandlerServer {
       if (tile instanceof TileHeatCollectorFirewall) {
         gui = new GuiStructureHeatCollectorFirewall(player.inventory,
             ((TileHeatCollectorFirewall) tile).getInventoryName(), x, y, z);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiStructureGeoThermalSmelter")) {
+      if (tile instanceof TileGeoThermalSmelter) {
+        gui = new GuiStructureGeoThermalSmelter(player.inventory, ((TileGeoThermalSmelter) tile).getInventoryName(), x,
+            y, z);
       }
     }
     if (gui != null) {

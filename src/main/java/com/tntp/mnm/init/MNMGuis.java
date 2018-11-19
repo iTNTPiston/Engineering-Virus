@@ -29,6 +29,7 @@ public class MNMGuis {
     assignGuiID("GuiHeat");
     assignGuiID("GuiHeatPipe");
     assignGuiID("GuiStructureHeatCollectorFirewall");
+    assignGuiID("GuiStructureGeoThermalSmelter");
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 
   }
