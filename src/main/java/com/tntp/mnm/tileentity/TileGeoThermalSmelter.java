@@ -37,8 +37,8 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
           }
         }
       }
-      int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & isWorking;
-      worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 3);
+      int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & (isWorking + 7);
+      worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
       if (currentProgress != nextProgress) {
         currentProgress = nextProgress;
         markDirty();
