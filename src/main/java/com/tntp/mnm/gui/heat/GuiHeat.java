@@ -1,16 +1,16 @@
-package com.tntp.mnm.gui;
+package com.tntp.mnm.gui.heat;
 
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
-import com.tntp.mnm.gui.container.ContainerHeat;
+import com.tntp.mnm.gui.SGui;
 import com.tntp.mnm.init.MNMResources;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiHeat extends GuiMain {
+public class GuiHeat extends SGui {
   private static final ResourceLocation foreground = MNMResources.getResource("textures/guis/guiHeat_overlay.png");
 
   IHeatNode heatNode;

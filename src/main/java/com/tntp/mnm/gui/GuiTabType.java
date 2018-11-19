@@ -3,7 +3,7 @@ package com.tntp.mnm.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
-import com.tntp.mnm.gui.marker.ITileStructure;
+import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMItems;
 

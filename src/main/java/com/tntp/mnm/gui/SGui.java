@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class GuiMain extends GuiContainer {
+public class SGui extends GuiContainer {
   private static final ResourceLocation background = MNMResources.getResource("textures/guis/guiMain.png");
   private static final int MAX_TABS = 8;
   private String unlocalizedTitle;
@@ -34,7 +34,7 @@ public class GuiMain extends GuiContainer {
   protected int openGuiY;
   protected int openGuiZ;
 
-  public GuiMain(Container container, String title, int x, int y, int z) {
+  public SGui(Container container, String title, int x, int y, int z) {
     super(container);
     xSize = 176;
     ySize = 205;

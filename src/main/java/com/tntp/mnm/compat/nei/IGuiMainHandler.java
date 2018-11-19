@@ -3,7 +3,7 @@ package com.tntp.mnm.compat.nei;
 import java.util.Collections;
 import java.util.List;
 
-import com.tntp.mnm.gui.GuiMain;
+import com.tntp.mnm.gui.SGui;
 
 import codechicken.nei.VisiblityData;
 import codechicken.nei.api.INEIGuiHandler;
@@ -35,8 +35,8 @@ public class IGuiMainHandler implements INEIGuiHandler {
 
   @Override
   public boolean hideItemPanelSlot(GuiContainer gui, int x, int y, int w, int h) {
-    if (gui instanceof GuiMain) {
-      return ((GuiMain) gui).hideItemPanel(x, y, w, h);
+    if (gui instanceof SGui) {
+      return ((SGui) gui).hideItemPanel(x, y, w, h);
     }
     return false;
   }

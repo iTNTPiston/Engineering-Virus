@@ -2,7 +2,7 @@ package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
-import com.tntp.mnm.gui.marker.ITileStructure;
+import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.DirUtil;
 

@@ -7,8 +7,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tntp.mnm.gui.GuiMain;
-import com.tntp.mnm.gui.container.ContainerStructure;
+import com.tntp.mnm.gui.SGui;
 import com.tntp.mnm.init.MNMResources;
 
 import net.minecraft.client.renderer.RenderHelper;
@@ -16,7 +15,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class GuiStructure extends GuiMain {
+public abstract class GuiStructure extends SGui {
   private static final ResourceLocation foreground = MNMResources.getResource("textures/guis/guiStructure_overlay.png");
 
   private Structure[][][] structure;

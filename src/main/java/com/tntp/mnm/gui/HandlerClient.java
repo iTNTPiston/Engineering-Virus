@@ -3,7 +3,9 @@ package com.tntp.mnm.gui;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
-import com.tntp.mnm.gui.container.ContainerHeatPipe;
+import com.tntp.mnm.gui.heat.ContainerHeatPipe;
+import com.tntp.mnm.gui.heat.GuiHeat;
+import com.tntp.mnm.gui.heat.GuiHeatPipe;
 import com.tntp.mnm.gui.structure.GuiStructureGeoThermalSmelter;
 import com.tntp.mnm.gui.structure.GuiStructureHeatCollectorFirewall;
 import com.tntp.mnm.init.MNMBlocks;
@@ -22,7 +24,7 @@ import net.minecraft.world.World;
 public class HandlerClient extends HandlerServer {
   @Override
   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    GuiMain gui = null;
+    SGui gui = null;
     TileEntity tile = world.getTileEntity(x, y, z);
     if (ID == MNMGuis.getGuiID("GuiHeat")) {
       if (tile instanceof IHeatNode) {

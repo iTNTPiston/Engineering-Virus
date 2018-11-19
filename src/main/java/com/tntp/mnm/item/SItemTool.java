@@ -1,7 +1,7 @@
 package com.tntp.mnm.item;
 
 import com.tntp.mnm.core.MNMMod;
-import com.tntp.mnm.gui.GuiMain;
+import com.tntp.mnm.gui.SGui;
 import com.tntp.mnm.gui.GuiTabType;
 import com.tntp.mnm.init.MNMGuis;
 
@@ -27,7 +27,7 @@ public class SItemTool extends SItemSpecialModel {
     }
   }
 
-  public void setGuiTabsWithCapability(ItemStack stack, World world, int x, int y, int z, GuiMain gui, int cap) {
+  public void setGuiTabsWithCapability(ItemStack stack, World world, int x, int y, int z, SGui gui, int cap) {
     int i = 0;
     for (GuiTabType tab : GuiTabType.values()) {
       if (i >= 8)

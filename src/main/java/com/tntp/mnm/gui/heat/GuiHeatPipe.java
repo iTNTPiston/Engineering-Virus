@@ -1,4 +1,4 @@
-package com.tntp.mnm.gui;
+package com.tntp.mnm.gui.heat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,14 +6,14 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tntp.mnm.gui.container.ContainerHeatPipe;
+import com.tntp.mnm.gui.SGui;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 
-public class GuiHeatPipe extends GuiMain {
+public class GuiHeatPipe extends SGui {
   private ItemStack endLeft;
   private ItemStack middle;
   private ItemStack endRight;
