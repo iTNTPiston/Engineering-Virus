@@ -8,6 +8,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public class MSPlayerGui extends MAInt4<MSPlayerGui> {
 
+  public MSPlayerGui() {
+    super(0, 0, 0, 0);
+  }
+
   public MSPlayerGui(int gui, int x, int y, int z) {
     super(gui, x, y, z);
   }
@@ -15,7 +19,8 @@ public class MSPlayerGui extends MAInt4<MSPlayerGui> {
   @Override
   public IMessage onMessage(MSPlayerGui message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    player.openGui(MNMMod.MODID, getI1(), player.getEntityWorld(), getI2(), getI3(), getI4());
+    player.openGui(MNMMod.MODID, message.getI1(), player.getEntityWorld(), message.getI2(), message.getI3(),
+        message.getI4());
     return null;
   }
 

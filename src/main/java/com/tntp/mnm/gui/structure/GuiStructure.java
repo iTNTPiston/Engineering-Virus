@@ -11,6 +11,7 @@ import com.tntp.mnm.gui.GuiMain;
 import com.tntp.mnm.gui.container.ContainerStructure;
 import com.tntp.mnm.init.MNMResources;
 
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -36,6 +37,10 @@ public abstract class GuiStructure extends GuiMain {
   }
 
   public abstract void setupStructure();
+
+  protected void setMainStack(ItemStack s) {
+    stack = s;
+  }
 
   protected void setStructureAt(Structure s, int x, int y, int z) {
     structure[x][y][z] = s;
@@ -67,24 +72,36 @@ public abstract class GuiStructure extends GuiMain {
           int drawX = 52 + y * 23 + x * 4;
           int drawY = 25 + z * 4;
           GL11.glColor4f(s.r, s.g, s.b, 1);
+          GL11.glDisable(GL11.GL_TEXTURE_2D);
           this.drawTexturedModalRect(drawX, drawY, 194, 0, 3, 3);
+          GL11.glEnable(GL11.GL_TEXTURE_2D);
         }
       }
     }
     int drawX = 7;
     int drawY = 53;
     List<String> emptyList = Collections.emptyList();
+
     for (Structure s : icons) {
+
       GL11.glColor4f(s.r, s.g, s.b, 1);
-      this.drawTexturedModalRect(drawX, drawY, 174, 18, 18, 18);
+      GL11.glDisable(GL11.GL_TEXTURE_2D);
+      this.drawTexturedModalRect(drawX, drawY, 176, 18, 18, 18);
+      GL11.glEnable(GL11.GL_TEXTURE_2D);
       GL11.glColor4f(1, 1, 1, 1);
-      this.drawTexturedModalRect(drawX, drawY, 174, 0, 18, 18);
+      this.drawTexturedModalRect(drawX, drawY, 176, 0, 18, 18);
+      drawX += 18;
+    }
+
+    drawX = 7;
+    for (Structure s : icons) {
       this.drawItemStack(s.iconStack, drawX + 1, drawY + 1, mx, my,
           s.tooltip == null ? emptyList : Arrays.asList(s.tooltip));
       drawX += 18;
     }
 
     this.drawItemStack(stack, 19, 26, mx, my, getMainTooltip(emptyList));
+    RenderHelper.enableGUIStandardItemLighting();
 
   }
 

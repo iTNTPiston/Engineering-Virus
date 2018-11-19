@@ -129,8 +129,9 @@ public class GuiMain extends GuiContainer {
       if (GuiTabType.isOnTab(i, x - guiLeft, y - guiTop)) {
         World clientWorld = Minecraft.getMinecraft().theWorld;
         String guiID = tabs[i].getGuiString(null, clientWorld, openGuiX, openGuiY, openGuiZ);
+        int id = MNMGuis.getGuiID(guiID);
         if (guiID != null)
-          MNMNetwork.network.sendToServer(new MSPlayerGui(MNMGuis.getGuiID(guiID), openGuiX, openGuiY, openGuiZ));
+          MNMNetwork.network.sendToServer(new MSPlayerGui(id, openGuiX, openGuiY, openGuiZ));
       }
     }
   }
