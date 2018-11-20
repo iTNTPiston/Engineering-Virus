@@ -27,11 +27,18 @@ public class GuiProcess extends SGui {
     super.drawGuiContainerForegroundLayer(mx, my);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(foreground);
-    this.drawTexturedModalRect(0, 0, 0, 0, xSize, 117);
 
     ContainerProcess container = (ContainerProcess) inventorySlots;
     double ratio = (double) container.getTile().getCurrentProgress() / container.getTile().getTotalProgress();
     this.drawTexturedModalRect(progressX, progressY, xSize, 0, (int) (ratio * 21), 17);
+  }
+
+  @Override
+  protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    super.drawGuiContainerBackgroundLayer(p_146976_1_, p_146976_2_, p_146976_3_);
+    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    this.mc.getTextureManager().bindTexture(foreground);
+    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, 117);
   }
 
 }
