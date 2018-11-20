@@ -12,6 +12,7 @@ public abstract class ContainerProcess extends SContainer {
 
   public ContainerProcess(IInventory playerInventory, ITileProcess tile) {
     super(playerInventory, tile.getSizeInventory());
+    this.tile = tile;
   }
 
   public abstract void setupMachineSlots();
