@@ -5,6 +5,7 @@ import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.ItemUtil;
+import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -27,31 +28,50 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
 
   public void updateEntity() {
     super.updateEntity();
-    if (worldObj != null && !worldObj.isRemote) {
-      int nextProgress = 0;
-      int isWorking = 7;
-      if (formed) {
-        if (hasEnoughEK()) {
-          if (canContinueSmelting()) {
-            totalProgress = getTotal();
-            nextProgress = currentProgress + 1;
-            System.out.println(nextProgress);
-            setEK(getEK() - getRate());
-            isWorking = 15;
+    if (worldObj != null) {
+      if (!worldObj.isRemote) {
+        int nextProgress = 0;
+        int isWorking = 0;
+        if (formed) {
+          if (hasEnoughEK()) {
+            if (canContinueSmelting()) {
+              totalProgress = getTotal();
+              nextProgress = currentProgress + 1;
+              setEK(getEK() - getRate());
+              isWorking = 8;
+            }
           }
         }
-      }
-      int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & isWorking;
-      worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
-      if (currentProgress != nextProgress) {
-        currentProgress = nextProgress;
-        markDirty();
-      }
-      if (currentProgress == totalProgress) {
-        currentProgress = 0;
-        smeltAll();
+
+        int meta = (worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & 7) + isWorking;
+        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
+        if (currentProgress != nextProgress) {
+          currentProgress = nextProgress;
+          markDirty();
+        }
+        if (currentProgress == totalProgress) {
+          currentProgress = 0;
+          smeltAll();
+        }
+      } else {
+        if ((worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & 8) == 8)
+          if (worldObj.getBlock(xCoord, yCoord + 1, zCoord) == MNMBlocks.blockChimney)
+            if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == MNMBlocks.blockHeatPipe)
+              if (worldObj.getBlockMetadata(xCoord, yCoord + 2, zCoord) == 1)
+                if (worldObj.getBlock(xCoord, yCoord + 3, zCoord).isAir(worldObj, xCoord, yCoord + 3, zCoord)) {
+                  // spawn particles
+                  double x = xCoord + RandomUtil.RAND.nextFloat() * 0.6 + 0.2;
+                  double z = zCoord + RandomUtil.RAND.nextFloat() * 0.6 + 0.2;
+                  double y = yCoord + 3 + RandomUtil.RAND.nextFloat() * 0.5;
+                  double vx = RandomUtil.RAND.nextFloat() * 0.1 - 0.05;
+                  double vz = RandomUtil.RAND.nextFloat() * 0.1 - 0.05;
+                  double vy = RandomUtil.RAND.nextFloat() * 0.1;
+                  worldObj.spawnParticle("smoke", x, y, z, vx, vy, vz);
+                }
+
       }
     }
+
   }
 
   @Override
@@ -109,7 +129,8 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     }
     if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == MNMBlocks.blockHeatPipe) {
       if (worldObj.getBlockMetadata(xCoord, yCoord + 2, zCoord) == 1) {
-        boosted = true;// must be up-down direction
+        if (worldObj.getBlock(xCoord, yCoord + 3, zCoord).isAir(worldObj, xCoord, yCoord + 3, zCoord))
+          boosted = true;// must be up-down direction & not obstructed
       }
     }
   }
