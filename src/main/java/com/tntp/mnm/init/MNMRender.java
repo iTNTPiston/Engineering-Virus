@@ -35,6 +35,9 @@ public class MNMRender {
     i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_MS"));
     itemRender.bindWaveObj(MNMItems.itemMeterStick, i);
 
+    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_CW"));
+    itemRender.bindWaveObj(MNMItems.itemCommonWrench, i);
+
   }
 
   public static WaveObjRenderer getWaveObjRenderer(String name) {
