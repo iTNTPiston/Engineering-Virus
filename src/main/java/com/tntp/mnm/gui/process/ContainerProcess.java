@@ -37,7 +37,7 @@ public abstract class ContainerProcess extends SContainer {
     for (Object obj : this.crafters) {
       ICrafting c = (ICrafting) obj;
       if (lastCurrent != current) {
-        c.sendProgressBarUpdate(this, 1, current);
+        c.sendProgressBarUpdate(this, 0, current);
       }
       if (lastTotal != total) {
         c.sendProgressBarUpdate(this, 1, total);

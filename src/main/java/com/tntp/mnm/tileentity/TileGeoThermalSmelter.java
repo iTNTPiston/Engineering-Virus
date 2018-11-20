@@ -29,17 +29,19 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {
       int nextProgress = 0;
-      int isWorking = 0;
+      int isWorking = 7;
       if (formed) {
         if (hasEnoughEK()) {
           if (canContinueSmelting()) {
+            totalProgress = getTotal();
             nextProgress = currentProgress + 1;
+            System.out.println(nextProgress);
             setEK(getEK() - getRate());
-            isWorking = 8;
+            isWorking = 15;
           }
         }
       }
-      int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & (isWorking + 7);
+      int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & isWorking;
       worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
       if (currentProgress != nextProgress) {
         currentProgress = nextProgress;
@@ -110,11 +112,14 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
         boosted = true;// must be up-down direction
       }
     }
-    totalProgress = boosted ? BOOST_TIME : NORMAL_TIME;
   }
 
   private boolean hasEnoughEK() {
     return getEK() >= getRate();
+  }
+
+  private int getTotal() {
+    return boosted ? BOOST_TIME : NORMAL_TIME;
   }
 
   private int getRate() {
