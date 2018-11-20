@@ -11,11 +11,9 @@ public abstract class ContainerProcess extends SContainer {
   private int lastCurrent;
 
   public ContainerProcess(IInventory playerInventory, ITileProcess tile) {
-    super(playerInventory, tile.getSizeInventory());
+    super(playerInventory, tile.getSizeInventory(), tile);
     this.tile = tile;
   }
-
-  public abstract void setupMachineSlots();
 
   @Override
   public void addCraftingToCrafters(ICrafting craft) {

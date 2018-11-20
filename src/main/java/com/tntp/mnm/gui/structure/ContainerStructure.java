@@ -7,11 +7,11 @@ import net.minecraft.inventory.IInventory;
 public class ContainerStructure extends SContainer {
 
   public ContainerStructure(IInventory playerInventory) {
-    super(playerInventory, 0);
+    super(playerInventory, 0, null);
   }
 
   @Override
-  public void setupMachineSlots() {
+  public void setupMachineSlots(IInventory i) {
   }
 
 }

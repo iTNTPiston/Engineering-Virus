@@ -10,7 +10,7 @@ public class ContainerProcessGeoThermalSmelter extends ContainerProcess {
   }
 
   @Override
-  public void setupMachineSlots() {
+  public void setupMachineSlots(IInventory tile) {
     int x = 26;
     int y = 49;
     for (int i = 0; i < 2; i++) {

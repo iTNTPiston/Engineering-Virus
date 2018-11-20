@@ -12,12 +12,12 @@ public class ContainerHeat extends SContainer {
   private int lastMaxEK;
 
   public ContainerHeat(IInventory playerInventory, IHeatNode tile) {
-    super(playerInventory, 0);
+    super(playerInventory, 0, null);
     this.tile = tile;
   }
 
   @Override
-  public void setupMachineSlots() {
+  public void setupMachineSlots(IInventory i) {
   }
 
   public void addCraftingToCrafters(ICrafting craft) {

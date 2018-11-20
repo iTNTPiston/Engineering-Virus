@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 public abstract class SContainer extends Container {
   private int machineSlots;
 
-  public SContainer(IInventory playerInventory, int slots) {
+  public SContainer(IInventory playerInventory, int slots, IInventory machine) {
     machineSlots = slots;
-    this.setupMachineSlots();
+    this.setupMachineSlots(machine);
     for (int k = 0; k < 3; k++) {
       for (int j = 0; j < 9; j++) {
         this.addSlotToContainer(new Slot(playerInventory, j + 9 + k * 9, 8 + j * 18, 123 + k * 18));
@@ -22,7 +22,7 @@ public abstract class SContainer extends Container {
     }
   }
 
-  public abstract void setupMachineSlots();
+  public abstract void setupMachineSlots(IInventory machine);
 
   @Override
   public boolean canInteractWith(EntityPlayer player) {

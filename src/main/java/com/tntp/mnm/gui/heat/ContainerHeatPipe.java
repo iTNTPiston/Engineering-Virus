@@ -10,7 +10,7 @@ public class ContainerHeatPipe extends SContainer {
   private ItemStack node2;
 
   public ContainerHeatPipe(IInventory playerInventory, ItemStack node1, ItemStack node2) {
-    super(playerInventory, 0);
+    super(playerInventory, 0, null);
     this.node1 = node1;
     this.node2 = node2;
   }
@@ -24,7 +24,7 @@ public class ContainerHeatPipe extends SContainer {
   }
 
   @Override
-  public void setupMachineSlots() {
+  public void setupMachineSlots(IInventory i) {
   }
 
 }
