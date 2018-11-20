@@ -11,6 +11,7 @@ public abstract class SContainer extends Container {
 
   public SContainer(IInventory playerInventory, int slots) {
     machineSlots = slots;
+    this.setupMachineSlots();
     for (int k = 0; k < 3; k++) {
       for (int j = 0; j < 9; j++) {
         this.addSlotToContainer(new Slot(playerInventory, j + 9 + k * 9, 8 + j * 18, 123 + k * 18));
