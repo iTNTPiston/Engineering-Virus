@@ -3,6 +3,7 @@ package com.tntp.mnm.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
+import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMItems;
@@ -22,7 +23,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public enum GuiTabType {
-  HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f);
+  HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
+  PROCESS("process", 1f, 1f, 0.8f);
   @SideOnly(Side.CLIENT)
   private static RenderItem itemRender;
   @SideOnly(Side.CLIENT)
@@ -50,6 +52,8 @@ public enum GuiTabType {
       return new ItemStack(MNMBlocks.blockHeatPipe);
     case STRUCTURE:
       return new ItemStack(MNMItems.itemMeterStick);
+    case PROCESS:
+      return new ItemStack(MNMItems.itemCommonWrench);
     default:
       return new ItemStack(Items.apple);
     }
@@ -85,6 +89,11 @@ public enum GuiTabType {
     case STRUCTURE:
       if (tile instanceof ITileStructure)
         name = ((ITileStructure) tile).getStructureGui();
+      break;
+    case PROCESS:
+      if (tile instanceof ITileProcess) {
+        name = ((ITileProcess) tile).getProcessGui();
+      }
       break;
     }
     return name;

@@ -1,6 +1,7 @@
 package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.api.ek.IHeatSink;
+import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.ItemUtil;
@@ -11,7 +12,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHeatSink, ITileStructure {
+public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHeatSink, ITileStructure, ITileProcess {
   private static final int MAX = 1000, NORMAL_RATE = 20, BOOST_RATE = 40, NORMAL_TIME = 400, BOOST_TIME = 240;
   private int totalProgress;
   private int currentProgress;
@@ -221,6 +222,11 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
   @Override
   public String getStructureGui() {
     return "GuiStructureGeoThermalSmelter";
+  }
+
+  @Override
+  public String getProcessGui() {
+    return "GuiProcessGeoThermalSmelter";
   }
 
 }

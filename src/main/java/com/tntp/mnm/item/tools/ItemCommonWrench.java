@@ -6,7 +6,7 @@ import com.tntp.mnm.item.SItemTool;
 public class ItemCommonWrench extends SItemTool {
 
   public ItemCommonWrench() {
-    super("itemCommonWrench");
+    super("itemCommonWrench", GuiTabType.PROCESS);
   }
 
 }

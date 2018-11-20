@@ -48,4 +48,8 @@ public abstract class ContainerProcess extends SContainer {
     lastTotal = total;
   }
 
+  public ITileProcess getTile() {
+    return tile;
+  }
+
 }

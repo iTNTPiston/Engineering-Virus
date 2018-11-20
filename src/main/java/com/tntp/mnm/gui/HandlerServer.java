@@ -5,6 +5,8 @@ import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.gui.heat.ContainerHeat;
 import com.tntp.mnm.gui.heat.ContainerHeatPipe;
+import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
+import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ContainerStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
@@ -51,6 +53,11 @@ public class HandlerServer implements IGuiHandler {
           }
         }
         return new ContainerHeatPipe(player.inventory, end0, end1);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiProcessGeoThermalSmelter")) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof ITileProcess) {
+        return new ContainerProcessGeoThermalSmelter(player.inventory, (ITileProcess) tile);
       }
     } else if (MNMGuis.getGui(ID).startsWith("GuiStructure")) {
       return new ContainerStructure(player.inventory);
