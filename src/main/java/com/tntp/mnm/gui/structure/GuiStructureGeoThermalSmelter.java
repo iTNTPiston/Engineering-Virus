@@ -17,6 +17,7 @@ public class GuiStructureGeoThermalSmelter extends GuiStructure {
   @Override
   public void setupStructure() {
     ItemStack mainStack = new ItemStack(MNMBlocks.blockGeoThermalSmelter);
+    setMainStack(mainStack);
     Structure smelter = newStructure(mainStack, 1f, 0.2f, 0.2f, null);
     icons.add(smelter);
     Structure firewall = newStructure(new ItemStack(MNMBlocks.blockFirewall), 1f, 0.8f, 0.2f, null);

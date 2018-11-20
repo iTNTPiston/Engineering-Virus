@@ -25,4 +25,4 @@ mnm.gui.struct.geo_thermal_smelter.main_2=§7Normal Speed: 400t at 20 EK/t
 mnm.gui.struct.geo_thermal_smelter.main_3=§7Boosted Speed: 240t at 40 EK/t
 
 mnm.gui.struct.geo_thermal_smelter.down_pipe=§7EK Input
-mnm.gui.struct.geo_thermal_smelter.top_pipe=§7Must be up-down
+mnm.gui.struct.geo_thermal_smelter.top_pipe=§7Must be up-down & unobstructed
