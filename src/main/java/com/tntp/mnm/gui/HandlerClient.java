@@ -36,7 +36,7 @@ public class HandlerClient extends HandlerServer {
       }
     } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
       Block b = world.getBlock(x, y, z);
-      if (b == MNMBlocks.blockHeatPipe) {
+      if (b == MNMBlocks.heatPipe) {
         int sides = BlockHeatPipe.metaToSide(world.getBlockMetadata(x, y, z));
         int side0 = sides >> 4;
         int side1 = sides & 15;

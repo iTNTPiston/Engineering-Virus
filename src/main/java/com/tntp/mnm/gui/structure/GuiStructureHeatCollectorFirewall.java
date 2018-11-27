@@ -16,11 +16,11 @@ public class GuiStructureHeatCollectorFirewall extends GuiStructure {
 
   @Override
   public void setupStructure() {
-    ItemStack hc = new ItemStack(MNMBlocks.blockHeatCollectorFirewall);
+    ItemStack hc = new ItemStack(MNMBlocks.heatCollectorFirewall);
     setMainStack(hc);
     Structure heatCollector = this.newStructure(hc, 1f, 0.2f, 0.2f, null);
     icons.add(heatCollector);
-    Structure firewall = this.newStructure(new ItemStack(MNMBlocks.blockFirewall), 1f, 1f, 0.2f,
+    Structure firewall = this.newStructure(new ItemStack(MNMBlocks.firewall), 1f, 1f, 0.2f,
         LocalUtil.localize("mnm.gui.struct.heat_collector.boost"));
     icons.add(firewall);
     for (int x = 1; x <= 3; x++) {

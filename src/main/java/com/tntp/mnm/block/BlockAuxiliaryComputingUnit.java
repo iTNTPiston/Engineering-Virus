@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 public class BlockAuxiliaryComputingUnit extends SBlockModelSpecial {
 
   public BlockAuxiliaryComputingUnit() {
-    super(Material.iron, "blockAuxiliaryComputingUnit");
+    super(Material.iron, "auxiliaryComputingUnit");
   }
 
   public boolean renderAsNormalBlock() {

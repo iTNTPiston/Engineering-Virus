@@ -17,26 +17,26 @@ public class MNMRender {
     BlockRenderingHelper simple = new BlockRenderingHelper();
 
     int i = simple.registerWaveObj(getWaveObjRenderer("MNM_CP"));
-    simple.bindWaveObj(MNMBlocks.blockCentralProcessor, 0, i);
+    simple.bindWaveObj(MNMBlocks.centralProcessor, 0, i);
 
     i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
-    simple.bindWaveObj(MNMBlocks.blockAuxiliaryComputingUnit, 0, i);
+    simple.bindWaveObj(MNMBlocks.auxiliaryComputingUnit, 0, i);
 
     WavefrontObject heatPipe = getWaveObj("MNM_HP");
     WavefrontObject heatPipeExt = getWaveObj("MNM_HP_EXT");
     ResourceLocation heatPipeTex = getTexture("MNM_HP");
     PipeRenderer heatPipeRender = new PipeRenderer(heatPipe, heatPipeExt, heatPipeTex);
     i = simple.registerWaveObj(heatPipeRender);
-    simple.bindWaveObj(MNMBlocks.blockHeatPipe, 0, i);
+    simple.bindWaveObj(MNMBlocks.heatPipe, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 
     ItemRenderingHelper itemRender = ItemRenderingHelper.instance;
     i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_MS"));
-    itemRender.bindWaveObj(MNMItems.itemMeterStick, i);
+    itemRender.bindWaveObj(MNMItems.meterStick, i);
 
     i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_CW"));
-    itemRender.bindWaveObj(MNMItems.itemCommonWrench, i);
+    itemRender.bindWaveObj(MNMItems.commonWrench, i);
 
   }
 

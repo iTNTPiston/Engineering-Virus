@@ -42,8 +42,8 @@ public class ItemToolBag extends SItem {
   @SideOnly(Side.CLIENT)
   public void registerIcons(IIconRegister reg) {
     super.registerIcons(reg);
-    left = reg.registerIcon(MNMMod.MODID + ":itemArrowLeft");
-    right = reg.registerIcon(MNMMod.MODID + ":itemArrowRight");
+    left = reg.registerIcon(MNMMod.MODID + ":arrowLeft");
+    right = reg.registerIcon(MNMMod.MODID + ":arrowRight");
 
   }
 

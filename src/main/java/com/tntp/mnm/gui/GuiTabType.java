@@ -47,13 +47,13 @@ public enum GuiTabType {
   public ItemStack getIconStack() {
     switch (this) {
     case HEAT:
-      return new ItemStack(MNMItems.itemWrench);
+      return new ItemStack(MNMItems.wrench);
     case HEAT_PIPE:
-      return new ItemStack(MNMBlocks.blockHeatPipe);
+      return new ItemStack(MNMBlocks.heatPipe);
     case STRUCTURE:
-      return new ItemStack(MNMItems.itemMeterStick);
+      return new ItemStack(MNMItems.meterStick);
     case PROCESS:
-      return new ItemStack(MNMItems.itemCommonWrench);
+      return new ItemStack(MNMItems.commonWrench);
     default:
       return new ItemStack(Items.apple);
     }
@@ -83,7 +83,7 @@ public enum GuiTabType {
         name = "GuiHeat";
       break;
     case HEAT_PIPE:
-      if (block == MNMBlocks.blockHeatPipe)
+      if (block == MNMBlocks.heatPipe)
         name = "GuiHeatPipe";
       break;
     case STRUCTURE:

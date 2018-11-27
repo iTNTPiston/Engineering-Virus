@@ -55,8 +55,8 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
         }
       } else {
         if ((worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & 8) == 8)
-          if (worldObj.getBlock(xCoord, yCoord + 1, zCoord) == MNMBlocks.blockChimney)
-            if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == MNMBlocks.blockHeatPipe)
+          if (worldObj.getBlock(xCoord, yCoord + 1, zCoord) == MNMBlocks.chimney)
+            if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == MNMBlocks.heatPipe)
               if (worldObj.getBlockMetadata(xCoord, yCoord + 2, zCoord) == 1)
                 if (worldObj.getBlock(xCoord, yCoord + 3, zCoord).isAir(worldObj, xCoord, yCoord + 3, zCoord)) {
                   // spawn particles
@@ -92,10 +92,10 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     ForgeDirection back = ForgeDirection.getOrientation(meta ^ 1);
     ForgeDirection side = ForgeDirection.getOrientation(7 - meta);
     Block mid = worldObj.getBlock(xCoord + back.offsetX, yCoord, zCoord + back.offsetZ);
-    if (mid != MNMBlocks.blockHeatPipe)
+    if (mid != MNMBlocks.heatPipe)
       return;
     Block back2 = worldObj.getBlock(xCoord + back.offsetX * 2, yCoord, zCoord + back.offsetZ * 2);
-    if (back2 != MNMBlocks.blockFirewall)
+    if (back2 != MNMBlocks.firewall)
       return;
     int offX = Math.abs(side.offsetX);
     int offZ = Math.abs(side.offsetZ);// one of these is 0
@@ -103,7 +103,7 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     for (int xx = xCoord - offX; xx <= xCoord + offX; xx += 2 * offX) {
       for (int zz = zCoord - offZ; zz <= zCoord + offZ; zz += 2 * offZ) {
         for (int i = 0; i < 2; i++) {
-          if (worldObj.getBlock(xx + back.offsetX * i, yCoord, zz + back.offsetZ * i) != MNMBlocks.blockFirewall)
+          if (worldObj.getBlock(xx + back.offsetX * i, yCoord, zz + back.offsetZ * i) != MNMBlocks.firewall)
             return;
         }
         if (offZ == 0)
@@ -117,7 +117,7 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
     for (int xx = xCoord - offX; xx <= xCoord + offX; xx += offX) {
       for (int zz = zCoord - offZ; zz <= zCoord + offZ; zz += offZ) {
         for (int i = 0; i < 2; i++) {
-          Block type = (xx == xCoord && zz == zCoord && i == 0) ? MNMBlocks.blockChimney : MNMBlocks.blockFirewall;
+          Block type = (xx == xCoord && zz == zCoord && i == 0) ? MNMBlocks.chimney : MNMBlocks.firewall;
           if (worldObj.getBlock(xx + back.offsetX * i, yy, zz + back.offsetZ * i) != type)
             return;
         }
@@ -127,7 +127,7 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
       if (offX == 0)
         break;
     }
-    if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == MNMBlocks.blockHeatPipe) {
+    if (worldObj.getBlock(xCoord, yCoord + 2, zCoord) == MNMBlocks.heatPipe) {
       if (worldObj.getBlockMetadata(xCoord, yCoord + 2, zCoord) == 1) {
         if (worldObj.getBlock(xCoord, yCoord + 3, zCoord).isAir(worldObj, xCoord, yCoord + 3, zCoord))
           boosted = true;// must be up-down direction & not obstructed

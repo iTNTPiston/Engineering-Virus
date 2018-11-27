@@ -115,7 +115,7 @@ public class PipeRenderer extends WaveObjRenderer {
   }
 
   public int[] getSideCodeFromBlock(Block block, IBlockAccess world, int x, int y, int z) {
-    if (block == MNMBlocks.blockHeatPipe) {
+    if (block == MNMBlocks.heatPipe) {
       int s = BlockHeatPipe.metaToSide(world.getBlockMetadata(x, y, z));
       if (s != 0)
         return new int[] { s >> 4, s & 15 };

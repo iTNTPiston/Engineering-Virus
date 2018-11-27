@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 public class BlockFirewall extends SBlock {
 
   public BlockFirewall() {
-    super(Material.rock, "blockFirewall");
+    super(Material.rock, "firewall");
   }
 
 }

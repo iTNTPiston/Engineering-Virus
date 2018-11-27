@@ -22,7 +22,7 @@ public class BlockNetworkMainframe extends SBlock {
   private boolean isOn;
 
   public BlockNetworkMainframe(boolean on) {
-    super(Material.iron, "blockNetworkMainframe" + (on ? "On" : "Off"));
+    super(Material.iron, "networkMainframe" + (on ? "On" : "Off"));
     this.setBlockTextureName(MNMMod.MODID + ":blockNetworkMainframe");
     isOn = on;
     if (isOn) {
@@ -62,7 +62,7 @@ public class BlockNetworkMainframe extends SBlock {
   }
 
   public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
-    return Item.getItemFromBlock(MNMBlocks.blockNetworkMainframeOff);
+    return Item.getItemFromBlock(MNMBlocks.networkMainframeOff);
   }
 
 }

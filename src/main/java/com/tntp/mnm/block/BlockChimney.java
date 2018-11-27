@@ -13,14 +13,14 @@ public class BlockChimney extends SBlock {
   private IIcon top;
 
   public BlockChimney() {
-    super(Material.rock, "blockChimney");
+    super(Material.rock, "chimney");
   }
 
   @Override
   @SideOnly(Side.CLIENT)
   public void registerBlockIcons(IIconRegister reg) {
     String tex = this.getTextureName();
-    this.blockIcon = reg.registerIcon(MNMMod.MODID + ":blockFirewall");
+    this.blockIcon = reg.registerIcon(MNMMod.MODID + ":firewall");
     top = reg.registerIcon(tex);
   }
 

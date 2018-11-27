@@ -43,7 +43,7 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
       int structure = 0;
       for (int xx = xCoord - 1; xx <= xCoord + 1; xx++) {
         for (int zz = zCoord - 1; zz <= zCoord + 1; zz++) {
-          if (worldObj.getBlock(xx, yCoord, zz) == MNMBlocks.blockFirewall) {
+          if (worldObj.getBlock(xx, yCoord, zz) == MNMBlocks.firewall) {
             structure++;
           }
         }

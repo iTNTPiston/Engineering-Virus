@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 public class BlockHeatEngineFirewall extends SBlock {
 
   public BlockHeatEngineFirewall() {
-    super(Material.rock, "blockHeatEngineFirewall");
+    super(Material.rock, "heatEngineFirewall");
   }
 
 }

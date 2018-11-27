@@ -16,7 +16,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BlockHeatPipe extends SBlockModelSpecial {
 
   public BlockHeatPipe() {
-    super(Material.iron, "blockHeatPipe");
+    super(Material.iron, "heatPipe");
   }
 
   @Override
@@ -101,7 +101,7 @@ public class BlockHeatPipe extends SBlockModelSpecial {
     comingFrom = comingFrom ^ 1;
     if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
       Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
-      if (b == MNMBlocks.blockHeatPipe) {
+      if (b == MNMBlocks.heatPipe) {
         return forwardPipe(world, startX, startY, startZ, pipe, comingFrom, toSink);
       } else {
         TileEntity te = world.getTileEntity(pipe.x, pipe.y, pipe.z);

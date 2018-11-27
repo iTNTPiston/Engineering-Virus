@@ -20,33 +20,33 @@ import net.minecraft.block.Block;
 
 @ObjectHolder("metalnetworkmainframe")
 public class MNMBlocks {
-  public static final Block blockFirewall = null;
-  public static final Block blockHeatCollectorFirewall = null;
-  public static final Block blockHeatPipe = null;
-  public static final Block blockChimney = null;
-  public static final Block blockGeoThermalSmelter = null;
+  public static final Block firewall = null;
+  public static final Block heatCollectorFirewall = null;
+  public static final Block heatPipe = null;
+  public static final Block chimney = null;
+  public static final Block geoThermalSmelter = null;
 
-  public static final Block blockMainframeCasing = null;
-  public static final Block blockNetworkMainframeOn = null;
-  public static final Block blockNetworkMainframeOff = null;
-  public static final Block blockCentralProcessor = null;
-  public static final Block blockAuxiliaryComputingUnit = null;
+  public static final Block mainframeCasing = null;
+  public static final Block networkMainframeOn = null;
+  public static final Block networkMainframeOff = null;
+  public static final Block centralProcessor = null;
+  public static final Block auxiliaryComputingUnit = null;
 
   public static void loadBlocks() {
     DebugUtil.log.info("Loading Blocks");
-    GameRegistry.registerBlock(new BlockFirewall(), "blockFirewall");
-    GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), "blockHeatCollectorFirewall");
+    GameRegistry.registerBlock(new BlockFirewall(), "firewall");
+    GameRegistry.registerBlock(new BlockHeatCollectorFirewall(), "heatCollectorFirewall");
     GameRegistry.registerTileEntity(TileHeatCollectorFirewall.class, "tileHeatCollectorFirewall");
-    GameRegistry.registerBlock(new BlockGeoThermalSmelter(), "blockGeoThermalSmelter");
+    GameRegistry.registerBlock(new BlockGeoThermalSmelter(), "geoThermalSmelter");
     GameRegistry.registerTileEntity(TileGeoThermalSmelter.class, "tileGeoThermalSmelter");
-    GameRegistry.registerBlock(new BlockChimney(), "blockChimney");
-    GameRegistry.registerBlock(new BlockHeatPipe(), "blockHeatPipe");
+    GameRegistry.registerBlock(new BlockChimney(), "chimney");
+    GameRegistry.registerBlock(new BlockHeatPipe(), "heatPipe");
 
-    GameRegistry.registerBlock(new BlockNetworkMainframe(false), "blockNetworkMainframeOff");
-    GameRegistry.registerBlock(new BlockNetworkMainframe(true), "blockNetworkMainframeOn");
-    GameRegistry.registerBlock(new BlockCentralProcessor(), "blockCentralProcessor");
+    GameRegistry.registerBlock(new BlockNetworkMainframe(false), "networkMainframeOff");
+    GameRegistry.registerBlock(new BlockNetworkMainframe(true), "networkMainframeOn");
+    GameRegistry.registerBlock(new BlockCentralProcessor(), "centralProcessor");
     GameRegistry.registerTileEntity(TileCentralProcessor.class, "tileCentralProcessor");
-    GameRegistry.registerBlock(new BlockAuxiliaryComputingUnit(), "blockAuxiliaryComputingUnit");
+    GameRegistry.registerBlock(new BlockAuxiliaryComputingUnit(), "auxiliaryComputingUnit");
     // GameRegistry.registerBlock(new BlockMainframeCasing(),
     // "blockMainframeCasing");
     // GameRegistry.registerBlock(new BlockMainframeCasingFramed(),

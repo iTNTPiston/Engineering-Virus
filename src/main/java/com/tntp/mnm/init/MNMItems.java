@@ -13,19 +13,19 @@ import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder("metalnetworkmainframe")
 public class MNMItems {
-  public static final ItemWrench itemWrench = null;
-  public static final ItemToolBag itemToolBag = null;
-  public static final SItemTool itemEKToolUniversal = null;
-  public static final ItemMeterStick itemMeterStick = null;
-  public static final ItemToolUniversal itemToolUniversal = null;
-  public static final ItemCommonWrench itemCommonWrench = null;
+  public static final ItemWrench wrench = null;
+  public static final ItemToolBag toolBag = null;
+  public static final SItemTool eKToolUniversal = null;
+  public static final ItemMeterStick meterStick = null;
+  public static final ItemToolUniversal toolUniversal = null;
+  public static final ItemCommonWrench commonWrench = null;
 
   public static void loadItems() {
-    GameRegistry.registerItem(new ItemWrench(), "itemWrench");
-    GameRegistry.registerItem(new ItemToolBag("itemToolBag", 5), "itemToolBag");
-    GameRegistry.registerItem(new ItemEKToolUniversal(), "itemEKToolUniversal");
-    GameRegistry.registerItem(new ItemMeterStick(), "itemMeterStick");
-    GameRegistry.registerItem(new ItemToolUniversal(), "itemToolUniversal");
-    GameRegistry.registerItem(new ItemCommonWrench(), "itemCommonWrench");
+    GameRegistry.registerItem(new ItemWrench(), "wrench");
+    GameRegistry.registerItem(new ItemToolBag("toolBag", 5), "toolBag");
+    GameRegistry.registerItem(new ItemEKToolUniversal(), "eKToolUniversal");
+    GameRegistry.registerItem(new ItemMeterStick(), "meterStick");
+    GameRegistry.registerItem(new ItemToolUniversal(), "toolUniversal");
+    GameRegistry.registerItem(new ItemCommonWrench(), "commonWrench");
   }
 }

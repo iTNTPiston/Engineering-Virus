@@ -20,7 +20,7 @@ public class BlockGeoThermalSmelter extends SBlockContainer {
   private IIcon back;
 
   public BlockGeoThermalSmelter() {
-    super(Material.rock, "blockGeoThermalSmelter");
+    super(Material.rock, "geoThermalSmelter");
   }
 
   @Override
@@ -32,7 +32,7 @@ public class BlockGeoThermalSmelter extends SBlockContainer {
   @SideOnly(Side.CLIENT)
   public void registerBlockIcons(IIconRegister reg) {
     String tex = this.getTextureName();
-    this.blockIcon = reg.registerIcon(MNMMod.MODID + ":blockFirewall");
+    this.blockIcon = reg.registerIcon(MNMMod.MODID + ":firewall");
     frontOn = reg.registerIcon(tex + "_front_on");
     frontOff = reg.registerIcon(tex + "_front_off");
     back = reg.registerIcon(tex + "_back");

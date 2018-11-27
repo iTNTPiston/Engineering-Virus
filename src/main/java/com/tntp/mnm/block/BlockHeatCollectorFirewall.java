@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class BlockHeatCollectorFirewall extends SBlock implements ITileEntityProvider {
 
   public BlockHeatCollectorFirewall() {
-    super(Material.rock, "blockHeatCollectorFirewall");
+    super(Material.rock, "heatCollectorFirewall");
   }
 
   @Override
