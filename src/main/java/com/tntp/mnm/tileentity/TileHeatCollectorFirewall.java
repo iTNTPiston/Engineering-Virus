@@ -53,7 +53,7 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
   }
 
   @Override
-  public boolean transferToSink(IHeatSink sink) {
+  public boolean transferToSink(IHeatSink sink, int sourceSide) {
     int transfer = Math.min(rate, sink.getMaxEK() - sink.getEK());
     if (transfer > 0) {
       setEK(getEK() - transfer);

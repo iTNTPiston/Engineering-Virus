@@ -43,13 +43,22 @@ public class SItemTool extends SItemSpecialModel {
 
   public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
       float hitY, float hitZ) {
-    String defaultGuiId = getDefaultGuiId(world, x, y, z, stack);
-    if (defaultGuiId == null)
-      return false;
-    if (!world.isRemote) {
-      player.openGui(MNMMod.MODID, MNMGuis.getGuiID(defaultGuiId), world, x, y, z);
+    if (player.isSneaking()) {
+      return onToolUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+    } else {
+      String defaultGuiId = getDefaultGuiId(world, x, y, z, stack);
+      if (defaultGuiId == null)
+        return false;
+      if (!world.isRemote) {
+        player.openGui(MNMMod.MODID, MNMGuis.getGuiID(defaultGuiId), world, x, y, z);
+      }
+      return true;
     }
-    return true;
+  }
+
+  public boolean onToolUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
+      float hitY, float hitZ) {
+    return false;
   }
 
   public int getGuiCapability() {

@@ -56,7 +56,7 @@ public class STileHeatNode extends STile implements IHeatNode {
       if (out[i] != null) {
         IHeatNode targetSink = out[i].getEnd(worldObj);
         if (targetSink instanceof IHeatSink) {
-          if (transferToSink((IHeatSink) targetSink)) {
+          if (transferToSink((IHeatSink) targetSink, i)) {
             worked = true;
             ((TileEntity) targetSink).markDirty();
           }
@@ -69,7 +69,7 @@ public class STileHeatNode extends STile implements IHeatNode {
       markDirty();
   }
 
-  public boolean transferToSink(IHeatSink sink) {
+  public boolean transferToSink(IHeatSink sink, int sourceSide) {
     return false;
   }
 
