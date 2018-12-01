@@ -63,6 +63,9 @@ public class ItemToolBag extends SItem {
   }
 
   public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    if (world.isRemote)
+      return stack;
+    System.out.println(1);
     if (stack.stackSize > 1)
       return stack;
     NBTTagCompound tag = stack.getTagCompound();
@@ -84,9 +87,7 @@ public class ItemToolBag extends SItem {
       activeStack = null;
     }
     if (player.isSneaking()) {
-      if (KeyUtil.isCtrlDown()) {
-        switchSide(toolBag);
-      }
+      switchSide(toolBag);
     } else {
       if (activeStack == null) {
         activeStack = takeOut(toolBag);
@@ -108,7 +109,9 @@ public class ItemToolBag extends SItem {
     NBTTagList tools = toolBag.getTagList("tools", NBT.TAG_COMPOUND);
     if (tools.tagCount() == 0)
       return null;
-    NBTTagCompound tool = (NBTTagCompound) tools.removeTag(0);
+    NBTTagCompound tool;
+    tool = (NBTTagCompound) tools.removeTag(0);
+
     ItemStack stack = ItemStack.loadItemStackFromNBT(tool);
     toolBag.setTag("tools", tools);
     return stack;
