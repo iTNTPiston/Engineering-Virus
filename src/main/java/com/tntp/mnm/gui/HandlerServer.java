@@ -3,7 +3,7 @@ package com.tntp.mnm.gui;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
-import com.tntp.mnm.gui.config.ContainerConfigHeatDistributor;
+import com.tntp.mnm.gui.conf.ContainerConfigHeatDistributor;
 import com.tntp.mnm.gui.heat.ContainerHeat;
 import com.tntp.mnm.gui.heat.ContainerHeatPipe;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;

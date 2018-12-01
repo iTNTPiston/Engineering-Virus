@@ -2,7 +2,7 @@ package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
-import com.tntp.mnm.gui.config.ITileConfig;
+import com.tntp.mnm.gui.conf.ITileConfig;
 import com.tntp.mnm.init.MNMBlocks;
 
 import net.minecraft.item.Item;

@@ -1,6 +1,6 @@
 package com.tntp.mnm.network;
 
-import com.tntp.mnm.gui.config.ContainerConfigHeatDistributor;
+import com.tntp.mnm.gui.conf.ContainerConfigHeatDistributor;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
