@@ -3,6 +3,7 @@ package com.tntp.mnm.gui;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
+import com.tntp.mnm.gui.config.ContainerConfigHeatDistributor;
 import com.tntp.mnm.gui.heat.ContainerHeat;
 import com.tntp.mnm.gui.heat.ContainerHeatPipe;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
@@ -11,6 +12,7 @@ import com.tntp.mnm.gui.structure.ContainerStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.tileentity.STileHeatNode;
+import com.tntp.mnm.tileentity.TileHeatDistributor;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.block.Block;
@@ -58,6 +60,11 @@ public class HandlerServer implements IGuiHandler {
       TileEntity tile = world.getTileEntity(x, y, z);
       if (tile instanceof ITileProcess) {
         return new ContainerProcessGeoThermalSmelter(player.inventory, (ITileProcess) tile);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiConfigHeatDistributor")) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof TileHeatDistributor) {
+        return new ContainerConfigHeatDistributor(player.inventory, (TileHeatDistributor) tile);
       }
     } else if (MNMGuis.getGui(ID).startsWith("GuiStructure")) {
       return new ContainerStructure(player.inventory);
