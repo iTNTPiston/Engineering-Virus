@@ -2,13 +2,14 @@ package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
+import com.tntp.mnm.gui.config.ITileConfig;
 import com.tntp.mnm.init.MNMBlocks;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileHeatDistributor extends STileHeatNodeInventory implements IHeatSource, IHeatSink {
+public class TileHeatDistributor extends STileHeatNodeInventory implements IHeatSource, IHeatSink, ITileConfig {
   private boolean[] isOut;
 
   public TileHeatDistributor() {
@@ -82,6 +83,11 @@ public class TileHeatDistributor extends STileHeatNodeInventory implements IHeat
     for (int i = 0; i < 6; i++) {
       isOut[i] = config[i] == 1;
     }
+  }
+
+  @Override
+  public String getConfigGui() {
+    return "GuiConfigHeatDistributor";
   }
 
 }

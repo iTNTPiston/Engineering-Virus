@@ -17,6 +17,7 @@ public class MNMNetwork {
 
     // regMS all messages received on server side
     regMS(MSPlayerGui.class);
+    regMS(MSHeatDistConf.class);
     if (clientSide) {
       // regMCC all messages received on client side
       // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());

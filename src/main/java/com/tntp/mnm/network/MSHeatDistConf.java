@@ -32,6 +32,7 @@ public class MSHeatDistConf extends MAInt2<MSHeatDistConf> {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     if (player.openContainer.windowId == message.getI1()) {
       ContainerConfigHeatDistributor container = (ContainerConfigHeatDistributor) player.openContainer;
+      container.setTileSides(message.getI2(), message.in);
     }
     return null;
   }
