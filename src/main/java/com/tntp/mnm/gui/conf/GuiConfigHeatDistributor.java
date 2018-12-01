@@ -44,16 +44,17 @@ public class GuiConfigHeatDistributor extends SGui {
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mx, int my) {
-    super.drawGuiContainerForegroundLayer(mx, my);
+  protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    super.drawGuiContainerBackgroundLayer(p_146976_1_, p_146976_2_, p_146976_3_);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(foreground);
+    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, 117);
   }
 
   private class Button extends GuiButton {
 
     public Button(int id) {
-      super(id, 35 + id * 18, 32, 18, 18, "In");
+      super(id, 34 + id * 18 + guiLeft, 31 + guiTop, 18, 18, "In");
     }
 
     public boolean isInput() {
