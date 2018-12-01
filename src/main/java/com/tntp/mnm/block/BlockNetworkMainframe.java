@@ -23,7 +23,7 @@ public class BlockNetworkMainframe extends SBlock {
 
   public BlockNetworkMainframe(boolean on) {
     super(Material.iron, "networkMainframe" + (on ? "On" : "Off"));
-    this.setBlockTextureName(MNMMod.MODID + ":blockNetworkMainframe");
+    this.setBlockTextureName(MNMMod.MODID + ":networkMainframe");
     isOn = on;
     if (isOn) {
       this.setTickRandomly(true);
