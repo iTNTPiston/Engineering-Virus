@@ -31,6 +31,8 @@ public class TileHeatDistributor extends STileHeatNodeInventory implements IHeat
     if (side >= 0 && side < 6) {
       isOut[side] = !in;
       markDirty();
+      if (worldObj != null)
+        this.worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
     }
   }
 
