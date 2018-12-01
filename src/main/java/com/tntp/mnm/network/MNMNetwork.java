@@ -16,23 +16,28 @@ public class MNMNetwork {
   public static void loadMessages(boolean clientSide) {
 
     // regMS all messages received on server side
-    regMS(MSPlayerGui.class);
-    regMS(MSHeatDistConf.class);
-    if (clientSide) {
-      // regMCC all messages received on client side
-      // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());
+    try {
+      regMS(MSPlayerGui.class);
+      regMS(MSHeatDistConf.class);
+      if (clientSide) {
+        // regMCC all messages received on client side
+        // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());
 
-    } else {
-      // regMCS all messages received on client side
-      // regMCS(MCUnivMacScreen.class);
+      } else {
+        // regMCS all messages received on client side
+        // regMCS(MCUnivMacScreen.class);
+      }
+    } catch (Exception e) {
+      throw new RuntimeException("MetalNetworkMainframe-Network: Cannot inst message: " + e.getMessage());
     }
+
   }
 
-  public static <REQ extends SMessage<REQ>> void regMS(Class<REQ> c) {
+  public static <REQ extends SMessage<REQ>> void regMS(Class<REQ> c) throws Exception {
     registerMessage(c, Side.SERVER);
   }
 
-  public static <REQ extends SMessage<REQ>> void regMCS(Class<REQ> c) {
+  public static <REQ extends SMessage<REQ>> void regMCS(Class<REQ> c) throws Exception {
     registerMessage(c, Side.CLIENT);
   }
 
@@ -41,12 +46,13 @@ public class MNMNetwork {
     network.registerMessage(handler, c, id++, Side.CLIENT);
   }
 
-  public static <REQ extends SMessage<REQ>> void registerMessage(Class<REQ> c, Side side) {
+  public static <REQ extends SMessage<REQ>> void registerMessage(Class<REQ> c, Side side) throws Exception {
     try {
       REQ req = c.newInstance();
       network.registerMessage(req, c, id++, side);
     } catch (Exception e) {
       DebugUtil.log.error("Cannot instantiate message " + c.getSimpleName() + ", check constructor.");
+      throw e;
     }
   }
 

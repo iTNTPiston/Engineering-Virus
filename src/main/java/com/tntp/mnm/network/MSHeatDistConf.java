@@ -15,6 +15,11 @@ public class MSHeatDistConf extends MAInt2<MSHeatDistConf> {
     this.in = in;
   }
 
+  public MSHeatDistConf() {
+    super(0, 0);
+    in = false;
+  }
+
   @Override
   public void fromBytes(ByteBuf buf) {
     super.fromBytes(buf);
