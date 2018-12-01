@@ -26,6 +26,13 @@ public class TileHeatDistributor extends STileHeatNodeInventory implements IHeat
     return isOut[side];
   }
 
+  public void setSide(int side, boolean in) {
+    if (side >= 0 && side < 6) {
+      isOut[side] = !in;
+      markDirty();
+    }
+  }
+
   @Override
   public void workAsSource() {
     int totalcfg = 0;

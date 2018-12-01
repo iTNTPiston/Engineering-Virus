@@ -3,6 +3,7 @@ package com.tntp.mnm.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
+import com.tntp.mnm.gui.config.ITileConfig;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
@@ -24,7 +25,7 @@ import net.minecraft.world.World;
 
 public enum GuiTabType {
   HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
-  PROCESS("process", 1f, 1f, 0.8f);
+  PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f);
   @SideOnly(Side.CLIENT)
   private static RenderItem itemRender;
   @SideOnly(Side.CLIENT)
@@ -93,6 +94,11 @@ public enum GuiTabType {
     case PROCESS:
       if (tile instanceof ITileProcess) {
         name = ((ITileProcess) tile).getProcessGui();
+      }
+      break;
+    case CONFIG:
+      if (tile instanceof ITileConfig) {
+        name = ((ITileConfig) tile).getConfigGui();
       }
       break;
     }
