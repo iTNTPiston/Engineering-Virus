@@ -13,6 +13,7 @@ import com.tntp.mnm.item.ItemBlockTooltip;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
+import com.tntp.mnm.tileentity.TileHeatDistributor;
 import com.tntp.mnm.util.DebugUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -44,6 +45,7 @@ public class MNMBlocks {
     GameRegistry.registerBlock(new BlockChimney(), "chimney");
     GameRegistry.registerBlock(new BlockHeatPipe(), "heatPipe");
     GameRegistry.registerBlock(new BlockHeatDistributor(), "heatDistributor");
+    GameRegistry.registerTileEntity(TileHeatDistributor.class, "tileHeatDistributor");
 
     GameRegistry.registerBlock(new BlockNetworkMainframe(false), "networkMainframeOff");
     GameRegistry.registerBlock(new BlockNetworkMainframe(true), "networkMainframeOn");
