@@ -17,7 +17,7 @@ public class BlockHeatDistributor extends SBlockContainer {
 
   private IIcon out;
 
-  public BlockHeatDistributor(Material mat, String regName) {
+  public BlockHeatDistributor() {
     super(Material.iron, "heatDistributor");
   }
 
