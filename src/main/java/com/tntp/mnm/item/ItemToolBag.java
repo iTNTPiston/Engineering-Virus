@@ -63,9 +63,6 @@ public class ItemToolBag extends SItem {
   }
 
   public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-    if (world.isRemote)
-      return stack;
-    System.out.println(1);
     if (stack.stackSize > 1)
       return stack;
     NBTTagCompound tag = stack.getTagCompound();
@@ -81,14 +78,14 @@ public class ItemToolBag extends SItem {
     boolean left = toolBag.getBoolean("side");
     index = ((left ? index - 1 : index + 1) + 9) % 9;
     ItemStack activeStack = player.inventory.getStackInSlot(index);
-    boolean p = putIn(toolBag, activeStack);
-    if (p) {
-      player.inventory.setInventorySlotContents(index, null);
-      activeStack = null;
-    }
     if (player.isSneaking()) {
       switchSide(toolBag);
     } else {
+      boolean p = putIn(toolBag, activeStack);
+      if (p) {
+        player.inventory.setInventorySlotContents(index, null);
+        activeStack = null;
+      }
       if (activeStack == null) {
         activeStack = takeOut(toolBag);
         if (activeStack != null)
