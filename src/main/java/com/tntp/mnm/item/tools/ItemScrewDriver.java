@@ -5,9 +5,8 @@ import com.tntp.mnm.item.SItemTool;
 
 public class ItemScrewDriver extends SItemTool {
 
-  public ItemScrewDriver(String regName, GuiTabType[] guiCap) {
-    super(regName, guiCap);
-    // TODO Auto-generated constructor stub
+  public ItemScrewDriver() {
+    super("screwDriver", GuiTabType.CONFIG);
   }
 
 }
