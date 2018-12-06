@@ -10,11 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileHeatDistributor extends STileHeatNodeInventory implements IHeatSource, IHeatSink, ITileConfig {
+  private static final int MAX = 1000;
   private boolean[] isOut;
 
   public TileHeatDistributor() {
     super(6);
     isOut = new boolean[6];
+    this.setMaxEK(1000);
   }
 
   @Override
