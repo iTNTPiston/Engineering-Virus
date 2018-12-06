@@ -16,7 +16,7 @@ public class TileHeatDistributor extends STileHeatNodeInventory implements IHeat
   public TileHeatDistributor() {
     super(6);
     isOut = new boolean[6];
-    this.setMaxEK(1000);
+    this.setMaxEK(MAX);
   }
 
   @Override
