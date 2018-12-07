@@ -9,17 +9,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-/**
- * Super class for GerThermalSmelter and HeatDistributor
- * No EK tiles support automation
- * 
- * @author iTNTPiston
- *
- */
-public class STileHeatNodeInventory extends STileHeatNode implements ISidedInventory {
+public class STileInventory extends STile implements ISidedInventory {
   private ItemStack[] inventory;
 
-  public STileHeatNodeInventory(int size) {
+  public STileInventory(int size) {
     inventory = new ItemStack[size];
   }
 
@@ -141,4 +134,8 @@ public class STileHeatNodeInventory extends STileHeatNode implements ISidedInven
     }
   }
 
+  @Override
+  public String getInventoryName() {
+    return getBlockType().getUnlocalizedName() + ".name";
+  }
 }

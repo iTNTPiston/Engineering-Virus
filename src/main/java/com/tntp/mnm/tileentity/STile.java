@@ -3,7 +3,7 @@ package com.tntp.mnm.tileentity;
 import net.minecraft.tileentity.TileEntity;
 
 /**
- * Super class of (hopefully) all tileentities in EV
+ * Super class of (hopefully) all tileentities in MNM
  * 
  * @author iTNTPiston
  *
