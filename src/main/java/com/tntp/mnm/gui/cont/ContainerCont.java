@@ -12,8 +12,8 @@ import net.minecraft.inventory.Slot;
 public class ContainerCont extends SContainer {
   private ITileCont tile;
 
-  public ContainerCont(IInventory playerInventory, int slots, ITileCont machine) {
-    super(playerInventory, slots, machine);
+  public ContainerCont(IInventory playerInventory, ITileCont machine) {
+    super(playerInventory, machine.getSizeInventory(), machine);
     tile = machine;
   }
 
