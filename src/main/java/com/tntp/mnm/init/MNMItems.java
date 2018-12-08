@@ -22,7 +22,7 @@ public class MNMItems {
   public static final ItemToolUniversal toolUniversal = null;
   public static final ItemCommonWrench commonWrench = null;
   public static final ItemScrewDriver screwDriver = null;
-  public static final ItemDisplayInterface displayInteface = null;
+  public static final ItemDisplayInterface displayInterface = null;
 
   public static void loadItems() {
     GameRegistry.registerItem(new ItemWrench(), "wrench");

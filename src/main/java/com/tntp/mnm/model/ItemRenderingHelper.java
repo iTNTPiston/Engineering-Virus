@@ -91,10 +91,10 @@ public class ItemRenderingHelper implements IItemRenderer {
   public void renderThirdPersonItem(ItemStack stack, RenderBlocks render, EntityLivingBase entity) {
     WaveObjRenderer obj = getRenderer(stack);
     GL11.glPushMatrix();
-    GL11.glTranslatef(1f, 1 / 2f, 1f);
+    GL11.glTranslatef(1, 1 / 2f, 1);
     GL11.glRotatef(45, 0, 1, 0);
-    GL11.glRotatef(105, 1, 0, 0);
-    GL11.glTranslatef(0, -0.7f, 0);
+    GL11.glRotatef(-75, 1, 0, 0);
+    GL11.glTranslatef(0, 0.7f, 0);
     obj.render();
     GL11.glPopMatrix();
   }

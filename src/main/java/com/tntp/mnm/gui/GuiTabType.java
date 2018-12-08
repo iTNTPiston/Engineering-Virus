@@ -59,7 +59,7 @@ public enum GuiTabType {
     case CONFIG:
       return new ItemStack(MNMItems.screwDriver);
     case CONTAINER:
-      return new ItemStack(MNMItems.displayInteface);
+      return new ItemStack(MNMItems.displayInterface);
     default:
       return new ItemStack(Items.apple);
     }
