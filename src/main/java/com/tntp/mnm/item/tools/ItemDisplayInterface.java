@@ -7,7 +7,6 @@ public class ItemDisplayInterface extends SItemTool {
 
   public ItemDisplayInterface() {
     super("displayInterface", GuiTabType.CONTAINER);
-    // TODO Auto-generated constructor stub
   }
 
 }

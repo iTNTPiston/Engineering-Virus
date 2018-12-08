@@ -9,11 +9,13 @@ import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatDistributor;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.block.BlockNetworkMainframe;
+import com.tntp.mnm.block.BlockSecurityEncoder;
 import com.tntp.mnm.item.ItemBlockTooltip;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
+import com.tntp.mnm.tileentity.TileSecurityEncoder;
 import com.tntp.mnm.util.DebugUtil;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -46,6 +48,8 @@ public class MNMBlocks {
     GameRegistry.registerBlock(new BlockHeatPipe(), "heatPipe");
     GameRegistry.registerBlock(new BlockHeatDistributor(), "heatDistributor");
     GameRegistry.registerTileEntity(TileHeatDistributor.class, "tileHeatDistributor");
+    GameRegistry.registerBlock(new BlockSecurityEncoder(), "securityEncoder");
+    GameRegistry.registerTileEntity(TileSecurityEncoder.class, "tileSecurityEncoder");
 
     GameRegistry.registerBlock(new BlockNetworkMainframe(false), "networkMainframeOff");
     GameRegistry.registerBlock(new BlockNetworkMainframe(true), "networkMainframeOn");
