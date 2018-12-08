@@ -68,7 +68,7 @@ public class HandlerServer implements IGuiHandler {
       if (tile instanceof TileHeatDistributor) {
         return new ContainerConfigHeatDistributor(player.inventory, (TileHeatDistributor) tile);
       }
-    } else if (ID == MNMGuis.getGuiID("GuiCont")) {
+    } else if (ID == MNMGuis.getGuiID("GuiContSecurityEncoder")) {
       TileEntity tile = world.getTileEntity(x, y, z);
       if (tile instanceof ITileCont) {
         return new ContainerCont(player.inventory, (ITileCont) tile);

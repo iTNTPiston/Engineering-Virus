@@ -5,6 +5,7 @@ import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.gui.conf.GuiConfigHeatDistributor;
 import com.tntp.mnm.gui.cont.GuiCont;
+import com.tntp.mnm.gui.cont.GuiContSecurityEncoder;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.heat.ContainerHeatPipe;
 import com.tntp.mnm.gui.heat.GuiHeat;
@@ -22,6 +23,7 @@ import com.tntp.mnm.tileentity.STileHeatNode;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
+import com.tntp.mnm.tileentity.TileSecurityEncoder;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -76,17 +78,15 @@ public class HandlerClient extends HandlerServer {
       }
     } else if (ID == MNMGuis.getGuiID("GuiProcessGeoThermalSmelter")) {
       if (tile instanceof TileGeoThermalSmelter) {
-        gui = new GuiProcessGeoThermalSmelter(
-            new ContainerProcessGeoThermalSmelter(player.inventory, (ITileProcess) tile),
-            ((TileGeoThermalSmelter) tile).getInventoryName(), x, y, z);
+        gui = new GuiProcessGeoThermalSmelter(player.inventory, (TileGeoThermalSmelter) tile, x, y, z);
       }
     } else if (ID == MNMGuis.getGuiID("GuiConfigHeatDistributor")) {
       if (tile instanceof TileHeatDistributor) {
         gui = new GuiConfigHeatDistributor(player.inventory, (TileHeatDistributor) tile, x, y, z);
       }
-    } else if (ID == MNMGuis.getGuiID("GuiCont")) {
-      if (tile instanceof ITileCont) {
-        gui = new GuiCont(player.inventory, (ITileCont) tile, x, y, z);
+    } else if (ID == MNMGuis.getGuiID("GuiContSecurityEncoder")) {
+      if (tile instanceof TileSecurityEncoder) {
+        gui = new GuiContSecurityEncoder(player.inventory, (ITileCont) tile, x, y, z);
       }
     }
     if (gui != null) {

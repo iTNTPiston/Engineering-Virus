@@ -108,7 +108,7 @@ public enum GuiTabType {
       break;
     case CONTAINER:
       if (tile instanceof ITileCont) {
-        name = "GuiCont";
+        name = ((ITileCont) tile).getContainerGui();
       }
       break;
     }

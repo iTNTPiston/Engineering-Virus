@@ -47,4 +47,9 @@ public class TileSecurityEncoder extends STileInventory implements ITileCont {
     slots.add(new Slot(this, 9, 53, 79));
   }
 
+  @Override
+  public String getContainerGui() {
+    return "GuiContSecurityEncoder";
+  }
+
 }
