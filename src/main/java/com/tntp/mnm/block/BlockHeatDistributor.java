@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class BlockHeatDistributor extends SBlockContainer {
 
-  private IIcon out;
+  private IIcon[] icons;
 
   public BlockHeatDistributor() {
     super(Material.iron, "heatDistributor");
@@ -25,9 +25,10 @@ public class BlockHeatDistributor extends SBlockContainer {
   @SideOnly(Side.CLIENT)
   public void registerBlockIcons(IIconRegister reg) {
     String tex = this.getTextureName();
-    this.blockIcon = reg.registerIcon(tex);
-    out = reg.registerIcon(tex + "_out");
-
+    icons = new IIcon[6];
+    for (int i = 0; i < 6; i++)
+      icons[i] = reg.registerIcon(tex + "_" + i);
+    this.blockIcon = icons[0];
   }
 
   @Override
@@ -36,14 +37,8 @@ public class BlockHeatDistributor extends SBlockContainer {
   }
 
   @SideOnly(Side.CLIENT)
-  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-    TileEntity t = world.getTileEntity(x, y, z);
-    if (t instanceof TileHeatDistributor) {
-      if (((TileHeatDistributor) t).isSourceSide(side)) {
-        return out;
-      }
-    }
-    return blockIcon;
+  public IIcon getIcon(int side, int meta) {
+    return icons[side];
   }
 
 }
