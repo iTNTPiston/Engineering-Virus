@@ -20,8 +20,8 @@ public class ItemCommonWrench extends SItemTool {
       float hitY, float hitZ) {
     Block b = world.getBlock(x, y, z);
     if (b == MNMBlocks.heatPipe) {
-      if (!world.isRemote)
-        MNMBlocks.heatPipe.detectConnection(world, x, y, z, 3);
+      if (!world.isRemote && !MNMBlocks.heatPipe.isConnectionStable(world, x, y, z))
+        MNMBlocks.heatPipe.detectConnection(world, x, y, z, 2);
       return true;
     }
     return false;
