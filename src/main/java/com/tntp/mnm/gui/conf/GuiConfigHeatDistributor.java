@@ -16,8 +16,8 @@ public class GuiConfigHeatDistributor extends SGui {
   private static final ResourceLocation foreground = MNMResources.getResource("textures/guis/guiHeatDist_overlay.png");
   private TileHeatDistributor tile;
 
-  public GuiConfigHeatDistributor(IInventory player, TileHeatDistributor tile, String title, int x, int y, int z) {
-    super(new ContainerConfigHeatDistributor(player, tile), title, x, y, z);
+  public GuiConfigHeatDistributor(IInventory player, TileHeatDistributor tile, int x, int y, int z) {
+    super(new ContainerConfigHeatDistributor(player, tile), tile.getInventoryName(), x, y, z);
     this.tile = tile;
   }
 

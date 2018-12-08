@@ -1,10 +1,14 @@
 package com.tntp.mnm.tileentity;
 
+import java.util.List;
+
+import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.util.SecurityUtil;
 
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class TileSecurityEncoder extends STileInventory {
+public class TileSecurityEncoder extends STileInventory implements ITileCont {
 
   public TileSecurityEncoder() {
     super(10);
@@ -32,6 +36,15 @@ public class TileSecurityEncoder extends STileInventory {
         }
       }
     }
+  }
+
+  @Override
+  public void addContainerSlots(List<Slot> slots) {
+    for (int i = 0; i < 8; i++) {
+      slots.add(new Slot(this, i, 17 + 18 * i, 41));
+    }
+    slots.add(new Slot(this, 8, 17, 79));
+    slots.add(new Slot(this, 9, 53, 79));
   }
 
 }

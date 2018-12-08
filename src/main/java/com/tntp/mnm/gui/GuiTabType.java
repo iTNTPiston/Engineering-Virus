@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.gui.conf.ITileConfig;
+import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
@@ -103,6 +104,11 @@ public enum GuiTabType {
     case CONFIG:
       if (tile instanceof ITileConfig) {
         name = ((ITileConfig) tile).getConfigGui();
+      }
+      break;
+    case CONTAINER:
+      if (tile instanceof ITileCont) {
+        name = "GuiCont";
       }
       break;
     }

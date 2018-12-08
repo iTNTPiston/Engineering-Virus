@@ -1,5 +1,6 @@
 package com.tntp.mnm.gui.cont;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tntp.mnm.gui.SContainer;
@@ -20,7 +21,8 @@ public class ContainerCont extends SContainer {
   @Override
   public void setupMachineSlots(IInventory machine) {
     ITileCont t = (ITileCont) machine;
-    List<Slot> slots = t.getContainerSlots();
+    List<Slot> slots = new ArrayList<Slot>();
+    t.addContainerSlots(slots);
     for (Slot s : slots) {
       this.addSlotToContainer(s);
     }

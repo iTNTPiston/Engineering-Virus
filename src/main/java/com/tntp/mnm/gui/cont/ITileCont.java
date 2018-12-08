@@ -8,7 +8,5 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
 public interface ITileCont extends IInventory {
-  public String getContainerGui();
-
-  public List<Slot> getContainerSlots();
+  public void addContainerSlots(List<Slot> slots);
 }
