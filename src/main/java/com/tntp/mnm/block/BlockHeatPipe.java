@@ -111,7 +111,6 @@ public class BlockHeatPipe extends SBlockModelSpecial {
       }
     }
     return -1;
-
   }
 
   public static void forwardPipe(HeatPipe pipe, int toDirection) {
