@@ -24,11 +24,6 @@ public abstract class SContainer extends Container {
 
   public abstract void setupMachineSlots(IInventory machine);
 
-  @Override
-  public boolean canInteractWith(EntityPlayer player) {
-    return true;
-  }
-
   public ItemStack transferStackInSlot(EntityPlayer player, int index) {
     ItemStack itemstack = null;
     Slot slot = (Slot) this.inventorySlots.get(index);

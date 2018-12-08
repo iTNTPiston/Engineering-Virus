@@ -2,6 +2,7 @@ package com.tntp.mnm.gui.process;
 
 import com.tntp.mnm.gui.SContainer;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 
@@ -49,6 +50,11 @@ public abstract class ContainerProcess extends SContainer {
 
   public ITileProcess getTile() {
     return tile;
+  }
+
+  @Override
+  public boolean canInteractWith(EntityPlayer player) {
+    return tile != null && tile.isUseableByPlayer(player);
   }
 
 }

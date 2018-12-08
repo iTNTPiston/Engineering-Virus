@@ -68,7 +68,7 @@ public class STileInventory extends STile implements ISidedInventory {
 
   @Override
   public boolean isUseableByPlayer(EntityPlayer player) {
-    return this.hasWorldObj() && this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
+    return isValidInWorld();
   }
 
   @Override

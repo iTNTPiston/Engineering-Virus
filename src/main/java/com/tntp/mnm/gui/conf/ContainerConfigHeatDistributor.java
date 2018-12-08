@@ -6,6 +6,7 @@ import com.tntp.mnm.gui.SContainer;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -58,6 +59,11 @@ public class ContainerConfigHeatDistributor extends SContainer {
       this.addSlotToContainer(new Slot(machine, i, 35 + i * 18, 50));
     }
 
+  }
+
+  @Override
+  public boolean canInteractWith(EntityPlayer p_75145_1_) {
+    return tile.isValidInWorld();
   }
 
 }

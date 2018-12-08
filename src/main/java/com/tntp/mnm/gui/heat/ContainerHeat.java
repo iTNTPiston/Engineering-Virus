@@ -2,7 +2,10 @@ package com.tntp.mnm.gui.heat;
 
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.gui.SContainer;
+import com.tntp.mnm.tileentity.STile;
+import com.tntp.mnm.tileentity.STileHeatNode;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 
@@ -52,6 +55,11 @@ public class ContainerHeat extends SContainer {
     }
     lastEK = ek;
     lastMaxEK = maxEk;
+  }
+
+  @Override
+  public boolean canInteractWith(EntityPlayer player) {
+    return ((STile) tile).isValidInWorld();
   }
 
 }

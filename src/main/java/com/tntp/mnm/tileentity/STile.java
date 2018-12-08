@@ -9,5 +9,7 @@ import net.minecraft.tileentity.TileEntity;
  *
  */
 public class STile extends TileEntity {
-
+  public boolean isValidInWorld() {
+    return this.hasWorldObj() && this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
+  }
 }

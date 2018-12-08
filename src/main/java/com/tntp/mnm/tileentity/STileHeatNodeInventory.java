@@ -75,7 +75,7 @@ public class STileHeatNodeInventory extends STileHeatNode implements ISidedInven
 
   @Override
   public boolean isUseableByPlayer(EntityPlayer player) {
-    return this.hasWorldObj() && this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
+    return isValidInWorld();
   }
 
   @Override

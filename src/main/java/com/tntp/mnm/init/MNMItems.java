@@ -4,6 +4,7 @@ import com.tntp.mnm.item.ItemToolBag;
 import com.tntp.mnm.item.ItemWrench;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
+import com.tntp.mnm.item.tools.ItemDisplayInterface;
 import com.tntp.mnm.item.tools.ItemEKToolUniversal;
 import com.tntp.mnm.item.tools.ItemMeterStick;
 import com.tntp.mnm.item.tools.ItemScrewDriver;
@@ -20,6 +21,8 @@ public class MNMItems {
   public static final ItemMeterStick meterStick = null;
   public static final ItemToolUniversal toolUniversal = null;
   public static final ItemCommonWrench commonWrench = null;
+  public static final ItemScrewDriver screwDriver = null;
+  public static final ItemDisplayInterface displayInteface = null;
 
   public static void loadItems() {
     GameRegistry.registerItem(new ItemWrench(), "wrench");
@@ -29,5 +32,6 @@ public class MNMItems {
     GameRegistry.registerItem(new ItemToolUniversal(), "toolUniversal");
     GameRegistry.registerItem(new ItemCommonWrench(), "commonWrench");
     GameRegistry.registerItem(new ItemScrewDriver(), "screwDriver");
+    GameRegistry.registerItem(new ItemDisplayInterface(), "displayInterface");
   }
 }

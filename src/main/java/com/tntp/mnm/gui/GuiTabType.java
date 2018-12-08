@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 
 public enum GuiTabType {
   HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
-  PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f);
+  PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f), CONTAINER("container", 0.8f, 0.8f, 1f);
   @SideOnly(Side.CLIENT)
   private static RenderItem itemRender;
   @SideOnly(Side.CLIENT)
@@ -55,6 +55,10 @@ public enum GuiTabType {
       return new ItemStack(MNMItems.meterStick);
     case PROCESS:
       return new ItemStack(MNMItems.commonWrench);
+    case CONFIG:
+      return new ItemStack(MNMItems.screwDriver);
+    case CONTAINER:
+      return new ItemStack(MNMItems.displayInteface);
     default:
       return new ItemStack(Items.apple);
     }
