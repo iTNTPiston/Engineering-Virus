@@ -38,6 +38,9 @@ public class MNMRender {
     i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_CW"));
     itemRender.bindWaveObj(MNMItems.commonWrench, i);
 
+    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_SD"));
+    itemRender.bindWaveObj(MNMItems.screwDriver, i);
+
   }
 
   public static WaveObjRenderer getWaveObjRenderer(String name) {
