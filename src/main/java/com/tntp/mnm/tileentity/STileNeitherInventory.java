@@ -9,10 +9,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class STileInventory extends STile implements ISidedInventory {
+public class STileNeitherInventory extends STileNeither implements ISidedInventory {
   private ItemStack[] inventory;
 
-  public STileInventory(int size) {
+  public STileNeitherInventory(int size) {
     inventory = new ItemStack[size];
   }
 
