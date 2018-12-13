@@ -15,6 +15,7 @@ import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.tileentity.STileHeatNode;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
+import com.tntp.mnm.util.BlockUtil;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.block.Block;
@@ -35,7 +36,7 @@ public class HandlerServer implements IGuiHandler {
     } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
       Block b = world.getBlock(x, y, z);
       if (b == MNMBlocks.heatPipe) {
-        int sides = BlockHeatPipe.metaToSide(world.getBlockMetadata(x, y, z));
+        int sides = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
         int side0 = sides >> 4;
         int side1 = sides & 15;
         ItemStack end0 = null;

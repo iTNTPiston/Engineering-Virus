@@ -19,7 +19,7 @@ public class TileHeatEngineFirewall extends STileHeatNode implements IHeatSink {
 
   @Override
   public boolean isSinkSide(int side) {
-    return side == DirUtil.D_D_MY;
+    return side == DirUtil.DOWN_MY;
   }
 
   @Override

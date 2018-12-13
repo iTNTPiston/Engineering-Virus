@@ -11,6 +11,8 @@ import com.tntp.mnm.api.neither.NeitherPipe;
 public abstract class STileNeither extends STile {
   private NeitherPipe pipe;
 
-  public abstract int getPortSide();
+  public int getPortSide() {
+    return this.getBlockMetadata();
+  }
 
 }

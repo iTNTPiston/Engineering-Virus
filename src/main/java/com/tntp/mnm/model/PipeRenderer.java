@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.init.MNMBlocks;
+import com.tntp.mnm.util.BlockUtil;
 import com.tntp.mnm.util.UniversalUtil;
 
 import net.minecraft.block.Block;
@@ -107,7 +108,7 @@ public class PipeRenderer extends WaveObjRenderer {
 
   public int[] getSideCodeFromBlock(Block block, IBlockAccess world, int x, int y, int z) {
     if (block == MNMBlocks.heatPipe) {
-      int s = BlockHeatPipe.metaToSide(world.getBlockMetadata(x, y, z));
+      int s = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
       if (s != 0)
         return new int[] { s >> 4, s & 15 };
     }

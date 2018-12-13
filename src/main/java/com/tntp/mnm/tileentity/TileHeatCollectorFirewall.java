@@ -21,7 +21,7 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
 
   @Override
   public boolean isSourceSide(int side) {
-    return side == DirUtil.D_U_PY;
+    return side == DirUtil.UP_PY;
   }
 
   public void updateEntity() {

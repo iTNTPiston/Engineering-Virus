@@ -8,13 +8,6 @@ import com.tntp.mnm.block.BlockHeatPipe;
 
 public class DebugUtil {
   public static final int VERSION = 1;
-  public static Logger log = LogManager.getLogger("EV-Log");
+  public static Logger log = LogManager.getLogger("MNM");
 
-  @Test
-  public void test() {
-    for (int i = 0; i < 16; i++) {
-      BlockHeatPipe.sideToMeta(BlockHeatPipe.metaToSide(i));
-
-    }
-  }
 }

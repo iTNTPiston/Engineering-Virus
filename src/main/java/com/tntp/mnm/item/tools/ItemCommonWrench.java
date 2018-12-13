@@ -3,6 +3,7 @@ package com.tntp.mnm.item.tools;
 import com.tntp.mnm.gui.GuiTabType;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.item.SItemTool;
+import com.tntp.mnm.util.BlockUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +21,8 @@ public class ItemCommonWrench extends SItemTool {
       float hitY, float hitZ) {
     Block b = world.getBlock(x, y, z);
     if (b == MNMBlocks.heatPipe) {
-      if (!world.isRemote && !MNMBlocks.heatPipe.isConnectionStable(world, x, y, z))
-        MNMBlocks.heatPipe.detectConnection(world, x, y, z, 2);
+      if (!world.isRemote && !BlockUtil.pipeConnectionStable(world, x, y, z, MNMBlocks.heatPipe))
+        BlockUtil.pipeDetectConnection(world, x, y, z, 2, MNMBlocks.heatPipe);
       return true;
     }
     return false;

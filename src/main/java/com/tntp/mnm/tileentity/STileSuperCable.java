@@ -49,12 +49,12 @@ public class STileSuperCable extends STileSuperWire {
 
   @Override
   public int[] getOutputSides() {
-    return DirUtil.D_ALL;
+    return DirUtil.ALL_DIR;
   }
 
   @Override
   public int[] getInputSides() {
-    return DirUtil.D_ALL;
+    return DirUtil.ALL_DIR;
   }
 
   @Override

@@ -8,6 +8,7 @@ import com.tntp.mnm.api.ek.IHeatSink;
 import com.tntp.mnm.api.ek.IHeatSource;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.init.MNMBlocks;
+import com.tntp.mnm.util.BlockUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -124,7 +125,7 @@ public class STileHeatNode extends STile implements IHeatNode {
     if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
       Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
       if (b == MNMBlocks.heatPipe) {
-        endOutSide = BlockHeatPipe.forwardPipe(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, toSink);
+        endOutSide = BlockUtil.pipeScan(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, toSink, MNMBlocks.heatPipe);
       } else {
         TileEntity te = world.getTileEntity(pipe.x, pipe.y, pipe.z);
         if (te instanceof IHeatNode) {

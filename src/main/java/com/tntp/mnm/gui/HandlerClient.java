@@ -24,6 +24,7 @@ import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
 import com.tntp.mnm.tileentity.TileSecurityEncoder;
+import com.tntp.mnm.util.BlockUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +44,7 @@ public class HandlerClient extends HandlerServer {
     } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
       Block b = world.getBlock(x, y, z);
       if (b == MNMBlocks.heatPipe) {
-        int sides = BlockHeatPipe.metaToSide(world.getBlockMetadata(x, y, z));
+        int sides = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
         int side0 = sides >> 4;
         int side1 = sides & 15;
         ItemStack end0 = null;
