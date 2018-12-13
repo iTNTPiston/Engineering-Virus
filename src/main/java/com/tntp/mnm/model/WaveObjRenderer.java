@@ -44,19 +44,6 @@ public class WaveObjRenderer {
   }
 
   public void tessellate(Tessellator tes, IIcon icon) {
-    tes(tes, icon, obj);
-  }
-
-  public void setRotation(float rad, ForgeDirection axis) {
-    rotation = rad;
-    rotationAxis = axis;
-  }
-
-  public void clearRotation() {
-    rotationAxis = null;
-  }
-
-  protected void tes(Tessellator tes, IIcon icon, WavefrontObject obj) {
     Vertex vRot = null;
     for (GroupObject go : obj.groupObjects) {
       for (Face f : go.faces) {
@@ -71,6 +58,15 @@ public class WaveObjRenderer {
         }
       }
     }
+  }
+
+  public void setRotation(float rad, ForgeDirection axis) {
+    rotation = rad;
+    rotationAxis = axis;
+  }
+
+  public void clearRotation() {
+    rotationAxis = null;
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {

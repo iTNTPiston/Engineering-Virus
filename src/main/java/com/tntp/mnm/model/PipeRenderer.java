@@ -7,7 +7,6 @@ import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.UniversalUtil;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
@@ -17,19 +16,11 @@ import net.minecraftforge.client.model.obj.WavefrontObject;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class PipeRenderer extends WaveObjRenderer {
-  private WavefrontObject extension;
+  private WaveObjRenderer extRender;
 
   public PipeRenderer(WavefrontObject obj, WavefrontObject ext, ResourceLocation texture) {
     super(obj, texture);
-    extension = ext;
-  }
-
-  public void renderExtension() {
-    extension.renderAll();
-  }
-
-  public void tessellateExtension(Tessellator tes, IIcon icon) {
-    tes(tes, icon, extension);
+    extRender = new WaveObjRenderer(ext, texture);
   }
 
   public void renderExtensionFor(int... sides) {
@@ -37,7 +28,7 @@ public class PipeRenderer extends WaveObjRenderer {
     for (int s : sides) {
       GL11.glPushMatrix();
       rotateGLFor(s);
-      renderExtension();
+      extRender.render();
       GL11.glPopMatrix();
     }
   }
@@ -45,7 +36,7 @@ public class PipeRenderer extends WaveObjRenderer {
   public void tessellateExtensionFor(Tessellator tes, IIcon icon, int... sides) {
     for (int s : sides) {
       setRotationFor(s);
-      tessellateExtension(tes, icon);
+      extRender.tessellate(tes, icon);
     }
     clearRotation();
   }
