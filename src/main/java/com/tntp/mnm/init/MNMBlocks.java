@@ -8,6 +8,7 @@ import com.tntp.mnm.block.BlockGeoThermalSmelter;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatDistributor;
 import com.tntp.mnm.block.BlockHeatPipe;
+import com.tntp.mnm.block.BlockNeitherCable;
 import com.tntp.mnm.block.BlockNetworkMainframe;
 import com.tntp.mnm.block.BlockSecurityEncoder;
 import com.tntp.mnm.item.ItemBlockTooltip;
@@ -31,6 +32,8 @@ public class MNMBlocks {
   public static final Block geoThermalSmelter = null;
   public static final Block heatDistributor = null;
 
+  public static final BlockNeitherCable neitherCable = null;
+
   public static final Block mainframeCasing = null;
   public static final Block networkMainframeOn = null;
   public static final Block networkMainframeOff = null;
@@ -48,6 +51,9 @@ public class MNMBlocks {
     GameRegistry.registerBlock(new BlockHeatPipe(), "heatPipe");
     GameRegistry.registerBlock(new BlockHeatDistributor(), "heatDistributor");
     GameRegistry.registerTileEntity(TileHeatDistributor.class, "tileHeatDistributor");
+
+    GameRegistry.registerBlock(new BlockNeitherCable(), "neitherCable");
+
     GameRegistry.registerBlock(new BlockSecurityEncoder(), "securityEncoder");
     GameRegistry.registerTileEntity(TileSecurityEncoder.class, "tileSecurityEncoder");
 

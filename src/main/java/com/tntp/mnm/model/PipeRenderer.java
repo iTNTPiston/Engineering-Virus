@@ -42,51 +42,7 @@ public class PipeRenderer extends WaveObjRenderer {
     clearRotation();
   }
 
-  private void setRotationFor(int side) {
-    switch (side) {
-    case 1:
-      setRotation((float) Math.PI, ForgeDirection.EAST);
-      break;
-    case 2:
-      setRotation((float) Math.PI / 2, ForgeDirection.EAST);
-      break;
-    case 3:
-      setRotation((float) -Math.PI / 2, ForgeDirection.EAST);
-      break;
-    case 4:
-      setRotation((float) -Math.PI / 2, ForgeDirection.SOUTH);
-      break;
-    case 5:
-      setRotation((float) Math.PI / 2, ForgeDirection.SOUTH);
-      break;
-
-    }
-  }
-
-  private void rotateGLFor(int side) {
-    switch (side) {
-    case 1:// up,x-axis 180
-      GL11.glRotatef(180, 1, 0, 0);
-      break;
-    case 2:// -z
-      GL11.glRotatef(90, 1, 0, 0);
-      break;
-    case 3:// +z
-      GL11.glRotatef(90, -1, 0, 0);
-      break;
-    case 4:// -x
-      GL11.glRotatef(90, 0, 0, 1);
-      break;
-    case 5:// +x
-      GL11.glRotatef(90, 0, 0, -1);
-      break;
-    }
-  }
-
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-    // GL11.glEnable(GL11.GL_BLEND);
-    // OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1,
-    // 0);
     render();
     renderExtensionFor(2, 3);
   }

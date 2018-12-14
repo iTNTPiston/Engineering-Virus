@@ -2,6 +2,7 @@ package com.tntp.mnm.model;
 
 import org.lwjgl.opengl.GL11;
 
+import com.tntp.mnm.util.DirUtil;
 import com.tntp.mnm.util.RenderUtil;
 
 import cpw.mods.fml.relauncher.Side;
@@ -27,11 +28,12 @@ public class WaveObjRenderer {
   protected ResourceLocation texture;
 
   protected float rotation;
-  protected ForgeDirection rotationAxis;
+  protected int rotationAxis;
 
   public WaveObjRenderer(WavefrontObject obj, ResourceLocation texture) {
     this.obj = obj;
     this.texture = texture;
+    rotationAxis = -1;
   }
 
   public void render() {
@@ -60,13 +62,55 @@ public class WaveObjRenderer {
     }
   }
 
-  public void setRotation(float rad, ForgeDirection axis) {
+  public void setRotation(float rad, int axis) {
     rotation = rad;
     rotationAxis = axis;
   }
 
   public void clearRotation() {
-    rotationAxis = null;
+    rotationAxis = -1;
+    rotation = 0;
+  }
+
+  public void setRotationFor(int side) {
+    switch (side) {
+    case 1:
+      setRotation((float) Math.PI, DirUtil.EAST_PX);
+      break;
+    case 2:
+      setRotation((float) Math.PI / 2, DirUtil.EAST_PX);
+      break;
+    case 3:
+      setRotation((float) -Math.PI / 2, DirUtil.EAST_PX);
+      break;
+    case 4:
+      setRotation((float) -Math.PI / 2, DirUtil.SOUTH_PZ);
+      break;
+    case 5:
+      setRotation((float) Math.PI / 2, DirUtil.SOUTH_PZ);
+      break;
+
+    }
+  }
+
+  public void rotateGLFor(int side) {
+    switch (side) {
+    case 1:// up,x-axis 180
+      GL11.glRotatef(180, 1, 0, 0);
+      break;
+    case 2:// -z
+      GL11.glRotatef(90, 1, 0, 0);
+      break;
+    case 3:// +z
+      GL11.glRotatef(90, -1, 0, 0);
+      break;
+    case 4:// -x
+      GL11.glRotatef(90, 0, 0, 1);
+      break;
+    case 5:// +x
+      GL11.glRotatef(90, 0, 0, -1);
+      break;
+    }
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {

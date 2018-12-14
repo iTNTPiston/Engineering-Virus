@@ -1,6 +1,7 @@
 package com.tntp.mnm.init;
 
 import com.tntp.mnm.model.ItemRenderingHelper;
+import com.tntp.mnm.model.NeitherCableRenderer;
 import com.tntp.mnm.model.PipeRenderer;
 import com.tntp.mnm.model.BlockRenderingHelper;
 import com.tntp.mnm.model.WaveObjRenderer;
@@ -28,6 +29,15 @@ public class MNMRender {
     PipeRenderer heatPipeRender = new PipeRenderer(heatPipe, heatPipeExt, heatPipeTex);
     i = simple.registerWaveObj(heatPipeRender);
     simple.bindWaveObj(MNMBlocks.heatPipe, 0, i);
+
+    WavefrontObject neitherCableCover = getWaveObj("MNM_NN_COV");
+    WavefrontObject neitherCableExt = getWaveObj("MNM_NN_EXT");
+    WavefrontObject neitherCablePlug = getWaveObj("MNM_NN_HEAD");
+    ResourceLocation neitherCableTex = getTexture("MNM_NN");
+    NeitherCableRenderer neitherCableRender = new NeitherCableRenderer(neitherCableCover, neitherCableExt,
+        neitherCablePlug, neitherCableTex);
+    i = simple.registerWaveObj(neitherCableRender);
+    simple.bindWaveObj(MNMBlocks.neitherCable, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 
