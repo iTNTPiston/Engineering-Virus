@@ -61,10 +61,10 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
   public void setPlugRotationFor(int side) {
     switch (side) {
     case 2:
-      plugRender.setRotation((float) -Math.PI / 2, DirUtil.UP_PY);
+      plugRender.setRotation((float) Math.PI / 2, DirUtil.UP_PY);
       break;
     case 3:
-      plugRender.setRotation((float) Math.PI / 2, DirUtil.UP_PY);
+      plugRender.setRotation((float) -Math.PI / 2, DirUtil.UP_PY);
       break;
     case 4:
       plugRender.setRotation((float) Math.PI, DirUtil.UP_PY);
