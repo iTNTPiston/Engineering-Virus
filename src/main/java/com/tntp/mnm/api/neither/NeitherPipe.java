@@ -1,7 +1,7 @@
 package com.tntp.mnm.api.neither;
 
 import com.tntp.mnm.api.TileEntityConnection;
-import com.tntp.mnm.tileentity.STileNeither;
+import com.tntp.mnm.tileentity.STileNeithernet;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -12,11 +12,11 @@ public class NeitherPipe extends TileEntityConnection {
     super(x, y, z);
   }
 
-  public STileNeither getEnd(World world) {
+  public STileNeithernet getEnd(World world) {
     TileEntity tile = super.getTileEntity(world);
-    if (!(tile instanceof STileNeither))
+    if (!(tile instanceof STileNeithernet))
       return null;
-    return (STileNeither) tile;
+    return (STileNeithernet) tile;
   }
 
 }

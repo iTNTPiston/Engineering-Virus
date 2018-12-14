@@ -2,7 +2,7 @@ package com.tntp.mnm.model;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tntp.mnm.tileentity.STileNeither;
+import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.util.BlockUtil;
 import com.tntp.mnm.util.DirUtil;
 
@@ -15,11 +15,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
-public class NeitherCableRenderer extends WaveObjRenderer {
+public class NeithernetCableRenderer extends WaveObjRenderer {
   private WaveObjRenderer extRender;
   private WaveObjRenderer plugRender;
 
-  public NeitherCableRenderer(WavefrontObject cover, WavefrontObject ext, WavefrontObject plug,
+  public NeithernetCableRenderer(WavefrontObject cover, WavefrontObject ext, WavefrontObject plug,
       ResourceLocation texture) {
     super(cover, texture);
     extRender = new WaveObjRenderer(ext, texture);
@@ -86,8 +86,8 @@ public class NeitherCableRenderer extends WaveObjRenderer {
         int zz = z + off[2];
         TileEntity tile = world.getTileEntity(xx, yy, zz);
         boolean plug = false;
-        if (tile instanceof STileNeither) {
-          int portSide = ((STileNeither) tile).getPortSide();
+        if (tile instanceof STileNeithernet) {
+          int portSide = ((STileNeithernet) tile).getPortSide();
           if (portSide == (d ^ 1))
             plug = true;
         }

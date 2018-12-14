@@ -5,10 +5,10 @@ import com.tntp.mnm.api.TileEntityConnection;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 
-public class BlockNeitherCable extends SBlockModelSpecial implements IBlockBidirectionalPipe {
+public class BlockNeithernetCable extends SBlockModelSpecial implements IBlockBidirectionalPipe {
 
-  public BlockNeitherCable() {
-    super(Material.iron, "neitherCable");
+  public BlockNeithernetCable() {
+    super(Material.iron, "neithernetCable");
   }
 
   @Override

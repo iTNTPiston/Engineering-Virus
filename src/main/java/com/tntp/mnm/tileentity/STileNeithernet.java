@@ -8,7 +8,7 @@ import com.tntp.mnm.api.neither.NeitherPipe;
  * @author iTNTPiston
  *
  */
-public abstract class STileNeither extends STile {
+public abstract class STileNeithernet extends STile {
   private NeitherPipe pipe;
 
   public int getPortSide() {
