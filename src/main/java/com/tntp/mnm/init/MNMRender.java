@@ -37,7 +37,7 @@ public class MNMRender {
     NeithernetCableRenderer neitherCableRender = new NeithernetCableRenderer(neitherCableCover, neitherCableExt,
         neitherCablePlug, neitherCableTex);
     i = simple.registerWaveObj(neitherCableRender);
-    simple.bindWaveObj(MNMBlocks.neitherCable, 0, i);
+    simple.bindWaveObj(MNMBlocks.neithernetCable, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 
