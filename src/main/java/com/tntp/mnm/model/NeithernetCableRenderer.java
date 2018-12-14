@@ -41,9 +41,9 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
   }
 
   public void tessellateExtensionFor(Tessellator tes, IIcon icon, int side) {
-    setRotationFor(side);
+    extRender.setRotationFor(side);
     extRender.tessellate(tes, icon);
-    clearRotation();
+    extRender.clearRotation();
   }
 
   public void tessellateCoverFor(Tessellator tes, IIcon icon, int side) {
@@ -53,9 +53,27 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
   }
 
   public void tessellatePlugFor(Tessellator tes, IIcon icon, int side) {
-    setRotationFor(side);
+    setPlugRotationFor(side);
     plugRender.tessellate(tes, icon);
-    clearRotation();
+    plugRender.clearRotation();
+  }
+
+  public void setPlugRotationFor(int side) {
+    switch (side) {
+    case 2:
+      plugRender.setRotation((float) -Math.PI / 2, DirUtil.UP_PY);
+      break;
+    case 3:
+      plugRender.setRotation((float) Math.PI / 2, DirUtil.UP_PY);
+      break;
+    case 4:
+      plugRender.setRotation((float) Math.PI, DirUtil.UP_PY);
+      break;
+    case 5:
+      plugRender.setRotation(0, DirUtil.UP_PY);
+      break;
+
+    }
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -79,7 +97,7 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
     int s1 = s >> 4;
     int s2 = s & 15;
     for (int d = 0; d < 6; d++) {
-      if (d == s1 || d == s2) {
+      if (s != 0 && (d == s1 || d == s2)) {
         int[] off = DirUtil.OFFSETS[d];
         int xx = x + off[0];
         int yy = y + off[1];

@@ -36,10 +36,10 @@ public class PipeRenderer extends WaveObjRenderer {
 
   public void tessellateExtensionFor(Tessellator tes, IIcon icon, int... sides) {
     for (int s : sides) {
-      setRotationFor(s);
+      extRender.setRotationFor(s);
       extRender.tessellate(tes, icon);
     }
-    clearRotation();
+    extRender.clearRotation();
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
