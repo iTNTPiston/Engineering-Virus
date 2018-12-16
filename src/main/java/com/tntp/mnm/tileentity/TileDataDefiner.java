@@ -50,7 +50,7 @@ public class TileDataDefiner extends STileData {
       s.stackSize = 1;
       item.id = id;
       definedItems.add(item);
-      return true;
+      return true;// defined
     }
     return false;
   }
