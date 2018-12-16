@@ -40,9 +40,19 @@ public class TileDataDefiner extends STileData {
         return definedItems.get(i).id;
       }
     }
-    if (getUsedSpace() + 4 <= getTotalSpaceFromDisks())
-      return definedItems.size();
     return -1;
+  }
+
+  public boolean defineItem(ItemStack stack, int id) {
+    if (getUsedSpace() + 4 <= getTotalSpaceFromDisks()) {
+      ItemDef item = new ItemDef();
+      ItemStack s = stack.copy();
+      s.stackSize = 1;
+      item.id = id;
+      definedItems.add(item);
+      return true;
+    }
+    return false;
   }
 
   public void writeToNBT(NBTTagCompound tag) {

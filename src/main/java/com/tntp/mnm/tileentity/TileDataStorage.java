@@ -27,68 +27,57 @@ public class TileDataStorage extends STileData {
 
   /**
    * 
-   * @param query
-   * @return true if this call terminates the query
+   * @return quantity left to be taken away
    */
-  public boolean takeAway(HashMap<Integer, Integer> query) {
-    boolean finished = true;
-    for (Entry<Integer, Integer> e : query.entrySet()) {
-      if (e.getValue() == 0) {
-        continue;// skip empty ones
-      }
-      int key = e.getKey();
-      int value = e.getValue();
-      int stock = map.containsKey(key) ? map.get(key) : 0;
-      if (stock <= value) {
-        value -= stock;
-        e.setValue(value);
-        map.remove(key);
-      } else {
-        stock -= value;
-        value = 0;
-        e.setValue(0);
-        map.put(key, stock);
-      }
-      // If there are leftovers
-      if (value != 0)
-        finished = false;
+  public int takeAway(int id, int qty) {
+    // how much is stored
+    int stock = map.containsKey(id) ? map.get(id) : 0;
+    // stored is less than or equal need
+    if (stock <= qty) {
+      qty -= stock;
+      map.remove(id);// take everything out
+    } else {
+      // stored has more than need
+      stock -= qty;
+      // need becomes 0
+      qty = 0;
+      map.put(id, stock);
     }
-    return finished;
+    // return qty not taken
+    return qty;
   }
 
-  public boolean putIn(HashMap<Integer, Integer> query) {
-    boolean finished = true;
-    for (Entry<Integer, Integer> e : query.entrySet()) {
-      if (e.getValue() == 0) {
-        continue;
-      }
+  /**
+   * 
+   * @param id
+   * @param qty
+   * @return qty that cannot be put in
+   */
+  public int putIn(int id, int qty) {
+    int additionalSpace = 0;// space needed to store the definition
+    int stock = 0;// stored
 
-      int key = e.getKey();
-      int value = e.getValue();
-
-      int additionalSpace = 0;
-      int stock = 0;
-      if (!map.containsKey(key)) {
-        additionalSpace = 1;
-      } else {
-        stock = map.get(key);
-      }
-      int spaceLeft = this.getTotalSpaceFromDisks() - this.getUsedSpace() - additionalSpace;
-      int maximumPut = itemCapacity(spaceLeft);
-      if (value <= maximumPut) {
-        map.put(key, stock + value);
-        value = 0;
-        e.setValue(value);
-      } else {
-        map.put(key, stock + maximumPut);
-        value -= maximumPut;
-        e.setValue(value);
-      }
-
-      if (value != 0)
-        finished = false;
+    if (!map.containsKey(id)) {
+      additionalSpace = 1;
+    } else {
+      stock = map.get(id);
     }
-    return finished;
+    // space left in the disks, counting definition
+    int spaceLeft = this.getTotalSpaceFromDisks() - this.getUsedSpace() - additionalSpace;
+    // max qty to put
+    int maximumPut = itemCapacity(spaceLeft);
+
+    if (qty <= maximumPut) {
+      // can put all
+      map.put(id, stock + qty);
+      qty = 0;
+    } else {
+      // cannot put all
+      map.put(id, stock + maximumPut);
+      qty -= maximumPut;
+    }
+
+    return qty;
   }
 
   public int spaceNeeded(int stackSize) {

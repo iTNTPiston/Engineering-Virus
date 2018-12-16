@@ -15,4 +15,8 @@ public class STileNeithernet extends STile {
     return this.getBlockMetadata();
   }
 
+  public NeitherPipe getPipe() {
+    return pipe;
+  }
+
 }
