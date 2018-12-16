@@ -43,6 +43,17 @@ public class TileDataDefiner extends STileData {
     return -1;
   }
 
+  public ItemStack getItemDef(int id) {
+    for (int i = 0; i < definedItems.size(); i++) {
+      if (definedItems.get(i).id == id) {
+        ItemStack s = definedItems.get(i).stack.copy();
+        s.stackSize = 1;
+        return s;
+      }
+    }
+    return null;
+  }
+
   public boolean defineItem(ItemStack stack, int id) {
     if (getUsedSpace() + 4 <= getTotalSpaceFromDisks()) {
       ItemDef item = new ItemDef();

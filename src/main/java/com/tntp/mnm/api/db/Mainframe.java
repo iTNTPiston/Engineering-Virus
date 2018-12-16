@@ -62,6 +62,41 @@ public class Mainframe {
     }
   }
 
+  public ItemStack takeItemStack(int id, int qty) {
+    ItemStack stack = getDefItemStack(id);
+    if (stack == null)
+      return null;
+    int toBeTaken = qty;
+    for (Port<STileNeithernet> p : neithernetPorts) {
+      STileNeithernet t = p.getTile();
+      STileNeithernet end = t.getPipe().getEnd(world);
+      if (end instanceof TileDataStorage) {
+        toBeTaken = ((TileDataStorage) end).takeAway(id, toBeTaken);
+        if (toBeTaken == 0) {
+          break;// finished
+        }
+      }
+    }
+    int taken = qty - toBeTaken;
+    stack.stackSize = taken;
+    return stack;
+  }
+
+  public ItemStack getDefItemStack(int id) {
+    if (id < 0)
+      return null;
+    for (Port<STileNeithernet> p : neithernetPorts) {
+      STileNeithernet t = p.getTile();
+      STileNeithernet end = t.getPipe().getEnd(world);
+      if (end instanceof TileDataDefiner) {
+        ItemStack stack = ((TileDataDefiner) end).getItemDef(id);
+        if (stack != null)
+          return stack;
+      }
+    }
+    return null;
+  }
+
   /**
    * Get the definition of the itemstack, if none, a new definition will generate
    * 
