@@ -4,9 +4,9 @@ import com.tntp.mnm.model.BlockRenderingHelper;
 
 import net.minecraft.block.material.Material;
 
-public class SBlockModelSpecial extends SBlock {
+public abstract class SBlockContainerModelSpecial extends SBlockContainer {
 
-  protected SBlockModelSpecial(Material mat, String regName) {
+  protected SBlockContainerModelSpecial(Material mat, String regName) {
     super(mat, regName);
   }
 

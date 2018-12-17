@@ -14,14 +14,6 @@ public class BlockCentralProcessor extends SBlockModelSpecial implements ITileEn
     // TODO Auto-generated constructor stub
   }
 
-  public boolean renderAsNormalBlock() {
-    return false;
-  }
-
-  public boolean isOpaqueCube() {
-    return false;
-  }
-
   @Override
   public TileEntity createNewTileEntity(World world, int meta) {
     return new TileCentralProcessor();

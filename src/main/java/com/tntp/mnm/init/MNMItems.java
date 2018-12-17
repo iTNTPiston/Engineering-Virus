@@ -1,5 +1,6 @@
 package com.tntp.mnm.init;
 
+import com.tntp.mnm.item.ItemDataGroupChip;
 import com.tntp.mnm.item.ItemToolBag;
 import com.tntp.mnm.item.ItemWrench;
 import com.tntp.mnm.item.SItemTool;
@@ -25,6 +26,7 @@ public class MNMItems {
   public static final ItemScrewDriver screwDriver = null;
   public static final ItemDisplayInterface displayInterface = null;
   public static final ItemSmallHammer smallHammer = null;
+  public static final ItemDataGroupChip dataGroupChip = null;
 
   public static void loadItems() {
     GameRegistry.registerItem(new ItemWrench(), "wrench");
@@ -36,5 +38,7 @@ public class MNMItems {
     GameRegistry.registerItem(new ItemScrewDriver(), "screwDriver");
     GameRegistry.registerItem(new ItemDisplayInterface(), "displayInterface");
     GameRegistry.registerItem(new ItemSmallHammer(), "smallHammer");
+
+    GameRegistry.registerItem(new ItemDataGroupChip(), "dataGroupChip");
   }
 }

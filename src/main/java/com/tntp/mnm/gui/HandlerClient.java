@@ -5,6 +5,7 @@ import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.gui.conf.GuiConfigHeatDistributor;
 import com.tntp.mnm.gui.cont.GuiCont;
+import com.tntp.mnm.gui.cont.GuiContDataGroupDefiner;
 import com.tntp.mnm.gui.cont.GuiContSecurityEncoder;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.heat.ContainerHeatPipe;
@@ -20,6 +21,7 @@ import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.tileentity.STileHeatNode;
+import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
@@ -88,6 +90,10 @@ public class HandlerClient extends HandlerServer {
     } else if (ID == MNMGuis.getGuiID("GuiContSecurityEncoder")) {
       if (tile instanceof TileSecurityEncoder) {
         gui = new GuiContSecurityEncoder(player.inventory, (ITileCont) tile, x, y, z);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiContDataGroupDefiner")) {
+      if (tile instanceof TileDataGroupDefiner) {
+        gui = new GuiContDataGroupDefiner(player.inventory, (ITileCont) tile, x, y, z);
       }
     }
     if (gui != null) {

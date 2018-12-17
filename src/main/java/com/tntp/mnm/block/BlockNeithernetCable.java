@@ -23,14 +23,6 @@ public class BlockNeithernetCable extends SBlockModelSpecial implements IBlockBi
     return false;
   }
 
-  public boolean renderAsNormalBlock() {
-    return false;
-  }
-
-  public boolean isOpaqueCube() {
-    return false;
-  }
-
   @Override
   public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
     if (!world.isRemote && !BlockUtil.pipeConnectionStable(world, x, y, z, this)) {

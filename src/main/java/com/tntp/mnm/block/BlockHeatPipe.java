@@ -22,16 +22,6 @@ public class BlockHeatPipe extends SBlockModelSpecial implements IBlockBidirecti
     super(Material.iron, "heatPipe");
   }
 
-  @Override
-  public boolean renderAsNormalBlock() {
-    return false;
-  }
-
-  @Override
-  public boolean isOpaqueCube() {
-    return false;
-  }
-
   /**
    * Lets the block know when one of its neighbor changes. Doesn't know which
    * neighbor changed (coordinates passed are

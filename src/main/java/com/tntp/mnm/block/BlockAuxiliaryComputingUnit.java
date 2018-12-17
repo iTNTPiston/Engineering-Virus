@@ -8,12 +8,4 @@ public class BlockAuxiliaryComputingUnit extends SBlockModelSpecial {
     super(Material.iron, "auxiliaryComputingUnit");
   }
 
-  public boolean renderAsNormalBlock() {
-    return false;
-  }
-
-  public boolean isOpaqueCube() {
-    return false;
-  }
-
 }
