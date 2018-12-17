@@ -33,4 +33,8 @@ public class ContainerCont extends SContainer {
     return ((STile) tile).isValidInWorld();
   }
 
+  public ITileCont getTile() {
+    return tile;
+  }
+
 }

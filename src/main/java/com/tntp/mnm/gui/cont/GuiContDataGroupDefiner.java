@@ -3,6 +3,8 @@ package com.tntp.mnm.gui.cont;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.init.MNMResources;
+import com.tntp.mnm.network.MNMNetwork;
+import com.tntp.mnm.network.MSDataGroupDefine;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.client.gui.GuiButton;
@@ -22,28 +24,48 @@ public class GuiContDataGroupDefiner extends GuiCont {
   @Override
   public void initGui() {
     super.initGui();
-    button = new GuiButton(0, 0, 0, 100, 100, LocalUtil.localize("send<LOCAL>"));
-    this.textField = new GuiTextField(this.fontRendererObj, guiLeft + 8, guiTop + 57, 52, 9);
+    button = new GuiButton(0, guiLeft + 38, guiTop + 95, 100, 18, LocalUtil.localize("send<LOCAL>"));
+    this.textField = new GuiTextField(this.fontRendererObj, guiLeft + 24, guiTop + 80, 128, 12);
     this.textField.setTextColor(-1);
     this.textField.setDisabledTextColour(-1);
-    this.textField.setEnableBackgroundDrawing(false);
-    this.textField.setMaxStringLength(32);
+    this.textField.setEnableBackgroundDrawing(true);
+    this.textField.setMaxStringLength(64);
+    this.buttonList.add(button);
   }
 
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button == this.button) {
-
+      String groupName = textField.getText();
+      if (groupName.length() > 0) {
+        MSDataGroupDefine mes = new MSDataGroupDefine(this.inventorySlots.windowId, groupName);
+        MNMNetwork.network.sendToServer(mes);
+      }
     }
   }
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
-    GL11.glPushMatrix();
+    this.fontRendererObj.drawString("<LOCAL>Group Icon", 29, 22, 0);
+    this.fontRendererObj.drawString("<LOCAL>Chip", 29, 52, 0);
+    this.fontRendererObj.drawString("<LOCAL>Group Name", 8, 65, 0);
     GL11.glTranslatef(-guiLeft, -guiTop, 0);
     textField.drawTextBox();
-    GL11.glPopMatrix();
+    GL11.glTranslatef(guiLeft, guiTop, 0);
     super.drawGuiContainerForegroundLayer(mx, my);
+  }
+
+  @Override
+  protected void mouseClicked(int x, int y, int p_73864_3_) {
+    super.mouseClicked(x, y, p_73864_3_);
+    textField.mouseClicked(x, y, p_73864_3_);
+  }
+
+  @Override
+  protected void keyTyped(char p_73869_1_, int p_73869_2_) {
+    if (!textField.textboxKeyTyped(p_73869_1_, p_73869_2_)) {
+      super.keyTyped(p_73869_1_, p_73869_2_);
+    }
   }
 
 }

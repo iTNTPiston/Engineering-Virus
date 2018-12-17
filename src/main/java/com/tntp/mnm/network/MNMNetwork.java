@@ -19,6 +19,7 @@ public class MNMNetwork {
     try {
       regMS(MSPlayerGui.class);
       regMS(MSHeatDistConf.class);
+      regMS(MSDataGroupDefine.class);
       if (clientSide) {
         // regMCC all messages received on client side
         // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());

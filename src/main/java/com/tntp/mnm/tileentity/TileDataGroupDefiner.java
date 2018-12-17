@@ -22,7 +22,8 @@ public class TileDataGroupDefiner extends STilePOB implements ITileCont {
     ItemStack chipStack = getStackInSlot(1);
 
     ItemDataGroupChip.writeGroupToItem(chipStack, groupName, iconStack);
-
+    this.setInventorySlotContents(1, chipStack);
+    markDirty();
   }
 
   @Override
@@ -32,8 +33,8 @@ public class TileDataGroupDefiner extends STilePOB implements ITileCont {
 
   @Override
   public void addContainerSlots(List<Slot> slots) {
-    slots.add(new Slot(this, 0, 105, 19));
-    slots.add(new Slot(this, 1, 105, 46));
+    slots.add(new Slot(this, 0, 126, 19));
+    slots.add(new Slot(this, 1, 126, 46));
   }
 
 }

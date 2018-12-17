@@ -7,6 +7,7 @@ import com.tntp.mnm.init.MNMItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -24,6 +25,14 @@ public class ItemDataGroupChip extends SItem {
     if (groupName.length() != 0) {
       list.add("<LOCAL>Group: " + groupName);
     }
+  }
+
+  /**
+   * Render Pass sensitive version of hasEffect()
+   */
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack par1ItemStack, int pass) {
+    return pass == 0 && getGroupName(par1ItemStack).length() > 0;
   }
 
   /**
