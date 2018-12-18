@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class BlockCentralProcessor extends SBlockModelSpecial implements ITileEntityProvider {
 
   public BlockCentralProcessor() {
-    super(Material.iron, "centralProcessor");
+    super(Material.iron);
     // TODO Auto-generated constructor stub
   }
 

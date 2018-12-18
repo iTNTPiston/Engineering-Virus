@@ -1,10 +1,21 @@
 itemGroup.metalnetworkmainframe=Metal Network Mainframe
+
+tile.firewall.name=Firewall
+tile.heat_collector_firewall.name=Firewall Heat Collector
+tile.geo_thermal_smelter.name=Geothermal Smelter
+tile.chimney.name=Chimney
+tile.heat_pipe.name=Heat Pipe
+tile.heat_distributor.name=Heat Distributor
+
+tile.neithernet_cable.name=Neithernet Cable
 tile.blockCentralProcessor.name=Central Processor
-tile.blockHeatCollectorFirewall.name=Firewall Heat Collector
+
 tile.blockHeatEngineFirewall.name=Firewall Heat Engine
 tile.blockHeatEngineFirewall.tooltip_0=10 EK -> 1 MZ
 tile.blockHeatEngineFirewall.tooltip_1=Max 2 MZ/t 3 MZ/t
 tile.blockHeatEngineFirewall.tooltip_2=When surrounded by 3x1x3 Firewall
+
+
 
 mnm.gui.format.heat=Heat Stored: 
 mnm.gui.format.heat_value=%d / %d EK

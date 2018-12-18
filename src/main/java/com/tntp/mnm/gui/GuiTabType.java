@@ -51,7 +51,7 @@ public enum GuiTabType {
     case HEAT:
       return new ItemStack(MNMItems.wrench);
     case HEAT_PIPE:
-      return new ItemStack(MNMBlocks.heatPipe);
+      return new ItemStack(MNMBlocks.heat_pipe);
     case STRUCTURE:
       return new ItemStack(MNMItems.meterStick);
     case PROCESS:
@@ -89,7 +89,7 @@ public enum GuiTabType {
         name = "GuiHeat";
       break;
     case HEAT_PIPE:
-      if (block == MNMBlocks.heatPipe)
+      if (block == MNMBlocks.heat_pipe)
         name = "GuiHeatPipe";
       break;
     case STRUCTURE:

@@ -13,8 +13,7 @@ import net.minecraft.world.World;
 public class BlockNeithernetPort extends SBlock implements ITileEntityProvider {
 
   public BlockNeithernetPort() {
-    super(Material.iron, "neithernetPort");
-    // TODO Auto-generated constructor stub
+    super(Material.iron);
   }
 
   @Override

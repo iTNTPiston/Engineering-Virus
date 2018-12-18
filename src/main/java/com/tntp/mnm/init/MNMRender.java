@@ -18,17 +18,17 @@ public class MNMRender {
     BlockRenderingHelper simple = new BlockRenderingHelper();
 
     int i = simple.registerWaveObj(getWaveObjRenderer("MNM_CP"));
-    simple.bindWaveObj(MNMBlocks.centralProcessor, 0, i);
+    // simple.bindWaveObj(MNMBlocks.centralProcessor, 0, i);
 
-    i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
-    simple.bindWaveObj(MNMBlocks.auxiliaryComputingUnit, 0, i);
+    // i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
+    // simple.bindWaveObj(MNMBlocks.auxiliaryComputingUnit, 0, i);
 
     WavefrontObject heatPipe = getWaveObj("MNM_HP");
     WavefrontObject heatPipeExt = getWaveObj("MNM_HP_EXT");
     ResourceLocation heatPipeTex = getTexture("MNM_HP");
     PipeRenderer heatPipeRender = new PipeRenderer(heatPipe, heatPipeExt, heatPipeTex);
     i = simple.registerWaveObj(heatPipeRender);
-    simple.bindWaveObj(MNMBlocks.heatPipe, 0, i);
+    simple.bindWaveObj(MNMBlocks.heat_pipe, 0, i);
 
     WavefrontObject neitherCableCover = getWaveObj("MNM_NN_COV");
     WavefrontObject neitherCableExt = getWaveObj("MNM_NN_EXT");
@@ -37,7 +37,7 @@ public class MNMRender {
     NeithernetCableRenderer neitherCableRender = new NeithernetCableRenderer(neitherCableCover, neitherCableExt,
         neitherCablePlug, neitherCableTex);
     i = simple.registerWaveObj(neitherCableRender);
-    simple.bindWaveObj(MNMBlocks.neithernetCable, 0, i);
+    simple.bindWaveObj(MNMBlocks.neithernet_cable, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 
@@ -72,5 +72,9 @@ public class MNMRender {
 
   public static ResourceLocation getTexture(String name) {
     return MNMResources.getResource("models/" + name + ".png");
+  }
+
+  public static ResourceLocation getBlockTexture(String name) {
+    return MNMResources.getResource("textures/blocks/" + name + ".png");
   }
 }

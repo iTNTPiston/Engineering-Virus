@@ -43,7 +43,7 @@ public class TileHeatDistributor extends STileHeatNodeInventory implements IHeat
     int totalcfg = 0;
     for (int i = 0; i < getSizeInventory(); i++) {
       ItemStack stack = getStackInSlot(i);
-      if (stack != null && stack.getItem() == Item.getItemFromBlock(MNMBlocks.heatPipe)) {
+      if (stack != null && stack.getItem() == Item.getItemFromBlock(MNMBlocks.heat_pipe)) {
         totalcfg += stack.stackSize;
       }
     }
@@ -57,7 +57,7 @@ public class TileHeatDistributor extends STileHeatNodeInventory implements IHeat
   @Override
   public boolean transferToSink(IHeatSink sink, int sourceSide) {
     ItemStack stack = getStackInSlot(sourceSide);
-    if (stack == null || stack.getItem() != Item.getItemFromBlock(MNMBlocks.heatPipe))
+    if (stack == null || stack.getItem() != Item.getItemFromBlock(MNMBlocks.heat_pipe))
       return false;
     int transfer = Math.min(stack.stackSize, sink.getMaxEK() - sink.getEK());
     if (transfer > 0) {

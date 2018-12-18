@@ -18,7 +18,7 @@ public class BlockHeatDistributor extends SBlockContainer {
   private IIcon[] icons;
 
   public BlockHeatDistributor() {
-    super(Material.iron, "heatDistributor");
+    super(Material.iron);
   }
 
   @Override

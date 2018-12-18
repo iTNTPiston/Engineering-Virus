@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class BlockDataGroupDefiner extends SBlockContainer {
 
   public BlockDataGroupDefiner() {
-    super(Material.iron, "dataGroupDefiner");
+    super(Material.iron);
   }
 
   @Override

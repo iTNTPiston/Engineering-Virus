@@ -19,7 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BlockHeatPipe extends SBlockModelSpecial implements IBlockBidirectionalPipe {
 
   public BlockHeatPipe() {
-    super(Material.iron, "heatPipe");
+    super(Material.iron);
   }
 
   /**

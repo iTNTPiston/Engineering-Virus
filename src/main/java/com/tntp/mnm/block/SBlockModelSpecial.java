@@ -6,8 +6,8 @@ import net.minecraft.block.material.Material;
 
 public class SBlockModelSpecial extends SBlock {
 
-  protected SBlockModelSpecial(Material mat, String regName) {
-    super(mat, regName);
+  protected SBlockModelSpecial(Material mat) {
+    super(mat);
   }
 
   public int getRenderType() {

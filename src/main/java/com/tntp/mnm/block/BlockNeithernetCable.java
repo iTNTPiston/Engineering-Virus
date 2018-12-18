@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class BlockNeithernetCable extends SBlockModelSpecial implements IBlockBidirectionalPipe {
 
   public BlockNeithernetCable() {
-    super(Material.iron, "neithernetCable");
+    super(Material.iron);
   }
 
   @Override

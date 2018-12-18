@@ -12,7 +12,7 @@ public class MNMCreativeTabs extends CreativeTabs {
 
   @Override
   public Item getTabIconItem() {
-    return Item.getItemFromBlock(MNMBlocks.centralProcessor);
+    return Item.getItemFromBlock(MNMBlocks.neithernet_cable);
   }
 
 }

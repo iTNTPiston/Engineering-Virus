@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class BlockSecurityEncoder extends SBlockContainer {
 
   public BlockSecurityEncoder() {
-    super(Material.iron, "securityEncoder");
+    super(Material.iron);
   }
 
   @Override

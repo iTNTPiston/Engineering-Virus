@@ -22,7 +22,7 @@ public class GuiHeatPipe extends SGui {
     super(container, "mnm.gui.title.heat_pipe", x, y, z);
     endLeft = container.getNode1();
     endRight = container.getNode2();
-    middle = new ItemStack(MNMBlocks.heatPipe);
+    middle = new ItemStack(MNMBlocks.heat_pipe);
   }
 
   @Override

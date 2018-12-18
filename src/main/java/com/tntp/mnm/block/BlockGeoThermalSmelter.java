@@ -20,7 +20,7 @@ public class BlockGeoThermalSmelter extends SBlockContainer {
   private IIcon back;
 
   public BlockGeoThermalSmelter() {
-    super(Material.rock, "geoThermalSmelter");
+    super(Material.rock);
   }
 
   @Override

@@ -13,7 +13,7 @@ public class BlockChimney extends SBlock {
   private IIcon top;
 
   public BlockChimney() {
-    super(Material.rock, "chimney");
+    super(Material.rock);
   }
 
   @Override

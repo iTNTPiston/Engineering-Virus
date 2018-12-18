@@ -16,13 +16,13 @@ public class GuiStructureGeoThermalSmelter extends GuiStructure {
 
   @Override
   public void setupStructure() {
-    ItemStack mainStack = new ItemStack(MNMBlocks.geoThermalSmelter);
+    ItemStack mainStack = new ItemStack(MNMBlocks.geo_thermal_smelter);
     setMainStack(mainStack);
     Structure smelter = newStructure(mainStack, 1f, 0.2f, 0.2f, null);
     icons.add(smelter);
     Structure firewall = newStructure(new ItemStack(MNMBlocks.firewall), 1f, 0.8f, 0.2f, null);
     icons.add(firewall);
-    ItemStack heatPipe = new ItemStack(MNMBlocks.heatPipe);
+    ItemStack heatPipe = new ItemStack(MNMBlocks.heat_pipe);
     Structure downPipe = newStructure(heatPipe, 0.2f, 1f, 0.2f,
         LocalUtil.localize("mnm.gui.struct.geo_thermal_smelter.down_pipe"));
     Structure topPipe = newStructure(heatPipe, 1f, 0.2f, 1f,

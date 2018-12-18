@@ -17,11 +17,8 @@ import net.minecraft.block.material.Material;
  */
 public class SBlock extends Block {
 
-  public SBlock(Material mat, String regName) {
+  public SBlock(Material mat) {
     super(mat);
-    this.setBlockName(regName);
-    this.setCreativeTab(MNMCreativeTabs.instance);
-    this.setBlockTextureName(MNMMod.MODID + ":" + regName);
   }
 
   @SideOnly(Side.CLIENT)

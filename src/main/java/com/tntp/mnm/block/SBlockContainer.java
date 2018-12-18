@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 
 public abstract class SBlockContainer extends SBlock implements ITileEntityProvider {
 
-  public SBlockContainer(Material mat, String regName) {
-    super(mat, regName);
+  public SBlockContainer(Material mat) {
+    super(mat);
     this.isBlockContainer = true;
   }
 

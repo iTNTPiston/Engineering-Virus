@@ -16,7 +16,7 @@ public class GuiStructureHeatCollectorFirewall extends GuiStructure {
 
   @Override
   public void setupStructure() {
-    ItemStack hc = new ItemStack(MNMBlocks.heatCollectorFirewall);
+    ItemStack hc = new ItemStack(MNMBlocks.heat_collector_firewall);
     setMainStack(hc);
     Structure heatCollector = this.newStructure(hc, 1f, 0.2f, 0.2f, null);
     icons.add(heatCollector);

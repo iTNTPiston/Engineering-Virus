@@ -6,8 +6,8 @@ import net.minecraft.block.material.Material;
 
 public abstract class SBlockContainerModelSpecial extends SBlockContainer {
 
-  protected SBlockContainerModelSpecial(Material mat, String regName) {
-    super(mat, regName);
+  protected SBlockContainerModelSpecial(Material mat) {
+    super(mat);
   }
 
   public int getRenderType() {

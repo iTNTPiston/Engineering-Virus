@@ -35,7 +35,7 @@ public class HandlerServer implements IGuiHandler {
       }
     } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
       Block b = world.getBlock(x, y, z);
-      if (b == MNMBlocks.heatPipe) {
+      if (b == MNMBlocks.heat_pipe) {
         int sides = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
         int side0 = sides >> 4;
         int side1 = sides & 15;

@@ -124,8 +124,8 @@ public class STileHeatNode extends STile implements IHeatNode {
     int endOutSide = -1;
     if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
       Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
-      if (b == MNMBlocks.heatPipe) {
-        endOutSide = BlockUtil.pipeScan(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, toSink, MNMBlocks.heatPipe);
+      if (b == MNMBlocks.heat_pipe) {
+        endOutSide = BlockUtil.pipeScan(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, toSink, MNMBlocks.heat_pipe);
       } else {
         TileEntity te = world.getTileEntity(pipe.x, pipe.y, pipe.z);
         if (te instanceof IHeatNode) {
