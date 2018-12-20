@@ -13,4 +13,12 @@ public class Port<T extends STile> {
   public T getTile() {
     return tile;
   }
+
+  public void setMainframe(Mainframe mf) {
+    this.mf = mf;
+  }
+
+  public void setTile(T tile) {
+    this.tile = tile;
+  }
 }

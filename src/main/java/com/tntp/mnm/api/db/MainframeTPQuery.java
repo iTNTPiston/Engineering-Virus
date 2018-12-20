@@ -14,13 +14,15 @@ import net.minecraft.nbt.NBTTagCompound;
  * @author iTNTPiston
  *
  */
-public class MainframeQuery {
+public class MainframeTPQuery implements IQuery {
+  private int priority;
   private List<Take> takeList;
 
   private static class Take {
     int id, qty;// put is id=-1
   }
 
+  @Override
   public void execute(Mainframe mf, IInventory inv, int startSlot, int endSlot) {
     for (Take t : takeList) {
       if (t.id >= 0) {
@@ -66,6 +68,11 @@ public class MainframeQuery {
       if (s.stackSize == 0)
         return;
     }
+  }
+
+  @Override
+  public int getPriority() {
+    return priority;
   }
 
 }

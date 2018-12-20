@@ -39,6 +39,12 @@ public class MNMRender {
     i = simple.registerWaveObj(neitherCableRender);
     simple.bindWaveObj(MNMBlocks.neithernet_cable, 0, i);
 
+    WavefrontObject motherboard = getWaveObj("mother_board");
+    ResourceLocation motherboardTex = getBlockTexture("mother_board");
+    WaveObjRenderer motherboardRender = new WaveObjRenderer(motherboard, motherboardTex);
+    i = simple.registerWaveObj(motherboardRender);
+    simple.bindWaveObj(MNMBlocks.mother_board, 0, i);
+
     RenderingRegistry.registerBlockHandler(simple);
 
     ItemRenderingHelper itemRender = ItemRenderingHelper.instance;

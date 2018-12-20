@@ -123,7 +123,8 @@ public class WaveObjRenderer {
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
     tes.setColorOpaque_F(1, 1, 1);
     tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, 0);
+    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture
+        : block.getIcon(0, world.getBlockMetadata(x, y, z));
     tessellate(tes, icon);
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;

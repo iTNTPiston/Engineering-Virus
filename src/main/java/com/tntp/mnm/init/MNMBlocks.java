@@ -9,6 +9,7 @@ import com.tntp.mnm.block.BlockGeoThermalSmelter;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatDistributor;
 import com.tntp.mnm.block.BlockHeatPipe;
+import com.tntp.mnm.block.BlockMotherboard;
 import com.tntp.mnm.block.BlockNeithernetCable;
 import com.tntp.mnm.block.BlockNeithernetPort;
 import com.tntp.mnm.block.BlockNetworkMainframe;
@@ -38,6 +39,7 @@ public class MNMBlocks {
   public static final Block heat_distributor = null;
 
   public static final BlockNeithernetCable neithernet_cable = null;
+  public static final Block mother_board = null;
 
   public static final Block dataGroupDefiner = null;
 
@@ -53,6 +55,7 @@ public class MNMBlocks {
     regBlock(new BlockHeatDistributor(), "heat_distributor");
     regTileEntity(TileHeatDistributor.class);
 
+    regBlock(new BlockMotherboard(), "mother_board");
     regBlock(new BlockNeithernetCable(), "neithernet_cable");
     regBlock(new BlockNeithernetPort(), "neithernet_port");
     regTileEntity(TileNeithernetPort.class);

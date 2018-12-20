@@ -1,5 +1,7 @@
 package com.tntp.mnm.tileentity;
 
+import java.util.List;
+
 import com.tntp.mnm.api.neither.NeitherPipe;
 
 /**
@@ -17,6 +19,17 @@ public class STileNeithernet extends STile {
 
   public NeitherPipe getPipe() {
     return pipe;
+  }
+
+  /**
+   * Exclude intermediate connection such as routers, which should override
+   * this<br>
+   * Ports must also override this
+   * 
+   * @param list
+   */
+  public void addFinalTilesTo(List<STileNeithernet> list) {
+    list.add(this);
   }
 
 }

@@ -2,20 +2,29 @@ package com.tntp.mnm.api.db;
 
 import java.util.List;
 
-import com.tntp.mnm.tileentity.STile;
+import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefiner;
 import com.tntp.mnm.tileentity.TileDataStorage;
+import com.tntp.mnm.tileentity.TileNeithernetPort;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class Mainframe {
+  private static final int MAX_HORIZONTAL = 5, MAX_POB_RADIUS = 2;
   private World world;
   private TileCentralProcessor cpu;
   private List<Port<STileNeithernet>> neithernetPorts;
+  /**
+   * excluding routers and ports on this board
+   */
+  private List<STileNeithernet> allNnetTiles;
   private int nextDefId;
+  private boolean scanedInTick;
 
   public Mainframe(TileCentralProcessor cpu) {
     this.cpu = cpu;
@@ -33,22 +42,85 @@ public class Mainframe {
     return world;
   }
 
+  public void scan() {
+    if (!scanedInTick) {
+      scanedInTick = true;
+      // scan structure first (ports)
+      neithernetPorts.clear();
+      boolean[][] alreadyScanned = new boolean[MAX_HORIZONTAL * 2 + 1][MAX_HORIZONTAL * 2 + 1];
+      // update the list of ports
+      scanBoardAt(cpu.xCoord, cpu.yCoord, cpu.zCoord, alreadyScanned, MAX_HORIZONTAL, MAX_HORIZONTAL);
+
+      allNnetTiles.clear();
+      // scan for all nnet tiles by iterating ports
+      for (Port<STileNeithernet> nnetport : neithernetPorts) {
+        STileNeithernet portTile = nnetport.getTile();
+        portTile.addFinalTilesTo(allNnetTiles);
+      }
+    }
+  }
+
+  private void scanBoardAt(int x, int y, int z, boolean[][] alreadyScanned, int i, int j) {
+    if (alreadyScanned[i][j])
+      return;
+    alreadyScanned[i][j] = true;
+    Block block = world.getBlock(x, y, z);
+    boolean valid = false;
+    if (block == MNMBlocks.mother_board) {
+      valid = true;
+    } else if (block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      valid = true;
+      if (tile == cpu) {
+      } else if (tile instanceof TileNeithernetPort) {
+        Port<STileNeithernet> p = ((TileNeithernetPort) tile).getPort();
+        p.setMainframe(this);
+        neithernetPorts.add(p);
+      } else {
+        valid = false;
+      }
+    }
+
+    if (valid) {
+      if (i > 0) {
+        scanBoardAt(x - 1, y, z, alreadyScanned, i - 1, j);
+      }
+      if (i < alreadyScanned.length - 1) {
+        scanBoardAt(x + 1, y, z, alreadyScanned, i + 1, j);
+      }
+      if (j > 0) {
+        scanBoardAt(x, y, z - 1, alreadyScanned, i, j - 1);
+      }
+      if (j < alreadyScanned.length - 1) {
+        scanBoardAt(x, y, z + 1, alreadyScanned, i, j + 1);
+      }
+    }
+  }
+
+  public void setNeedScan() {
+    scanedInTick = false;
+  }
+
   public void insertItemStack(ItemStack... stack) {
+    // make sure the tile data is up-to-date
+    scan();
+
+    // get definition of all itesm
     int[] def = new int[stack.length];
     for (int i = 0; i < def.length; i++) {
       def[i] = defineItem(stack[i]);
     }
-    for (Port<STileNeithernet> p : neithernetPorts) {
-      STileNeithernet t = p.getTile();
-      STileNeithernet end = t.getPipe().getEnd(world);
-      if (end instanceof TileDataStorage) {
+
+    // scan all neithernet tiles for data storage
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof TileDataStorage) {
         boolean done = true;
         for (int i = 0; i < def.length; i++) {
           if (def[i] < 0)
             continue;
           if (stack[i] == null)
             continue;
-          int left = ((TileDataStorage) end).putIn(def[i], stack[i].stackSize);
+          int left = ((TileDataStorage) tile).putIn(def[i], stack[i].stackSize);
           if (left == 0) {
             stack[i] = null;
           } else {
@@ -63,15 +135,17 @@ public class Mainframe {
   }
 
   public ItemStack takeItemStack(int id, int qty) {
+    // check
+    scan();
+    // define item
     ItemStack stack = getDefItemStack(id);
     if (stack == null)
       return null;
     int toBeTaken = qty;
-    for (Port<STileNeithernet> p : neithernetPorts) {
-      STileNeithernet t = p.getTile();
-      STileNeithernet end = t.getPipe().getEnd(world);
-      if (end instanceof TileDataStorage) {
-        toBeTaken = ((TileDataStorage) end).takeAway(id, toBeTaken);
+
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof TileDataStorage) {
+        toBeTaken = ((TileDataStorage) tile).takeAway(id, toBeTaken);
         if (toBeTaken == 0) {
           break;// finished
         }
@@ -85,11 +159,11 @@ public class Mainframe {
   public ItemStack getDefItemStack(int id) {
     if (id < 0)
       return null;
-    for (Port<STileNeithernet> p : neithernetPorts) {
-      STileNeithernet t = p.getTile();
-      STileNeithernet end = t.getPipe().getEnd(world);
-      if (end instanceof TileDataDefiner) {
-        ItemStack stack = ((TileDataDefiner) end).getItemDef(id);
+    scan();
+    // scan data definers for definition
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof TileDataDefiner) {
+        ItemStack stack = ((TileDataDefiner) tile).getItemDef(id);
         if (stack != null)
           return stack;
       }
@@ -104,30 +178,33 @@ public class Mainframe {
    * @return the definition id of the stack, or -1 if space is full
    */
   public int defineItem(ItemStack stack) {
+    if (nextDefId < 0)// integer overflow safety
+      return -1;
     if (stack == null)
       return -1;
-    for (Port<STileNeithernet> p : neithernetPorts) {
-      STileNeithernet t = p.getTile();
-      STileNeithernet end = t.getPipe().getEnd(world);
-      if (end instanceof TileDataDefiner) {
-        int id = ((TileDataDefiner) end).getItemDefID(stack);
+    // check tile data
+    scan();
+    // scan for existing definition first
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof TileDataDefiner) {
+        int id = ((TileDataDefiner) tile).getItemDefID(stack);
         if (id >= 0)
-          return id;
+          return id;// found definition
       }
     }
-    // define new
+
+    // if definition not found, define new
     int id = nextDefId;
-    for (Port<STileNeithernet> p : neithernetPorts) {
-      STileNeithernet t = p.getTile();
-      STileNeithernet end = t.getPipe().getEnd(world);
-      if (end instanceof TileDataDefiner) {
-        boolean defined = ((TileDataDefiner) end).defineItem(stack, id);
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof TileDataDefiner) {
+        boolean defined = ((TileDataDefiner) tile).defineItem(stack, id);
         if (defined) {
           nextDefId++;
           return id;
         }
       }
     }
+
     // cannot define
     return -1;
   }
