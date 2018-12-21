@@ -40,6 +40,7 @@ public class MNMBlocks {
 
   public static final BlockNeithernetCable neithernet_cable = null;
   public static final Block mother_board = null;
+  public static final Block central_processor = null;
 
   public static final Block dataGroupDefiner = null;
 
@@ -56,6 +57,8 @@ public class MNMBlocks {
     regTileEntity(TileHeatDistributor.class);
 
     regBlock(new BlockMotherboard(), "mother_board");
+    regBlock(new BlockCentralProcessor(), "central_processor");
+    regTileEntity(TileCentralProcessor.class);
     regBlock(new BlockNeithernetCable(), "neithernet_cable");
     regBlock(new BlockNeithernetPort(), "neithernet_port");
     regTileEntity(TileNeithernetPort.class);

@@ -19,6 +19,7 @@ public class BlockMotherboard extends SBlockModelSpecial {
 
   public BlockMotherboard() {
     super(Material.iron);
+    this.setBlockBounds(0, 0, 0, 1, 1 / 8f, 1);
   }
 
   @Override
@@ -38,30 +39,11 @@ public class BlockMotherboard extends SBlockModelSpecial {
   }
 
   @Override
-  public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-    super.onBlockPlacedBy(world, x, y, z, entity, stack);
+  public void onBlockAdded(World world, int x, int y, int z) {
+    super.onBlockAdded(world, x, y, z);
     if (!world.isRemote) {
       world.setBlockMetadataWithNotify(x, y, z, RandomUtil.RAND.nextInt(16), 2);
     }
   }
-
-//  @Override
-//  public void onBlockAdded(World world, int x, int y, int z) {
-//    super.onBlockAdded(world, x, y, z);
-//    
-//  }
-
-//  /**
-//   * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z,
-//   * side, hitX, hitY, hitZ, block metadata
-//   */
-//  @Override
-//  public int onBlockPlaced(World world, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_,
-//      float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
-//    if (!world.isRemote)
-//      return RandomUtil.RAND.nextInt(16);
-//    else
-//      return 15;
-//  }
 
 }

@@ -1,6 +1,7 @@
 package com.tntp.mnm.init;
 
 import com.tntp.mnm.model.ItemRenderingHelper;
+import com.tntp.mnm.model.MotherboardComponentRenderer;
 import com.tntp.mnm.model.NeithernetCableRenderer;
 import com.tntp.mnm.model.PipeRenderer;
 import com.tntp.mnm.model.BlockRenderingHelper;
@@ -16,10 +17,7 @@ public class MNMRender {
     BlockRenderingHelper.id = RenderingRegistry.getNextAvailableRenderId();
 
     BlockRenderingHelper simple = new BlockRenderingHelper();
-
-    int i = simple.registerWaveObj(getWaveObjRenderer("MNM_CP"));
-    // simple.bindWaveObj(MNMBlocks.centralProcessor, 0, i);
-
+    int i;
     // i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
     // simple.bindWaveObj(MNMBlocks.auxiliaryComputingUnit, 0, i);
 
@@ -44,6 +42,12 @@ public class MNMRender {
     WaveObjRenderer motherboardRender = new WaveObjRenderer(motherboard, motherboardTex);
     i = simple.registerWaveObj(motherboardRender);
     simple.bindWaveObj(MNMBlocks.mother_board, 0, i);
+
+    WavefrontObject cpu = getWaveObj("cpu");
+    ResourceLocation cpuTex = getBlockTexture("central_processor");
+    WaveObjRenderer cpuRender = new MotherboardComponentRenderer(motherboard, cpu, cpuTex);
+    i = simple.registerWaveObj(cpuRender);
+    simple.bindWaveObj(MNMBlocks.central_processor, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);
 

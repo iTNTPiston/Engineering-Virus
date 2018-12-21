@@ -11,7 +11,7 @@ public class BlockCentralProcessor extends SBlockModelSpecial implements ITileEn
 
   public BlockCentralProcessor() {
     super(Material.iron);
-    // TODO Auto-generated constructor stub
+    this.setBlockBounds(0, 0, 0, 1, 1 / 4f, 1);
   }
 
   @Override
