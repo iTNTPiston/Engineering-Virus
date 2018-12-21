@@ -26,7 +26,8 @@ import net.minecraft.world.World;
 
 public enum GuiTabType {
   HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
-  PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f), CONTAINER("container", 0.8f, 0.8f, 1f);
+  PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f), CARD_ACCESS("graphic_interface", 0.8f, 0.8f, 1f),
+  DATA_ACCESS("graphic_interface", 0.7f, 0.7f, 1f);
   @SideOnly(Side.CLIENT)
   private static RenderItem itemRender;
   @SideOnly(Side.CLIENT)

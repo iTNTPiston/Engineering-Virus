@@ -5,7 +5,7 @@ import com.tntp.mnm.item.ItemToolBag;
 import com.tntp.mnm.item.ItemWrench;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
-import com.tntp.mnm.item.tools.ItemDisplayInterface;
+import com.tntp.mnm.item.tools.ItemDataReader;
 import com.tntp.mnm.item.tools.ItemEKToolUniversal;
 import com.tntp.mnm.item.tools.ItemMeterStick;
 import com.tntp.mnm.item.tools.ItemScrewDriver;
@@ -24,7 +24,7 @@ public class MNMItems {
   public static final ItemToolUniversal toolUniversal = null;
   public static final ItemCommonWrench commonWrench = null;
   public static final ItemScrewDriver screwDriver = null;
-  public static final ItemDisplayInterface displayInterface = null;
+  public static final ItemDataReader data_reader = null;
   public static final ItemSmallHammer smallHammer = null;
   public static final ItemDataGroupChip dataGroupChip = null;
 
@@ -36,7 +36,7 @@ public class MNMItems {
     GameRegistry.registerItem(new ItemToolUniversal(), "toolUniversal");
     GameRegistry.registerItem(new ItemCommonWrench(), "commonWrench");
     GameRegistry.registerItem(new ItemScrewDriver(), "screwDriver");
-    GameRegistry.registerItem(new ItemDisplayInterface(), "displayInterface");
+    GameRegistry.registerItem(new ItemDataReader(), "displayInterface");
     GameRegistry.registerItem(new ItemSmallHammer(), "smallHammer");
 
     GameRegistry.registerItem(new ItemDataGroupChip(), "dataGroupChip");
