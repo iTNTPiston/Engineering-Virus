@@ -33,8 +33,7 @@ public class ItemToolBag extends SItem {
     }
   }
 
-  public ItemToolBag(String regName, int lim) {
-    super(regName);
+  public ItemToolBag(int lim) {
     limit = lim;
     this.setMaxStackSize(1);
   }

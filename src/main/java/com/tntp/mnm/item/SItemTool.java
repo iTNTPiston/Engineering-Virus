@@ -18,8 +18,7 @@ public class SItemTool extends SItemSpecialModel {
   // thermometer (heat)
   private int guiCapabilities;
 
-  public SItemTool(String regName, GuiTabType... guiCap) {
-    super(regName);
+  public SItemTool(GuiTabType... guiCap) {
     this.setMaxStackSize(1);
     guiCapabilities = 0;
     for (GuiTabType gc : guiCap) {

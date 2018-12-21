@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 public class ItemSmallHammer extends SItemTool {
 
   public ItemSmallHammer() {
-    super("smallHammer");
   }
 
   @Override

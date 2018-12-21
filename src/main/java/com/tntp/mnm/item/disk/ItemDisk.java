@@ -13,8 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class ItemDisk extends SItem {
   public int dataSize;// 256 items take 1, 1 data def takes 4
 
-  public ItemDisk(String regName, int size) {
-    super(regName);
+  public ItemDisk(int size) {
     dataSize = size;
   }
 

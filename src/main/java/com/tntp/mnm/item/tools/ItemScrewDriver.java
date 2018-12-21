@@ -6,7 +6,7 @@ import com.tntp.mnm.item.SItemTool;
 public class ItemScrewDriver extends SItemTool {
 
   public ItemScrewDriver() {
-    super("screwDriver", GuiTabType.CONFIG);
+    super(GuiTabType.CONFIG);
   }
 
 }

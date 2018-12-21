@@ -6,9 +6,8 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 
 public class SItemSpecialModel extends SItem {
 
-  public SItemSpecialModel(String regName) {
-    super(regName);
-    // TODO Auto-generated constructor stub
+  public SItemSpecialModel() {
+    super();
   }
 
   @SideOnly(Side.CLIENT)

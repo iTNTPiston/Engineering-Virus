@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class ItemCommonWrench extends SItemTool {
 
   public ItemCommonWrench() {
-    super("commonWrench", GuiTabType.PROCESS);
+    super(GuiTabType.PROCESS);
   }
 
   @Override

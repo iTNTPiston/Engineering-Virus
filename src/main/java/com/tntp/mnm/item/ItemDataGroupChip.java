@@ -13,7 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class ItemDataGroupChip extends SItem {
   public ItemDataGroupChip() {
-    super("dataGroupChip");
   }
 
   /**
@@ -74,7 +73,7 @@ public class ItemDataGroupChip extends SItem {
   public static void writeGroupToItem(ItemStack stack, String group, ItemStack icon) {
     if (icon == null)
       return;
-    if (stack == null || stack.getItem() != MNMItems.dataGroupChip)
+    if (stack == null || stack.getItem() != MNMItems.data_group_chip)
       return;
     if (group == null || group.length() == 0)
       return;

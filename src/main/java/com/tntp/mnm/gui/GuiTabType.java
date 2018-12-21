@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.gui.conf.ITileConfig;
 import com.tntp.mnm.gui.cont.ITileCont;
+import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
@@ -50,17 +51,17 @@ public enum GuiTabType {
   public ItemStack getIconStack() {
     switch (this) {
     case HEAT:
-      return new ItemStack(MNMItems.wrench);
+      return new ItemStack(Items.apple);
     case HEAT_PIPE:
       return new ItemStack(MNMBlocks.heat_pipe);
     case STRUCTURE:
-      return new ItemStack(MNMItems.meterStick);
+      return new ItemStack(MNMItems.meter_stick);
     case PROCESS:
-      return new ItemStack(MNMItems.commonWrench);
+      return new ItemStack(MNMItems.common_wrench);
     case CONFIG:
-      return new ItemStack(MNMItems.screwDriver);
-    case CONTAINER:
-      return new ItemStack(MNMItems.displayInterface);
+      return new ItemStack(MNMItems.screw_driver);
+    case DATA_ACCESS:
+      return new ItemStack(MNMItems.data_reader);
     default:
       return new ItemStack(Items.apple);
     }
@@ -107,8 +108,8 @@ public enum GuiTabType {
         name = ((ITileConfig) tile).getConfigGui();
       }
       break;
-    case CONTAINER:
-      if (tile instanceof ITileCont) {
+    case DATA_ACCESS:
+      if (tile instanceof ITileDataCont) {
         name = ((ITileCont) tile).getContainerGui();
       }
       break;

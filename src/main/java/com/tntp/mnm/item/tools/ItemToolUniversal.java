@@ -6,7 +6,7 @@ import com.tntp.mnm.item.SItemTool;
 public class ItemToolUniversal extends SItemTool {
 
   public ItemToolUniversal() {
-    super("toolUniversal", GuiTabType.values());
+    super(GuiTabType.values());
     // TODO Auto-generated constructor stub
   }
 

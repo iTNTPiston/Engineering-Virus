@@ -6,7 +6,7 @@ import com.tntp.mnm.item.SItemTool;
 public class ItemEKToolUniversal extends SItemTool {
 
   public ItemEKToolUniversal() {
-    super("eKToolUniversal", GuiTabType.HEAT, GuiTabType.HEAT_PIPE);
+    super(GuiTabType.HEAT, GuiTabType.HEAT_PIPE);
   }
 
 }

@@ -6,7 +6,7 @@ import com.tntp.mnm.item.SItemTool;
 public class ItemDataReader extends SItemTool {
 
   public ItemDataReader() {
-    super("displayInterface", GuiTabType.CONTAINER);
+    super(GuiTabType.DATA_ACCESS);
   }
 
 }

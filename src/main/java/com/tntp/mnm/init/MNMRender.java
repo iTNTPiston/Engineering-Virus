@@ -21,30 +21,30 @@ public class MNMRender {
     // i = simple.registerWaveObj(getWaveObjRenderer("MNM_ACU"));
     // simple.bindWaveObj(MNMBlocks.auxiliaryComputingUnit, 0, i);
 
-    WavefrontObject heatPipe = getWaveObj("MNM_HP");
-    WavefrontObject heatPipeExt = getWaveObj("MNM_HP_EXT");
-    ResourceLocation heatPipeTex = getTexture("MNM_HP");
+    WavefrontObject heatPipe = getWaveObj("heat_pipe/main");
+    WavefrontObject heatPipeExt = getWaveObj("heat_pipe/ext");
+    ResourceLocation heatPipeTex = getBlockTexture("heat_pipe");
     PipeRenderer heatPipeRender = new PipeRenderer(heatPipe, heatPipeExt, heatPipeTex);
     i = simple.registerWaveObj(heatPipeRender);
     simple.bindWaveObj(MNMBlocks.heat_pipe, 0, i);
 
-    WavefrontObject neitherCableCover = getWaveObj("MNM_NN_COV");
-    WavefrontObject neitherCableExt = getWaveObj("MNM_NN_EXT");
-    WavefrontObject neitherCablePlug = getWaveObj("MNM_NN_HEAD");
-    ResourceLocation neitherCableTex = getTexture("MNM_NN");
+    WavefrontObject neitherCableCover = getWaveObj("neithernet_cable/cover");
+    WavefrontObject neitherCableExt = getWaveObj("neithernet_cable/ext");
+    WavefrontObject neitherCablePlug = getWaveObj("neithernet_cable/plug");
+    ResourceLocation neitherCableTex = getBlockTexture("neithernet_cable");
     NeithernetCableRenderer neitherCableRender = new NeithernetCableRenderer(neitherCableCover, neitherCableExt,
         neitherCablePlug, neitherCableTex);
     i = simple.registerWaveObj(neitherCableRender);
     simple.bindWaveObj(MNMBlocks.neithernet_cable, 0, i);
 
-    WavefrontObject motherboard = getWaveObj("mother_board");
+    WavefrontObject motherboard = getWaveObj("mother_board/0");
     ResourceLocation motherboardTex = getBlockTexture("mother_board");
     WaveObjRenderer motherboardRender = new WaveObjRenderer(motherboard, motherboardTex);
     i = simple.registerWaveObj(motherboardRender);
     simple.bindWaveObj(MNMBlocks.mother_board, 0, i);
 
-    WavefrontObject cpu = getWaveObj("cpu");
-    ResourceLocation cpuTex = getBlockTexture("central_processor");
+    WavefrontObject cpu = getWaveObj("central_processor/0");
+    ResourceLocation cpuTex = getBlockTexture("central_processor/0");
     WaveObjRenderer cpuRender = new MotherboardComponentRenderer(motherboard, cpu, cpuTex);
     i = simple.registerWaveObj(cpuRender);
     simple.bindWaveObj(MNMBlocks.central_processor, 0, i);
@@ -52,17 +52,17 @@ public class MNMRender {
     RenderingRegistry.registerBlockHandler(simple);
 
     ItemRenderingHelper itemRender = ItemRenderingHelper.instance;
-    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_MS"));
-    itemRender.bindWaveObj(MNMItems.meterStick, i);
+    i = itemRender.registerWaveObj(getWaveObjRenderer("meter_stick/0"));
+    itemRender.bindWaveObj(MNMItems.meter_stick, i);
 
-    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_CW"));
-    itemRender.bindWaveObj(MNMItems.commonWrench, i);
+    i = itemRender.registerWaveObj(getWaveObjRenderer("common_wrench/0"));
+    itemRender.bindWaveObj(MNMItems.common_wrench, i);
 
     i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_SD"));
-    itemRender.bindWaveObj(MNMItems.screwDriver, i);
+    itemRender.bindWaveObj(MNMItems.screw_driver, i);
 
     i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_SH"));
-    itemRender.bindWaveObj(MNMItems.smallHammer, i);
+    itemRender.bindWaveObj(MNMItems.small_hammer, i);
 
   }
 
