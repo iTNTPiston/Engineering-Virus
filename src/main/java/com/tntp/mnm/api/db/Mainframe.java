@@ -23,6 +23,7 @@ public class Mainframe {
    * excluding routers and ports on this board
    */
   private List<STileNeithernet> allNnetTiles;
+
   private int nextDefId;
   private boolean scanedInTick;
 
