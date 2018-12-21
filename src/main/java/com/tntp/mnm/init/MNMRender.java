@@ -44,7 +44,7 @@ public class MNMRender {
     simple.bindWaveObj(MNMBlocks.mother_board, 0, i);
 
     WavefrontObject cpu = getWaveObj("central_processor/0");
-    ResourceLocation cpuTex = getBlockTexture("central_processor/0");
+    ResourceLocation cpuTex = getBlockTexture("central_processor");
     WaveObjRenderer cpuRender = new MotherboardComponentRenderer(motherboard, cpu, cpuTex);
     i = simple.registerWaveObj(cpuRender);
     simple.bindWaveObj(MNMBlocks.central_processor, 0, i);
@@ -58,10 +58,10 @@ public class MNMRender {
     i = itemRender.registerWaveObj(getWaveObjRenderer("common_wrench/0"));
     itemRender.bindWaveObj(MNMItems.common_wrench, i);
 
-    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_SD"));
+    i = itemRender.registerWaveObj(getWaveObjRenderer("screw_driver/0"));
     itemRender.bindWaveObj(MNMItems.screw_driver, i);
 
-    i = itemRender.registerWaveObj(getWaveObjRenderer("MNM_SH"));
+    i = itemRender.registerWaveObj(getWaveObjRenderer("small_hammer/0"));
     itemRender.bindWaveObj(MNMItems.small_hammer, i);
 
   }

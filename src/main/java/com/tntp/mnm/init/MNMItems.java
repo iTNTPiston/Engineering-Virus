@@ -33,15 +33,14 @@ public class MNMItems {
     // GameRegistry.registerItem(new ItemWrench(), "wrench");
     // GameRegistry.registerItem(new ItemToolBag("toolBag", 5), "toolBag");
 
-    GameRegistry.registerItem(new ItemEKToolUniversal(), "ek_tool_universal");
-    GameRegistry.registerItem(new ItemMeterStick(), "meter_stick");
-    GameRegistry.registerItem(new ItemToolUniversal(), "tool_universal");
-    GameRegistry.registerItem(new ItemCommonWrench(), "common_wrench");
-    GameRegistry.registerItem(new ItemScrewDriver(), "screw_driver");
-    GameRegistry.registerItem(new ItemDataReader(), "data_reader");
-    GameRegistry.registerItem(new ItemSmallHammer(), "small_hammer");
-
-    GameRegistry.registerItem(new ItemDataGroupChip(), "data_group_chip");
+    regItem(new ItemEKToolUniversal(), "ek_tool_universal");
+    regItem(new ItemMeterStick(), "meter_stick");
+    regItem(new ItemToolUniversal(), "tool_universal");
+    regItem(new ItemCommonWrench(), "common_wrench");
+    regItem(new ItemScrewDriver(), "screw_driver");
+    regItem(new ItemDataReader(), "data_reader");
+    regItem(new ItemSmallHammer(), "small_hammer");
+    regItem(new ItemDataGroupChip(), "data_group_chip");
   }
 
   private static void regItem(Item item, String name) {
