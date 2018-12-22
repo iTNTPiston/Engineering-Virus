@@ -47,10 +47,12 @@ public class TileCentralProcessor extends STile {
       if (mainframe.getWorld() == null) {
         mainframe.setWorld(worldObj);
       }
-      if (scanCD >= scanTotal) {
+      if (scanCD <= 0) {
         // mandatory scan
         mainframe.scan();
-        scanCD = 0;
+        scanCD = scanTotal;
+      } else {
+        scanCD--;
       }
 
       // execution power check

@@ -8,6 +8,8 @@ import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
 import com.tntp.mnm.item.tools.ItemDataReader;
 import com.tntp.mnm.item.tools.ItemEKToolUniversal;
+import com.tntp.mnm.item.tools.ItemEraserCard;
+import com.tntp.mnm.item.tools.ItemIDCard;
 import com.tntp.mnm.item.tools.ItemMeterStick;
 import com.tntp.mnm.item.tools.ItemScrewDriver;
 import com.tntp.mnm.item.tools.ItemSmallHammer;
@@ -31,6 +33,8 @@ public class MNMItems {
   public static final ItemDataGroupChip data_group_chip = null;
 
   public static final ItemDisk disk = null;
+  public static final ItemIDCard id_card = null;
+  public static final ItemEraserCard eraser_Card = null;
 
   public static void loadItems() {
     // GameRegistry.registerItem(new ItemWrench(), "wrench");
@@ -45,6 +49,8 @@ public class MNMItems {
     regItem(new ItemSmallHammer(), "small_hammer");
     regItem(new ItemDataGroupChip(), "data_group_chip");
     regItem(new ItemDisk(4), "disk");
+    regItem(new ItemIDCard(), "id_card");
+    regItem(new ItemEraserCard(), "eraser_card");
   }
 
   private static void regItem(Item item, String name) {

@@ -3,11 +3,13 @@ package com.tntp.mnm.gui;
 import com.tntp.mnm.api.TileEntityConnection;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
+import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.block.IBlockBidirectionalPipe;
 import com.tntp.mnm.gui.conf.ContainerConfigHeatDistributor;
 import com.tntp.mnm.gui.cont.ContainerCont;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.cont.ITileDataCont;
+import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.gui.heat.ContainerHeat;
 import com.tntp.mnm.gui.heat.ContainerConnection;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
@@ -83,6 +85,12 @@ public class HandlerServer implements IGuiHandler {
         if (((ITileDataCont) tile).canReadData()) {
           canOpen = true;
         }
+      }
+      if (tile instanceof ITileSecuredCont) {
+        Security s = ((ITileSecuredCont) tile).getSecurity();
+        ItemStack using = player.getCurrentEquippedItem();
+        if (s.securityCheck(using))
+          canOpen = true;
       } else if (tile instanceof ITileCont) {
         canOpen = true;
       }

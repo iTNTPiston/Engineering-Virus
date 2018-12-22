@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tntp.mnm.init.MNMBlocks;
+import com.tntp.mnm.tileentity.STileDataStorage;
 import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.tileentity.STilePOB;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefiner;
-import com.tntp.mnm.tileentity.STileDataStorage;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 
 import net.minecraft.block.Block;
@@ -34,6 +34,9 @@ public class Mainframe {
 
   public Mainframe(TileCentralProcessor cpu) {
     this.cpu = cpu;
+    neithernetPorts = new ArrayList<Port<STileNeithernet>>();
+    allNnetTiles = new ArrayList<STileNeithernet>();
+    boardPorts = new ArrayList<Port<STilePOB>>();
   }
 
   public boolean isValid() {
@@ -54,7 +57,13 @@ public class Mainframe {
       // clear structure list
       // structureList.clear();
       // scan structure first (ports)
+      for (Port<STileNeithernet> port : neithernetPorts) {
+        port.setMainframe(null);
+      }
       neithernetPorts.clear();
+      for (Port<STilePOB> port : boardPorts) {
+        port.setMainframe(null);
+      }
       boardPorts.clear();
       boolean[][] alreadyScanned = new boolean[MAX_HORIZONTAL * 2 + 1][MAX_HORIZONTAL * 2 + 1];
       // update the list of ports

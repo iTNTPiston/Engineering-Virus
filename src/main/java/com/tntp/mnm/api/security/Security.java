@@ -4,6 +4,7 @@ import com.tntp.mnm.tileentity.STile;
 import com.tntp.mnm.util.SecurityUtil;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * A class used for tile security
@@ -15,6 +16,10 @@ public class Security {
   private STile owner;
   private boolean secured;
   private int securityCode;
+
+  public Security(STile tile) {
+    owner = tile;
+  }
 
   public boolean securityCheck(ItemStack using) {
     if (!isSecured())
@@ -36,6 +41,16 @@ public class Security {
       securityCode = code;
       secured = true;
     }
+  }
+
+  public void writeToNBT(NBTTagCompound tag) {
+    tag.setBoolean("security_secured", secured);
+    tag.setInteger("security_code", securityCode);
+  }
+
+  public void readFromNBT(NBTTagCompound tag) {
+    secured = tag.getBoolean("security_secured");
+    securityCode = tag.getInteger("securty_code");
   }
 
 }

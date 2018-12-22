@@ -22,10 +22,12 @@ public class MNMNetwork {
       regMS(MSDataGroupDefine.class);
       if (clientSide) {
         // regMCC all messages received on client side
+        regMCC(MCChatMsg.class, new MCChatMsgHandler());
         // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());
 
       } else {
         // regMCS all messages received on client side
+        regMCS(MCChatMsg.class);
         // regMCS(MCUnivMacScreen.class);
       }
     } catch (Exception e) {

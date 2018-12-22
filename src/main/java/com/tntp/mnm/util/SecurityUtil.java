@@ -47,6 +47,14 @@ public class SecurityUtil {
     return i == codeToMatch;
   }
 
+  public static int getCode(ItemStack stack) {
+    if (!stack.hasTagCompound())
+      return 0;
+    NBTTagCompound tag = stack.getTagCompound();
+    int i = tag.getInteger("MNM|Security");
+    return i;
+  }
+
   public static boolean canEncode(ItemStack stack) {
     if (stack == null)
       return false;
