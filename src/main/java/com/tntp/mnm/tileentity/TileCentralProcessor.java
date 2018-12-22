@@ -32,6 +32,9 @@ public class TileCentralProcessor extends STile {
    */
   private int maxQueueSize;
 
+  private int scanCD;
+  private int scanTotal = 200;
+
   public TileCentralProcessor() {
     mainframe = new Mainframe(this);
     queue = new PriorityQueue<QueryExecuter>();
@@ -43,6 +46,11 @@ public class TileCentralProcessor extends STile {
       // init mainframe
       if (mainframe.getWorld() == null) {
         mainframe.setWorld(worldObj);
+      }
+      if (scanCD >= scanTotal) {
+        // mandatory scan
+        mainframe.scan();
+        scanCD = 0;
       }
 
       // execution power check

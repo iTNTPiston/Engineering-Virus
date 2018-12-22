@@ -4,6 +4,7 @@ import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.item.ItemDataGroupChip;
 import com.tntp.mnm.item.ItemToolBag;
 import com.tntp.mnm.item.SItemTool;
+import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
 import com.tntp.mnm.item.tools.ItemDataReader;
 import com.tntp.mnm.item.tools.ItemEKToolUniversal;
@@ -29,6 +30,8 @@ public class MNMItems {
   public static final ItemSmallHammer small_hammer = null;
   public static final ItemDataGroupChip data_group_chip = null;
 
+  public static final ItemDisk disk = null;
+
   public static void loadItems() {
     // GameRegistry.registerItem(new ItemWrench(), "wrench");
     // GameRegistry.registerItem(new ItemToolBag("toolBag", 5), "toolBag");
@@ -41,6 +44,7 @@ public class MNMItems {
     regItem(new ItemDataReader(), "data_reader");
     regItem(new ItemSmallHammer(), "small_hammer");
     regItem(new ItemDataGroupChip(), "data_group_chip");
+    regItem(new ItemDisk(4), "disk");
   }
 
   private static void regItem(Item item, String name) {

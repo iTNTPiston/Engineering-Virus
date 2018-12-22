@@ -3,13 +3,16 @@ package com.tntp.mnm.tileentity;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.minecraft.util.IntHashMap;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants.NBT;
 
-public class TileDataStorage extends STileData {
+public class STileDataStorage extends STileData {
   private HashMap<Integer, Integer> map;
 
-  public TileDataStorage(int size) {
+  public STileDataStorage(int size) {
     super(size);
+    map = new HashMap<Integer, Integer>();
   }
 
   @Override
@@ -88,6 +91,30 @@ public class TileDataStorage extends STileData {
     if (dataspace < 0)
       return 0;
     return dataspace * 256;
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    NBTTagList hash = new NBTTagList();
+    for (Entry<Integer, Integer> e : map.entrySet()) {
+      NBTTagCompound t = new NBTTagCompound();
+      t.setInteger("key", e.getKey());
+      t.setInteger("value", e.getValue());
+      hash.appendTag(t);
+    }
+    tag.setTag("HashMap", hash);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    map = new HashMap<Integer, Integer>();
+    NBTTagList hash = tag.getTagList("HashMap", NBT.TAG_COMPOUND);
+    for (int i = 0; i < hash.tagCount(); i++) {
+      NBTTagCompound t = hash.getCompoundTagAt(i);
+      map.put(t.getInteger("key"), t.getInteger("value"));
+    }
   }
 
 }

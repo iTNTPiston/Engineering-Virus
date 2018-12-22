@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.tileentity.STileNeithernet;
+import com.tntp.mnm.tileentity.STilePOB;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefiner;
-import com.tntp.mnm.tileentity.TileDataStorage;
+import com.tntp.mnm.tileentity.STileDataStorage;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 
 import net.minecraft.block.Block;
@@ -24,8 +25,9 @@ public class Mainframe {
    * excluding routers and ports on this board
    */
   private List<STileNeithernet> allNnetTiles;
+  private List<Port<STilePOB>> boardPorts;
 
-  private ArrayList<Object> structureList;
+  // private ArrayList<Object> structureList;
 
   private int nextDefId;
   private boolean scanedInTick;
@@ -50,9 +52,10 @@ public class Mainframe {
     if (!scanedInTick) {
       scanedInTick = true;
       // clear structure list
-      structureList.clear();
+      // structureList.clear();
       // scan structure first (ports)
       neithernetPorts.clear();
+      boardPorts.clear();
       boolean[][] alreadyScanned = new boolean[MAX_HORIZONTAL * 2 + 1][MAX_HORIZONTAL * 2 + 1];
       // update the list of ports
       scanBoardAt(cpu.xCoord, cpu.yCoord, cpu.zCoord, alreadyScanned, MAX_HORIZONTAL, MAX_HORIZONTAL);
@@ -74,17 +77,22 @@ public class Mainframe {
     boolean valid = false;
     if (block == MNMBlocks.mother_board) {
       valid = true;
-      structureList.add(block);
+      // structureList.add(block);
     } else if (block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
       TileEntity tile = world.getTileEntity(x, y, z);
       valid = true;
       if (tile == cpu) {
-        structureList.add(cpu.getBlockType());
+        // structureList.add(cpu.getBlockType());
       } else if (tile instanceof TileNeithernetPort) {
         Port<STileNeithernet> p = ((TileNeithernetPort) tile).getPort();
         p.setMainframe(this);
         neithernetPorts.add(p);
-        structureList.add(tile.getBlockType());
+        // structureList.add(tile.getBlockType());
+      } else if (tile instanceof STilePOB) {
+        Port<STilePOB> p = ((STilePOB) tile).getPort();
+        p.setMainframe(this);
+        boardPorts.add(p);
+        // structureList.add(tile.getBlockType());
       } else {
         valid = false;
       }
@@ -122,14 +130,14 @@ public class Mainframe {
 
     // scan all neithernet tiles for data storage
     for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataStorage) {
+      if (tile instanceof STileDataStorage) {
         boolean done = true;
         for (int i = 0; i < def.length; i++) {
           if (def[i] < 0)
             continue;
           if (stack[i] == null)
             continue;
-          int left = ((TileDataStorage) tile).putIn(def[i], stack[i].stackSize);
+          int left = ((STileDataStorage) tile).putIn(def[i], stack[i].stackSize);
           if (left == 0) {
             stack[i] = null;
           } else {
@@ -153,8 +161,8 @@ public class Mainframe {
     int toBeTaken = qty;
 
     for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataStorage) {
-        toBeTaken = ((TileDataStorage) tile).takeAway(id, toBeTaken);
+      if (tile instanceof STileDataStorage) {
+        toBeTaken = ((STileDataStorage) tile).takeAway(id, toBeTaken);
         if (toBeTaken == 0) {
           break;// finished
         }
