@@ -1,13 +1,15 @@
 package com.tntp.mnm.gui;
 
+import com.tntp.mnm.api.TileEntityConnection;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
+import com.tntp.mnm.block.IBlockBidirectionalPipe;
 import com.tntp.mnm.gui.conf.ContainerConfigHeatDistributor;
 import com.tntp.mnm.gui.cont.ContainerCont;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.gui.heat.ContainerHeat;
-import com.tntp.mnm.gui.heat.ContainerHeatPipe;
+import com.tntp.mnm.gui.heat.ContainerConnection;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ContainerStructure;
@@ -33,31 +35,36 @@ public class HandlerServer implements IGuiHandler {
       if (tile instanceof IHeatNode) {
         return new ContainerHeat(player.inventory, (IHeatNode) tile);
       }
-    } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
+    } else if (ID == MNMGuis.getGuiID("GuiConnection")) {
       Block b = world.getBlock(x, y, z);
-      if (b == MNMBlocks.heat_pipe) {
+      if (b instanceof IBlockBidirectionalPipe) {
         int sides = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
         int side0 = sides >> 4;
         int side1 = sides & 15;
         ItemStack end0 = null;
         ItemStack end1 = null;
-        HeatPipe p = new HeatPipe(x, y, z);
-        int outSide0 = STileHeatNode.findHeatNode(p, side0, 3, world);
+        TileEntityConnection pipe0 = null;
+        TileEntityConnection pipe1 = null;
+        int outSide0 = -1, outSide1 = -1;
+        if (b == MNMBlocks.heat_pipe) {
+          pipe0 = new HeatPipe(x, y, z);
+          outSide0 = STileHeatNode.findHeatNode((HeatPipe) pipe0, side0, 3, world);
+          pipe1 = new HeatPipe(x, y, z);
+          outSide1 = STileHeatNode.findHeatNode((HeatPipe) pipe1, side1, 3, world);
+        }
         if (outSide0 != -1) {
-          TileEntity tile = (TileEntity) p.getEnd(world);
+          TileEntity tile = (TileEntity) pipe0.getTileEntity(world);
           if (tile != null) {
             end0 = new ItemStack(tile.getBlockType());
           }
         }
-        p = new HeatPipe(x, y, z);
-        int outSide1 = STileHeatNode.findHeatNode(p, side1, 3, world);
         if (outSide1 != -1) {
-          TileEntity tile = (TileEntity) p.getEnd(world);
+          TileEntity tile = (TileEntity) pipe1.getTileEntity(world);
           if (tile != null) {
             end1 = new ItemStack(tile.getBlockType());
           }
         }
-        return new ContainerHeatPipe(player.inventory, end0, end1);
+        return new ContainerConnection(player.inventory, end0, end1, new ItemStack(b));
       }
     } else if (ID == MNMGuis.getGuiID("GuiProcessGeoThermalSmelter")) {
       TileEntity tile = world.getTileEntity(x, y, z);

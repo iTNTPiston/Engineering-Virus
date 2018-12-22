@@ -8,7 +8,7 @@ import com.tntp.mnm.gui.cont.GuiCont;
 import com.tntp.mnm.gui.cont.GuiContDataGroupDefiner;
 import com.tntp.mnm.gui.cont.GuiContSecurityEncoder;
 import com.tntp.mnm.gui.cont.ITileCont;
-import com.tntp.mnm.gui.heat.ContainerHeatPipe;
+import com.tntp.mnm.gui.heat.ContainerConnection;
 import com.tntp.mnm.gui.heat.GuiHeat;
 import com.tntp.mnm.gui.heat.GuiHeatPipe;
 import com.tntp.mnm.gui.process.ContainerProcess;
@@ -43,31 +43,10 @@ public class HandlerClient extends HandlerServer {
       if (tile instanceof IHeatNode) {
         gui = new GuiHeat(player.inventory, (IHeatNode) tile, x, y, z);
       }
-    } else if (ID == MNMGuis.getGuiID("GuiHeatPipe")) {
+    } else if (ID == MNMGuis.getGuiID("GuiConnection")) {
       Block b = world.getBlock(x, y, z);
       if (b == MNMBlocks.heat_pipe) {
-        int sides = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
-        int side0 = sides >> 4;
-        int side1 = sides & 15;
-        ItemStack end0 = null;
-        ItemStack end1 = null;
-        HeatPipe p = new HeatPipe(x, y, z);
-        int outSide0 = STileHeatNode.findHeatNode(p, side0, 3, world);
-        if (outSide0 != -1) {
-          TileEntity te = (TileEntity) p.getEnd(world);
-          if (te != null) {
-            end0 = new ItemStack(te.getBlockType());
-          }
-        }
-        p = new HeatPipe(x, y, z);
-        int outSide1 = STileHeatNode.findHeatNode(p, side1, 3, world);
-        if (outSide1 != -1) {
-          TileEntity te = (TileEntity) p.getEnd(world);
-          if (te != null) {
-            end1 = new ItemStack(te.getBlockType());
-          }
-        }
-        gui = new GuiHeatPipe(new ContainerHeatPipe(player.inventory, end0, end1), x, y, z);
+        gui = new GuiHeatPipe(new ContainerConnection(player.inventory, null, null, null), x, y, z);
       }
     } else if (ID == MNMGuis.getGuiID("GuiStructureHeatCollectorFirewall")) {
       if (tile instanceof TileHeatCollectorFirewall) {

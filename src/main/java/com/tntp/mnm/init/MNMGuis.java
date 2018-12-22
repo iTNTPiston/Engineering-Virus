@@ -28,7 +28,7 @@ public class MNMGuis {
   public static void loadGuis() {
 
     assignGuiID("GuiHeat");
-    assignGuiID("GuiHeatPipe");
+    assignGuiID("GuiConnection");
     assignGuiID("GuiStructureHeatCollectorFirewall");
     assignGuiID("GuiStructureGeoThermalSmelter");
     assignGuiID("GuiProcessGeoThermalSmelter");

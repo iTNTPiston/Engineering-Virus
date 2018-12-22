@@ -15,10 +15,6 @@ public class SlotDecorative extends Slot {
     return false;
   }
 
-  public void putStack(ItemStack p_75215_1_) {
-
-  }
-
   public ItemStack decrStackSize(int p_75209_1_) {
     return null;
   }

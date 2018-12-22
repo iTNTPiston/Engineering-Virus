@@ -27,7 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public enum GuiTabType {
-  HEAT("heat", 1f, 0.7f, 0.5f), HEAT_PIPE("heat_pipe", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
+  HEAT("heat", 1f, 0.7f, 0.5f), CONNECTION("connection", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
   PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f), CARD_ACCESS("graphic_interface", 0.8f, 0.8f, 1f),
   DATA_ACCESS("graphic_interface", 0.7f, 0.7f, 1f);
   @SideOnly(Side.CLIENT)
@@ -53,8 +53,8 @@ public enum GuiTabType {
     switch (this) {
     case HEAT:
       return new ItemStack(Items.apple);
-    case HEAT_PIPE:
-      return new ItemStack(MNMBlocks.heat_pipe);
+    case CONNECTION:
+      return new ItemStack(MNMItems.meter_stick);
     case STRUCTURE:
       return new ItemStack(MNMItems.meter_stick);
     case PROCESS:
@@ -91,9 +91,9 @@ public enum GuiTabType {
       if (tile instanceof IHeatNode)
         name = "GuiHeat";
       break;
-    case HEAT_PIPE:
+    case CONNECTION:
       if (block == MNMBlocks.heat_pipe)
-        name = "GuiHeatPipe";
+        name = "GuiConnection";
       break;
     case STRUCTURE:
       if (tile instanceof ITileStructure)
