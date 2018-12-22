@@ -9,6 +9,7 @@ import com.tntp.mnm.api.ek.IHeatSource;
 import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.BlockUtil;
+import com.tntp.mnm.util.DirUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,6 +36,7 @@ public class STileHeatNode extends STile implements IHeatNode {
   }
 
   public void updateEntity() {
+    super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {
       if (rescaned) {
         rescanCD = rescanTotal;
@@ -80,27 +82,21 @@ public class STileHeatNode extends STile implements IHeatNode {
       rescaned = true;
       if (this instanceof IHeatSource) {
         for (int i = 0; i < 6; i++) {
-          if (!((IHeatSource) this).isSourceSide(i)) {
-            out[i] = null;
-          } else {
-            if (out[i] == null) {
-              HeatPipe p = new HeatPipe(xCoord, yCoord, zCoord);
-              if (findHeatNode(p, i, 1, worldObj) != -1)
-                out[i] = p;
-            }
+          out[i] = null;
+          if (((IHeatSource) this).isSourceSide(i)) {
+            HeatPipe p = new HeatPipe(xCoord, yCoord, zCoord);
+            if (findHeatNode(p, i, 1, worldObj) != -1)
+              out[i] = p;
           }
         }
       }
       if (this instanceof IHeatSink) {
         for (int i = 0; i < 6; i++) {
-          if (!((IHeatSink) this).isSinkSide(i)) {
-            in[i] = null;
-          } else {
-            if (in[i] == null) {
-              HeatPipe p = new HeatPipe(xCoord, yCoord, zCoord);
-              if (findHeatNode(p, i, 2, worldObj) != -1)
-                in[i] = p;
-            }
+          in[i] = null;
+          if (((IHeatSink) this).isSinkSide(i)) {
+            HeatPipe p = new HeatPipe(xCoord, yCoord, zCoord);
+            if (findHeatNode(p, i, 2, worldObj) != -1)
+              in[i] = p;
           }
         }
       }
@@ -115,10 +111,10 @@ public class STileHeatNode extends STile implements IHeatNode {
    * @param pipe
    */
   public static int findHeatNode(@Nonnull HeatPipe pipe, int outSide, int toSink, World world) {
-    ForgeDirection direction = ForgeDirection.getOrientation(outSide);
-    pipe.x = pipe.x + direction.offsetX;
-    pipe.y = pipe.y + direction.offsetY;
-    pipe.z = pipe.z + direction.offsetZ;
+    int[] offset = DirUtil.OFFSETS[outSide];
+    pipe.x = pipe.x + offset[0];
+    pipe.y = pipe.y + offset[1];
+    pipe.z = pipe.z + offset[2];
 
     int comingFrom = outSide ^ 1;
     int endOutSide = -1;

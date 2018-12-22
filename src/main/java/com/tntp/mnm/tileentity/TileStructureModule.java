@@ -9,14 +9,12 @@ import net.minecraft.inventory.Slot;
 
 public class TileStructureModule extends STilePOB implements ITileDataCont {
 
-  public TileStructureModule(int size) {
-    super(size);
-    // TODO Auto-generated constructor stub
+  public TileStructureModule() {
+    super(8);
   }
 
   @Override
   public String getContainerGui() {
-    // TODO Auto-generated method stub
     return null;
   }
 
@@ -28,8 +26,7 @@ public class TileStructureModule extends STilePOB implements ITileDataCont {
 
   @Override
   public boolean canReadData() {
-    // TODO Auto-generated method stub
-    return false;
+    return getPort().getMainframe() != null;
   }
 
   @Override

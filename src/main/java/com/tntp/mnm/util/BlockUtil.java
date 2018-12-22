@@ -166,12 +166,12 @@ public class BlockUtil {
    * @param startZ
    * @param pipe
    * @param comingFrom
-   * @param toSink
+   * @param extra
    * @param pipeType
    * @return
    */
   public static int pipeScan(World world, int startX, int startY, int startZ, TileEntityConnection pipe, int comingFrom,
-      int toSink, IBlockBidirectionalPipe pipeType) {
+      int extra, IBlockBidirectionalPipe pipeType) {
     // pre-condition is the pipe position must be on a block that is heat pipe
     if (pipe.x == startX && pipe.y == startY && pipe.z == startZ)
       return -1;// prevent loop
@@ -196,9 +196,9 @@ public class BlockUtil {
     if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
       Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
       if (b == pipeType) {
-        return pipeScan(world, startX, startY, startZ, pipe, comingFrom, toSink, pipeType);
+        return pipeScan(world, startX, startY, startZ, pipe, comingFrom, extra, pipeType);
       } else {
-        return pipeType.connectPipeToBlock(world, pipe, comingFrom, toSink);
+        return pipeType.connectPipeToBlock(world, pipe, comingFrom, extra);
       }
     }
     return -1;

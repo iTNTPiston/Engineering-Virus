@@ -6,6 +6,7 @@ import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.gui.conf.ITileConfig;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.cont.ITileDataCont;
+import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
@@ -110,6 +111,11 @@ public enum GuiTabType {
       break;
     case DATA_ACCESS:
       if (tile instanceof ITileDataCont) {
+        name = ((ITileCont) tile).getContainerGui();
+      }
+      break;
+    case CARD_ACCESS:
+      if (tile instanceof ITileSecuredCont) {
         name = ((ITileCont) tile).getContainerGui();
       }
       break;

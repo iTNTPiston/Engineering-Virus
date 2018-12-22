@@ -13,6 +13,8 @@ public class STilePOB extends STileInventory {
 
   public STilePOB(int size) {
     super(size);
+    port = new Port<STilePOB>();
+    port.setTile(this);
   }
 
   public Port<STilePOB> getPort() {

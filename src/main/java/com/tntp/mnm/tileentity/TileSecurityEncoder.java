@@ -3,12 +3,13 @@ package com.tntp.mnm.tileentity;
 import java.util.List;
 
 import com.tntp.mnm.gui.cont.ITileCont;
+import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.util.SecurityUtil;
 
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class TileSecurityEncoder extends STileInventory implements ITileCont {
+public class TileSecurityEncoder extends STilePOB implements ITileDataCont {
 
   public TileSecurityEncoder() {
     super(10);
@@ -50,6 +51,11 @@ public class TileSecurityEncoder extends STileInventory implements ITileCont {
   @Override
   public String getContainerGui() {
     return "GuiContSecurityEncoder";
+  }
+
+  @Override
+  public boolean canReadData() {
+    return getPort().getMainframe() != null;
   }
 
 }

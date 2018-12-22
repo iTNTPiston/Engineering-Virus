@@ -29,8 +29,8 @@ public class ContainerCont extends SContainer {
   }
 
   @Override
-  public boolean canInteractWith(EntityPlayer p_75145_1_) {
-    return ((STile) tile).isValidInWorld();
+  public boolean canInteractWith(EntityPlayer player) {
+    return tile.isUseableByPlayer(player);
   }
 
   public ITileCont getTile() {

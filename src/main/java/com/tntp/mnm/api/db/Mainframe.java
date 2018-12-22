@@ -1,5 +1,6 @@
 package com.tntp.mnm.api.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tntp.mnm.init.MNMBlocks;
@@ -24,6 +25,8 @@ public class Mainframe {
    */
   private List<STileNeithernet> allNnetTiles;
 
+  private ArrayList<Object> structureList;
+
   private int nextDefId;
   private boolean scanedInTick;
 
@@ -46,6 +49,8 @@ public class Mainframe {
   public void scan() {
     if (!scanedInTick) {
       scanedInTick = true;
+      // clear structure list
+      structureList.clear();
       // scan structure first (ports)
       neithernetPorts.clear();
       boolean[][] alreadyScanned = new boolean[MAX_HORIZONTAL * 2 + 1][MAX_HORIZONTAL * 2 + 1];
@@ -69,14 +74,17 @@ public class Mainframe {
     boolean valid = false;
     if (block == MNMBlocks.mother_board) {
       valid = true;
+      structureList.add(block);
     } else if (block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
       TileEntity tile = world.getTileEntity(x, y, z);
       valid = true;
       if (tile == cpu) {
+        structureList.add(cpu.getBlockType());
       } else if (tile instanceof TileNeithernetPort) {
         Port<STileNeithernet> p = ((TileNeithernetPort) tile).getPort();
         p.setMainframe(this);
         neithernetPorts.add(p);
+        structureList.add(tile.getBlockType());
       } else {
         valid = false;
       }

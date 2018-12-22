@@ -3,13 +3,14 @@ package com.tntp.mnm.tileentity;
 import java.util.List;
 
 import com.tntp.mnm.gui.cont.ITileCont;
+import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.init.MNMItems;
 import com.tntp.mnm.item.ItemDataGroupChip;
 
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class TileDataGroupDefiner extends STilePOB implements ITileCont {
+public class TileDataGroupDefiner extends STilePOB implements ITileSecuredCont {
   public TileDataGroupDefiner() {
     super(2);
   }
