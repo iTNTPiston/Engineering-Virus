@@ -20,7 +20,7 @@ public class TileNeithernetPort extends STileNeithernet {
 
   @Override
   public void addFinalTilesTo(List<STileNeithernet> list) {
-    if (port.getMainframe() != null) {
+    if (port.getMainframe() != null && getPipe() != null) {
       STileNeithernet tile = this.getPipe().getEnd(worldObj);
       if (tile != null) {
         tile.addFinalTilesTo(list);

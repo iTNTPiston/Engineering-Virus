@@ -1,5 +1,7 @@
 package com.tntp.mnm.gui.process;
 
+import com.tntp.mnm.gui.SlotOutput;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
