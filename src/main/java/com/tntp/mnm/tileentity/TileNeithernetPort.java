@@ -15,6 +15,10 @@ import com.tntp.mnm.api.neither.NeitherPipe;
 public class TileNeithernetPort extends STileNeithernet {
   private Port<STileNeithernet> port;
 
+  public TileNeithernetPort() {
+    port = new Port<STileNeithernet>();
+  }
+
   public Port<STileNeithernet> getPort() {
     return port;
   }

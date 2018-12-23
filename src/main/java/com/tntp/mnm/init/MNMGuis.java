@@ -35,6 +35,8 @@ public class MNMGuis {
     assignGuiID("GuiConfigHeatDistributor");
     assignGuiID("GuiContSecurityEncoder");
     assignGuiID("GuiContDataGroupDefiner");
+    assignGuiID("GuiContDataDefinitionTerminal");
+    assignGuiID("GuiContQueryBuilder");
 
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 

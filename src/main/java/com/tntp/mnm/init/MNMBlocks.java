@@ -3,6 +3,7 @@ package com.tntp.mnm.init;
 import com.tntp.mnm.block.BlockAuxiliaryComputingUnit;
 import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockChimney;
+import com.tntp.mnm.block.BlockDataDefinitionTerminal;
 import com.tntp.mnm.block.BlockDataGroupDefiner;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockGeoThermalSmelter;
@@ -13,14 +14,17 @@ import com.tntp.mnm.block.BlockMotherboard;
 import com.tntp.mnm.block.BlockNeithernetCable;
 import com.tntp.mnm.block.BlockNeithernetPort;
 import com.tntp.mnm.block.BlockNetworkMainframe;
+import com.tntp.mnm.block.BlockQueryBuilder;
 import com.tntp.mnm.block.BlockSecurityEncoder;
 import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
+import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
+import com.tntp.mnm.tileentity.TileQueryBuilder;
 import com.tntp.mnm.tileentity.TileSecurityEncoder;
 import com.tntp.mnm.util.DebugUtil;
 
@@ -44,6 +48,7 @@ public class MNMBlocks {
 
   public static final Block data_group_definer = null;
   public static final Block security_encoder = null;
+  public static final Block query_builder = null;
 
   public static void loadBlocks() {
     DebugUtil.log.info("Loading Blocks");
@@ -60,15 +65,18 @@ public class MNMBlocks {
     regBlock(new BlockMotherboard(), "mother_board");
     regBlock(new BlockCentralProcessor(), "central_processor");
     regTileEntity(TileCentralProcessor.class);
-    regBlock(new BlockNeithernetCable(), "neithernet_cable");
-    regBlock(new BlockNeithernetPort(), "neithernet_port");
-    regTileEntity(TileNeithernetPort.class);
-
     regBlock(new BlockDataGroupDefiner(), "data_group_definer");
     regTileEntity(TileDataGroupDefiner.class);
 
     regBlock(new BlockSecurityEncoder(), "security_encoder");
     regTileEntity(TileSecurityEncoder.class);
+    regBlock(new BlockNeithernetCable(), "neithernet_cable");
+    regBlock(new BlockNeithernetPort(), "neithernet_port");
+    regTileEntity(TileNeithernetPort.class);
+    regBlock(new BlockDataDefinitionTerminal(), "data_definition_terminal");
+    regTileEntity(TileDataDefinitionTerminal.class);
+    regBlock(new BlockQueryBuilder(), "query_builder");
+    regTileEntity(TileQueryBuilder.class);
 
     // GameRegistry.registerBlock(new BlockNetworkMainframe(false),
     // "networkMainframeOff");
