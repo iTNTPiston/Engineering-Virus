@@ -41,7 +41,6 @@ public class MSDataGroupDefine extends MAStr1<MSDataGroupDefine> {
       ContainerCont container = (ContainerCont) player.openContainer;
       ITileCont t = container.getTile();
       if (t instanceof TileDataGroupDefiner) {
-        System.out.println(message.getStr1());
         ((TileDataGroupDefiner) t).defineGroup(message.getStr1());
       }
     }

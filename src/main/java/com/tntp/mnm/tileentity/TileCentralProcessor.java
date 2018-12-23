@@ -38,6 +38,9 @@ public class TileCentralProcessor extends STile {
   public TileCentralProcessor() {
     mainframe = new Mainframe(this);
     queue = new PriorityQueue<QueryExecuter>();
+    executionPerTick = 1;
+    executionLeft = 0;
+    maxQueueSize = 10;
   }
 
   public void updateEntity() {
@@ -71,5 +74,13 @@ public class TileCentralProcessor extends STile {
 
       mainframe.setNeedScan();
     }
+  }
+
+  public boolean addQuery(QueryExecuter query) {
+    if (queue.size() < maxQueueSize) {
+      queue.add(query);
+      return true;
+    }
+    return false;
   }
 }

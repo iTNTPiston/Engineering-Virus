@@ -14,6 +14,11 @@ public abstract class ContainerProcess extends SContainer {
   public ContainerProcess(IInventory playerInventory, ITileProcess tile) {
     super(playerInventory, tile.getSizeInventory(), tile);
     this.tile = tile;
+    tile.openInventory();
+  }
+
+  public void onContainerClosed(EntityPlayer player) {
+    tile.closeInventory();
   }
 
   @Override

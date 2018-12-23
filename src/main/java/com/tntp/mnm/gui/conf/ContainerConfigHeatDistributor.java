@@ -19,6 +19,11 @@ public class ContainerConfigHeatDistributor extends SContainer {
     super(playerInventory, 6, machine);
     last = new boolean[6];
     tile = machine;
+    tile.openInventory();
+  }
+
+  public void onContainerClosed(EntityPlayer player) {
+    tile.closeInventory();
   }
 
   @Override

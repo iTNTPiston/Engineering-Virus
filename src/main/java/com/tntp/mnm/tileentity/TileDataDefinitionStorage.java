@@ -4,19 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tntp.mnm.api.db.ItemDef;
+import com.tntp.mnm.api.security.Security;
+import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.util.ItemUtil;
 
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class TileDataDefiner extends STileData {
+public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont {
   private List<ItemDef> definedItems;
+  private Security security;
 
-  public TileDataDefiner() {
+  public TileDataDefinitionStorage() {
     super(5);
+    security = new Security(this);
   }
 
   @Override
@@ -75,6 +80,7 @@ public class TileDataDefiner extends STileData {
       list.appendTag(com);
     }
     tag.setTag("defined_items", list);
+    security.writeToNBT(tag);
   }
 
   public void readFromNBT(NBTTagCompound tag) {
@@ -87,6 +93,25 @@ public class TileDataDefiner extends STileData {
       def.fromNBT(com);
       definedItems.add(def);
     }
+    security = new Security(this);
+    security.readFromNBT(tag);
+  }
+
+  @Override
+  public String getContainerGui() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void addContainerSlots(List<Slot> slots) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public Security getSecurity() {
+    return security;
   }
 
 }

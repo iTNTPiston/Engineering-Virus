@@ -1,6 +1,9 @@
 package com.tntp.mnm.tileentity;
 
+import com.tntp.mnm.api.db.GroupSearchResult;
 import com.tntp.mnm.api.db.Mainframe;
+import com.tntp.mnm.api.db.MainframeTPQuery;
+import com.tntp.mnm.api.db.QueryExecuter;
 
 import net.minecraft.item.ItemStack;
 
@@ -22,7 +25,29 @@ public class TileQueryBuilder extends STileNeithernetInventory {
   }
 
   public void selectGroup(String str) {
-    Mainframe mf = getPort().getMainframe();
+    Mainframe mf = connectToMainframe();
+    if (mf != null) {
+      GroupSearchResult result = mf.getGroup(str);
+      cachedGroupList = new ItemStack[result.getGroupChipList().size()];
+      result.getGroupChipList().toArray(cachedGroupList);
+      cachedItemGroup = new ItemStack[result.getGroupItems().size()];
+      result.getGroupItems().toArray(cachedItemGroup);
+      currentGroupName = str;
+    } else {
+      cachedGroupList = null;
+      cachedItemGroup = null;
+      currentGroupName = "";
+    }
+  }
+
+  public void executePut() {
+    Mainframe mf = connectToMainframe();
+    if (mf != null) {
+      MainframeTPQuery query = new MainframeTPQuery();
+      query.addTP(-1, 0);
+      QueryExecuter qe = new QueryExecuter(query, this, 0, 8);
+      mf.sendQueryToCPU(qe);
+    }
   }
 
 }

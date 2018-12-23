@@ -1,5 +1,6 @@
 package com.tntp.mnm.api.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tntp.mnm.util.ItemUtil;
@@ -20,6 +21,24 @@ public class MainframeTPQuery implements IQuery {
 
   private static class Take {
     int id, qty;// put is id=-1
+
+    Take(int i, int q) {
+      id = i;
+      qty = q;
+    }
+  }
+
+  public MainframeTPQuery(int priority) {
+    this.priority = priority;
+    takeList = new ArrayList<Take>();
+  }
+
+  public MainframeTPQuery() {
+    this(0);
+  }
+
+  public void addTP(int id, int qty) {
+    takeList.add(new Take(id, qty));
   }
 
   @Override

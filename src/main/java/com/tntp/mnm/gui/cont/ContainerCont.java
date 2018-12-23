@@ -16,6 +16,11 @@ public class ContainerCont extends SContainer {
   public ContainerCont(IInventory playerInventory, ITileCont machine) {
     super(playerInventory, machine.getSizeInventory(), machine);
     tile = machine;
+    tile.openInventory();
+  }
+
+  public void onContainerClosed(EntityPlayer player) {
+    tile.closeInventory();
   }
 
   @Override

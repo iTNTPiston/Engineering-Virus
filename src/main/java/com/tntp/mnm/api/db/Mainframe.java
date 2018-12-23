@@ -11,7 +11,7 @@ import com.tntp.mnm.tileentity.STileDataStorage;
 import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.tileentity.STilePOB;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
-import com.tntp.mnm.tileentity.TileDataDefiner;
+import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 
@@ -217,8 +217,8 @@ public class Mainframe {
     scan();
     // scan data definers for definition
     for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefiner) {
-        ItemStack stack = ((TileDataDefiner) tile).getItemDef(id);
+      if (tile instanceof TileDataDefinitionStorage) {
+        ItemStack stack = ((TileDataDefinitionStorage) tile).getItemDef(id);
         if (stack != null)
           return stack;
       }
@@ -241,8 +241,8 @@ public class Mainframe {
     scan();
     // scan for existing definition first
     for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefiner) {
-        int id = ((TileDataDefiner) tile).getItemDefID(stack);
+      if (tile instanceof TileDataDefinitionStorage) {
+        int id = ((TileDataDefinitionStorage) tile).getItemDefID(stack);
         if (id >= 0)
           return id;// found definition
       }
@@ -251,8 +251,8 @@ public class Mainframe {
     // if definition not found, define new
     int id = nextDefId;
     for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefiner) {
-        boolean defined = ((TileDataDefiner) tile).defineItem(stack, id);
+      if (tile instanceof TileDataDefinitionStorage) {
+        boolean defined = ((TileDataDefinitionStorage) tile).defineItem(stack, id);
         if (defined) {
           nextDefId++;
           return id;
@@ -300,6 +300,28 @@ public class Mainframe {
     getQuantityFor(result.getGroupItems(), allIDs);
 
     return result;
+  }
+
+  public boolean sendQueryToCPU(QueryExecuter query) {
+    if (cpu != null)
+      return cpu.addQuery(query);
+    return false;
+  }
+
+  public ItemStack[] getDefinitions() {
+    ItemStack[] defs = new ItemStack[nextDefId];
+    scan();
+    // scan data definers for definition
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof TileDataDefinitionStorage) {
+        List<ItemDef> list = ((TileDataDefinitionStorage) tile).getDefinedItems();
+        for (ItemDef d : list) {
+          if (defs[d.id] == null)
+            defs[d.id] = d.stack;
+        }
+      }
+    }
+    return defs;
   }
 
 }
