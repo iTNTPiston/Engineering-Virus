@@ -1,0 +1,38 @@
+# Blender MTL File: 'MNM_board_template.blend'
+# Material Count: 4
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\textures\blocks\security_encoder.png
+
+newmtl None_MNM_ACU.png.009
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\textures\blocks\security_encoder.png
+
+newmtl None_MNM_ACU.png.010
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\textures\blocks\security_encoder.png
+
+newmtl None_MNM_ACU.png.011
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd C:\Users\zhaoy12\Documents\GitHub\MetalNetworkMainframe\src\main\resources\assets\metalnetworkmainframe\textures\blocks\security_encoder.png

@@ -42,7 +42,8 @@ public class MNMBlocks {
   public static final Block mother_board = null;
   public static final Block central_processor = null;
 
-  public static final Block dataGroupDefiner = null;
+  public static final Block data_group_definer = null;
+  public static final Block security_encoder = null;
 
   public static void loadBlocks() {
     DebugUtil.log.info("Loading Blocks");

@@ -1,10 +1,10 @@
 package com.tntp.mnm.init;
 
+import com.tntp.mnm.model.BlockRenderingHelper;
 import com.tntp.mnm.model.ItemRenderingHelper;
 import com.tntp.mnm.model.MotherboardComponentRenderer;
 import com.tntp.mnm.model.NeithernetCableRenderer;
 import com.tntp.mnm.model.PipeRenderer;
-import com.tntp.mnm.model.BlockRenderingHelper;
 import com.tntp.mnm.model.WaveObjRenderer;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -49,6 +49,11 @@ public class MNMRender {
     i = simple.registerWaveObj(cpuRender);
     simple.bindWaveObj(MNMBlocks.central_processor, 0, i);
 
+    WavefrontObject security = getWaveObj("security_encoder/0");
+    ResourceLocation securityTex = getBlockTexture("security_encoder");
+    i = simple.registerWaveObj(new MotherboardComponentRenderer(motherboard, security, securityTex));
+    simple.bindWaveObj(MNMBlocks.security_encoder, 0, i);
+
     RenderingRegistry.registerBlockHandler(simple);
 
     ItemRenderingHelper itemRender = ItemRenderingHelper.instance;
@@ -63,6 +68,14 @@ public class MNMRender {
 
     i = itemRender.registerWaveObj(getWaveObjRenderer("small_hammer/0"));
     itemRender.bindWaveObj(MNMItems.small_hammer, i);
+
+    WavefrontObject card = getWaveObj("card/card");
+    ResourceLocation greenCard = getTexture("card/green");
+    ResourceLocation redCard = getTexture("card/red");
+    i = itemRender.registerWaveObj(new WaveObjRenderer(card, greenCard));
+    itemRender.bindWaveObj(MNMItems.id_card, i);
+    i = itemRender.registerWaveObj(new WaveObjRenderer(card, redCard));
+    itemRender.bindWaveObj(MNMItems.eraser_card, i);
 
   }
 

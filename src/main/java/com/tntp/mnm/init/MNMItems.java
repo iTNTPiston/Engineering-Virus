@@ -34,7 +34,7 @@ public class MNMItems {
 
   public static final ItemDisk disk = null;
   public static final ItemIDCard id_card = null;
-  public static final ItemEraserCard eraser_Card = null;
+  public static final ItemEraserCard eraser_card = null;
 
   public static void loadItems() {
     // GameRegistry.registerItem(new ItemWrench(), "wrench");
