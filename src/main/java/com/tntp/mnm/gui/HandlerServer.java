@@ -85,8 +85,7 @@ public class HandlerServer implements IGuiHandler {
         if (((ITileDataCont) tile).canReadData()) {
           canOpen = true;
         }
-      }
-      if (tile instanceof ITileSecuredCont) {
+      } else if (tile instanceof ITileSecuredCont) {
         Security s = ((ITileSecuredCont) tile).getSecurity();
         ItemStack using = player.getCurrentEquippedItem();
         if (s.securityCheck(using))

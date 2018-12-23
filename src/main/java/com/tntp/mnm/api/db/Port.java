@@ -7,6 +7,9 @@ public class Port<T extends STile> {
   private T tile;
 
   public Mainframe getMainframe() {
+    if (mf != null && !mf.isValid()) {
+      mf = null;// check validity of mainframe
+    }
     return mf;
   }
 

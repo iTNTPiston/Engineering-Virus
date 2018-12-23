@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.tntp.mnm.api.TileEntityConnection;
+import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
 import com.tntp.mnm.api.ek.IHeatSource;
@@ -134,6 +135,25 @@ public class STileNeithernet extends STile {
    */
   public void addFinalTilesTo(List<STileNeithernet> list) {
     list.add(this);
+  }
+
+  /**
+   * Return true if this tile is not part of a router or port
+   * 
+   * @return
+   */
+  public boolean isFinalTile() {
+    return true;
+  }
+
+  public Mainframe connectToMainframe() {
+    if (pipe != null) {
+      STileNeithernet tile = pipe.getEnd(worldObj);
+      if (tile != null && !tile.isFinalTile()) {// cannot connect 2 final tiles
+        return tile.connectToMainframe();
+      }
+    }
+    return null;
   }
 
 }

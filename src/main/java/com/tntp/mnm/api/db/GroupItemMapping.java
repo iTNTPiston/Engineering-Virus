@@ -3,7 +3,7 @@ package com.tntp.mnm.api.db;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class GroupItemDef {
+public class GroupItemMapping {
   public String groupId;
   public int itemId;
 
@@ -22,8 +22,8 @@ public class GroupItemDef {
   }
 
   public boolean equals(Object o) {
-    if (o instanceof GroupItemDef) {
-      GroupItemDef d = (GroupItemDef) o;
+    if (o instanceof GroupItemMapping) {
+      GroupItemMapping d = (GroupItemMapping) o;
       return d.groupId == groupId && d.itemId == itemId;
     }
     return false;

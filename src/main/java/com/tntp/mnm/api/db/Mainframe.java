@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tntp.mnm.init.MNMBlocks;
+import com.tntp.mnm.init.MNMItems;
+import com.tntp.mnm.item.ItemDataGroupChip;
+import com.tntp.mnm.tileentity.STileDataGroupMapping;
 import com.tntp.mnm.tileentity.STileDataStorage;
 import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.tileentity.STilePOB;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefiner;
+import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 
 import net.minecraft.block.Block;
@@ -182,6 +186,31 @@ public class Mainframe {
     return stack;
   }
 
+  public void getQuantityFor(List<ItemStack> toFill, List<Integer> idList) {
+    // check
+    scan();
+    toFill.clear();// safety
+    // integrity check, define all ids
+    for (int i = 0; i < idList.size(); i++) {
+      ItemStack s = getDefItemStack(idList.get(i));
+      if (s == null) {
+        idList.remove(i);
+        i--;
+      } else {
+        toFill.add(s);
+      }
+    }
+    // fill the stacksize
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataStorage) {
+        for (int i = 0; i < idList.size(); i++) {
+          int qty = ((STileDataStorage) tile).findQuantityFor(idList.get(i));
+          toFill.get(i).stackSize += qty;
+        }
+      }
+    }
+  }
+
   public ItemStack getDefItemStack(int id) {
     if (id < 0)
       return null;
@@ -233,6 +262,44 @@ public class Mainframe {
 
     // cannot define
     return -1;
+  }
+
+  public GroupSearchResult getGroup(String name) {
+    scan();
+    GroupSearchResult result = new GroupSearchResult(name);
+    String prefix = name;
+    List<ItemStack> allGroups = new ArrayList<ItemStack>();
+
+    // search tile data group
+    for (Port<STilePOB> port : boardPorts) {
+      STilePOB tile = port.getTile();
+      if (tile instanceof TileDataGroupChipset) {
+        ((TileDataGroupChipset) tile).addGroups(allGroups, prefix);
+      }
+    }
+
+    // add to result
+    ItemDataGroupChip chip = MNMItems.data_group_chip;
+    for (ItemStack groupChip : allGroups) {
+      String groupName = chip.getGroupName(groupChip);
+      if (!groupName.equals(name)) {
+        // add to sub list
+        // groupName must be prefixed, so no need to check here
+        result.getGroupChipList().add(groupChip);
+      }
+    }
+
+    // search for items in group using data group mapping
+    List<Integer> allIDs = new ArrayList<Integer>();
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataGroupMapping) {
+        ((STileDataGroupMapping) tile).findMapping(allIDs, name);
+      }
+    }
+
+    getQuantityFor(result.getGroupItems(), allIDs);
+
+    return result;
   }
 
 }

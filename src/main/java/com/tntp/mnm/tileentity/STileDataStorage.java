@@ -1,8 +1,10 @@
 package com.tntp.mnm.tileentity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -80,6 +82,13 @@ public class STileDataStorage extends STileData {
       qty -= maximumPut;
     }
 
+    return qty;
+  }
+
+  public int findQuantityFor(int id) {
+    Integer qty = map.get(id);
+    if (qty == null)
+      return 0;
     return qty;
   }
 

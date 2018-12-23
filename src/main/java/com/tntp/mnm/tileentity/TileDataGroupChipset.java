@@ -5,14 +5,15 @@ import java.util.List;
 import com.tntp.mnm.gui.cont.ITileDataCont;
 
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
-public class TileDataGroup extends STilePOB implements ITileDataCont {
+public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
 
-  public TileDataGroup() {
+  public TileDataGroupChipset() {
     super(3);
   }
 
-  public void addGroupNameToList(List<String> groups) {
+  public void addGroups(List<ItemStack> groups, String prefix) {
 
   }
 
