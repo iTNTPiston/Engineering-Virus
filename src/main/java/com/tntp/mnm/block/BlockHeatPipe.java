@@ -1,5 +1,7 @@
 package com.tntp.mnm.block;
 
+import java.util.List;
+
 import com.tntp.mnm.api.TileEntityConnection;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
@@ -11,7 +13,9 @@ import com.tntp.mnm.util.DirUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -75,6 +79,13 @@ public class BlockHeatPipe extends SBlockModelSpecial implements IBlockBidirecti
       maxX = 1;
     }
     this.setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+  }
+
+  @Override
+  public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
+    this.setBlockBoundsBasedOnState(world, x, y, z);
+    super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+    this.setBlockBoundsForItemRender();
   }
 
   @Override

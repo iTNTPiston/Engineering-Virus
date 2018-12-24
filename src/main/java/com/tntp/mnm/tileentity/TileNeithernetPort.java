@@ -17,6 +17,7 @@ public class TileNeithernetPort extends STileNeithernet {
 
   public TileNeithernetPort() {
     port = new Port<STileNeithernet>();
+    port.setTile(this);
   }
 
   public Port<STileNeithernet> getPort() {
