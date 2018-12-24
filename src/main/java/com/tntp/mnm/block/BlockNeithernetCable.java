@@ -28,7 +28,6 @@ public class BlockNeithernetCable extends SBlockModelSpecial implements IBlockBi
   public int connectPipeToBlock(World world, TileEntityConnection tecon, int comingFrom, int extra) {
     TileEntity te = world.getTileEntity(tecon.x, tecon.y, tecon.z);
     if (te instanceof STileNeithernet) {
-      System.out.println(tecon);
       return ((STileNeithernet) te).connectPipe(tecon, comingFrom);
     }
     return -1;

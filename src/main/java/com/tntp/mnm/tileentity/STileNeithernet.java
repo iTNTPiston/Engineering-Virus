@@ -53,7 +53,10 @@ public class STileNeithernet extends STile {
   }
 
   public int getPortSide() {
-    return this.getBlockMetadata();
+    if (worldObj == null)
+      return -1;
+    else
+      return worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
   }
 
   public NeitherPipe getPipe() {
@@ -70,7 +73,6 @@ public class STileNeithernet extends STile {
       if (findNeither(p, portSide, worldObj) != -1) {
         pipe = p;
       }
-      System.out.println(pipe);
     }
   }
 
