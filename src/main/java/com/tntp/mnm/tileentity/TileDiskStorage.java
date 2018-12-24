@@ -3,6 +3,7 @@ package com.tntp.mnm.tileentity;
 import java.util.List;
 
 import com.tntp.mnm.api.security.Security;
+import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
 
 import net.minecraft.inventory.Slot;
@@ -18,14 +19,12 @@ public class TileDiskStorage extends STileDataStorage implements ITileSecuredCon
 
   @Override
   public String getContainerGui() {
-    // TODO Auto-generated method stub
-    return null;
+    return "GuiContDiskStorage";
   }
 
   @Override
   public void addContainerSlots(List<Slot> slots) {
-    // TODO Auto-generated method stub
-
+    slots.add(new SlotDecorative(this, 0, 9, 21));
   }
 
   @Override

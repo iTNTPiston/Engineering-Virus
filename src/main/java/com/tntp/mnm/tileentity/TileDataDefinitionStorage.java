@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tntp.mnm.api.db.ItemDef;
 import com.tntp.mnm.api.security.Security;
+import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.util.ItemUtil;
@@ -22,6 +23,7 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
   public TileDataDefinitionStorage() {
     super(5);
     security = new Security(this);
+    definedItems = new ArrayList<ItemDef>();
   }
 
   @Override
@@ -99,14 +101,14 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
 
   @Override
   public String getContainerGui() {
-    // TODO Auto-generated method stub
-    return null;
+    return "GuiContDataDefinitionStorage";
   }
 
   @Override
   public void addContainerSlots(List<Slot> slots) {
-    // TODO Auto-generated method stub
-
+    for (int i = 0; i < 5; i++) {
+      slots.add(new SlotDecorative(this, i, 9 + i * 18, 21));
+    }
   }
 
   @Override

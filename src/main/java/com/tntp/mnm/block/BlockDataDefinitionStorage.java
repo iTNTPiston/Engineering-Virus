@@ -1,7 +1,7 @@
 package com.tntp.mnm.block;
 
 import com.tntp.mnm.core.MNMMod;
-import com.tntp.mnm.tileentity.TileDiskStorage;
+import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.util.BlockUtil;
 
 import cpw.mods.fml.relauncher.Side;
@@ -14,18 +14,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockDiskStorage extends SBlockContainer {
-
+public class BlockDataDefinitionStorage extends SBlockContainer {
   private IIcon port;
   private IIcon front;
 
-  public BlockDiskStorage() {
+  public BlockDataDefinitionStorage() {
     super(Material.iron);
   }
 
   @Override
   public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-    return new TileDiskStorage();
+    return new TileDataDefinitionStorage();
   }
 
   @Override

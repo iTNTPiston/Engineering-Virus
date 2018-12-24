@@ -37,6 +37,8 @@ public class MNMGuis {
     assignGuiID("GuiContDataGroupDefiner");
     assignGuiID("GuiContDataDefinitionTerminal");
     assignGuiID("GuiContQueryBuilder");
+    assignGuiID("GuiContDiskStorage");
+    assignGuiID("GuiContDataDefinitionStorage");
 
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 

@@ -18,7 +18,7 @@ public class ItemSmallHammer extends SItemTool {
   public boolean onToolUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
       float hitY, float hitZ) {
     Block b = world.getBlock(x, y, z);
-    if (b == MNMBlocks.heat_pipe) {
+    if (b == MNMBlocks.heat_pipe || b == MNMBlocks.neithernet_cable) {
       if (!world.isRemote) {
         int meta = world.getBlockMetadata(x, y, z);
         meta = (meta + 1) & 15;

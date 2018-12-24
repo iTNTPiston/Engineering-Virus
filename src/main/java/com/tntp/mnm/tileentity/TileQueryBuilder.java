@@ -8,7 +8,11 @@ import com.tntp.mnm.api.db.MainframeTPQuery;
 import com.tntp.mnm.api.db.QueryExecuter;
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
+import com.tntp.mnm.network.SMessage;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +31,12 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   public TileQueryBuilder() {
     super(12);// 0-8 inventory, 9,10,11 chip,12-26 display
     security = new Security(this);
+  }
+
+  public IMessage receiveClientGuiMessage(int buttonID) {
+    // server only
+    executePut();
+    return null;
   }
 
   public void scroll(int direction) {

@@ -12,6 +12,8 @@ import com.tntp.mnm.network.MSPlayerGui;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
@@ -121,6 +123,10 @@ public class SGui extends GuiContainer {
     return (c2 >= c1 && c2 <= c1 + w1) || (c2 + w2 >= c1 && c2 + w2 <= c1 + w1);
   }
 
+  public boolean withInRect(int x, int y, int fromX, int fromY, int w, int h) {
+    return x >= fromX && y >= fromY && x <= fromX + w && y <= fromY + h;
+  }
+
   protected void mouseClicked(int x, int y, int button) {
     super.mouseClicked(x, y, button);
     for (int i = 0; i < MAX_TABS; i++) {
@@ -163,6 +169,14 @@ public class SGui extends GuiContainer {
     GL11.glColorMask(true, true, true, true);
     GL11.glEnable(GL11.GL_LIGHTING);
     GL11.glEnable(GL11.GL_DEPTH_TEST);
+  }
+
+  protected void drawCenteredStringNoShadow(FontRenderer fr, String text, int x, int y, int color) {
+    fr.drawString(text, x - fr.getStringWidth(text) / 2, y, color);
+  }
+
+  protected void playButtonSound() {
+    mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
   }
 
 }

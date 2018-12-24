@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 
 public abstract class STileData extends STileNeithernetInventory {
 
+  private int clientUsedSpaceCache;
+
   public STileData(int size) {
     super(size);
   }
@@ -38,4 +40,21 @@ public abstract class STileData extends STileNeithernetInventory {
   }
 
   public abstract int getUsedSpace();
+
+  /**
+   * For gui purposes.
+   * 
+   * @return
+   */
+  public int getUsedSpaceCache() {
+    return clientUsedSpaceCache;
+  }
+
+  public void setUsedSpaceCache(int c) {
+    clientUsedSpaceCache = c;
+  }
+
+  public int receiveDataPullRequest() {
+    return getUsedSpace();
+  }
 }

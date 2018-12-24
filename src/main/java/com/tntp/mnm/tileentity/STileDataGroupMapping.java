@@ -10,6 +10,7 @@ public class STileDataGroupMapping extends STileData {
 
   public STileDataGroupMapping(int size) {
     super(size);
+    definedItems = new HashSet<GroupItemMapping>();
   }
 
   @Override

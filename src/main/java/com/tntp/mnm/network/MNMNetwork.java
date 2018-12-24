@@ -20,15 +20,16 @@ public class MNMNetwork {
       regMS(MSPlayerGui.class);
       regMS(MSHeatDistConf.class);
       regMS(MSDataGroupDefine.class);
+      regMS(MSGuiQueryBuilder.class);
+      regMS(MSGuiDataStorageRequest.class);
       if (clientSide) {
         // regMCC all messages received on client side
         regMCC(MCChatMsg.class, new MCChatMsgHandler());
-        // regMCC(MCUnivMacScreen.class, new MCUnivMacScreenHandler());
-
+        regMCC(MCGuiDataStorageResponse.class, new MCGuiDataStorageResponseHandler());
       } else {
         // regMCS all messages received on client side
         regMCS(MCChatMsg.class);
-        // regMCS(MCUnivMacScreen.class);
+        regMCS(MCGuiDataStorageResponse.class);
       }
     } catch (Exception e) {
       throw new RuntimeException("MetalNetworkMainframe-Network: Cannot inst message: " + e.getMessage());
