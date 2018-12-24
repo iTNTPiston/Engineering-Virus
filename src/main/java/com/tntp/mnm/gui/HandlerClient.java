@@ -14,7 +14,7 @@ import com.tntp.mnm.gui.cont.GuiContSecurityEncoder;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.heat.ContainerConnection;
 import com.tntp.mnm.gui.heat.GuiHeat;
-import com.tntp.mnm.gui.heat.GuiHeatPipe;
+import com.tntp.mnm.gui.heat.GuiConnection;
 import com.tntp.mnm.gui.process.ContainerProcess;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
 import com.tntp.mnm.gui.process.GuiProcessGeoThermalSmelter;
@@ -53,8 +53,8 @@ public class HandlerClient extends HandlerServer {
       }
     } else if (ID == MNMGuis.getGuiID("GuiConnection")) {
       Block b = world.getBlock(x, y, z);
-      if (b == MNMBlocks.heat_pipe) {
-        gui = new GuiHeatPipe(new ContainerConnection(player.inventory, null, null, null), x, y, z);
+      if (b == MNMBlocks.heat_pipe || b == MNMBlocks.neithernet_cable) {
+        gui = new GuiConnection(new ContainerConnection(player.inventory, null, null, null), x, y, z);
       }
     } else if (ID == MNMGuis.getGuiID("GuiStructureHeatCollectorFirewall")) {
       if (tile instanceof TileHeatCollectorFirewall) {

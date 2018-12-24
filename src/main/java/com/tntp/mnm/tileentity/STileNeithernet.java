@@ -42,6 +42,7 @@ public class STileNeithernet extends STile {
       if (rescanCD == 0) {
         rescanNeither();
         markDirty();
+        rescanTotal = RESCAN;
       } else {
         rescanCD--;
       }

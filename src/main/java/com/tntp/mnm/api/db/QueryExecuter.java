@@ -27,6 +27,7 @@ public class QueryExecuter implements Comparable<QueryExecuter> {
       if (!((STile) inv).isValidInWorld())
         return false;
     }
+    System.out.println("Query Execution Start");
     query.execute(mainframe, inv, start, end);
     return true;
   }

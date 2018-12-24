@@ -62,6 +62,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   public void executePut() {
     Mainframe mf = connectToMainframe();
     if (mf != null) {
+      System.out.println("Connected to MF");
       MainframeTPQuery query = new MainframeTPQuery();
       query.addTP(-1, 0);
       QueryExecuter qe = new QueryExecuter(query, this, 0, 8);

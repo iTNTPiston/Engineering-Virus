@@ -15,10 +15,10 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiHeatPipe extends SGui {
+public class GuiConnection extends SGui {
   protected ResourceLocation foreground = MNMResources.getResource("textures/guis/gui_connection_overlay.png");
 
-  public GuiHeatPipe(ContainerConnection container, int x, int y, int z) {
+  public GuiConnection(ContainerConnection container, int x, int y, int z) {
     super(container, "mnm.gui.title.connection", x, y, z);
   }
 

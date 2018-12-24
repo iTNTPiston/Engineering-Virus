@@ -43,6 +43,7 @@ public class MainframeTPQuery implements IQuery {
 
   @Override
   public void execute(Mainframe mf, IInventory inv, int startSlot, int endSlot) {
+    System.out.println("Analyzing Query");
     for (Take t : takeList) {
       if (t.id >= 0) {
         ItemStack s = mf.takeItemStack(t.id, t.qty);
@@ -53,12 +54,14 @@ public class MainframeTPQuery implements IQuery {
           }
         }
       } else {
+        System.out.println("Executing PUT");
         // put
         ItemStack[] is = new ItemStack[inv.getSizeInventory()];
         for (int i = startSlot; i <= endSlot; i++) {
           is[i] = inv.getStackInSlot(i);
         }
         mf.insertItemStack(is);
+        System.out.println("Applying changes");
         for (int i = startSlot; i <= endSlot; i++) {
           if (is[i].stackSize == 0)
             is[i] = null;

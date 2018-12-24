@@ -8,6 +8,7 @@ import com.tntp.mnm.api.db.IQuery;
 import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.api.db.QueryExecuter;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -67,6 +68,7 @@ public class TileCentralProcessor extends STile {
       while (executionLeft > 0) {
         if (queue.isEmpty())
           break;// no more task
+        System.out.println("Executing Query");
         QueryExecuter qe = queue.poll();
         if (qe.execute(mainframe))// only if it is executed successfully
           executionLeft--;
@@ -77,10 +79,28 @@ public class TileCentralProcessor extends STile {
   }
 
   public boolean addQuery(QueryExecuter query) {
+    System.out.println("CPU received Query");
     if (queue.size() < maxQueueSize) {
+      System.out.println("Query Queued");
       queue.add(query);
       return true;
     }
     return false;
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    NBTTagCompound mf = new NBTTagCompound();
+    mainframe.writeToNBT(mf);
+    tag.setTag("mainframe", mf);
+  }
+
+  @Override
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    NBTTagCompound mf = (NBTTagCompound) tag.getTag("mainframe");
+    mainframe = new Mainframe(this);
+    mainframe.readFromNBT(mf);
   }
 }

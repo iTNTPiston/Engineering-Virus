@@ -17,6 +17,7 @@ import com.tntp.mnm.tileentity.TileNeithernetPort;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -134,11 +135,12 @@ public class Mainframe {
   public void insertItemStack(ItemStack... stack) {
     // make sure the tile data is up-to-date
     scan();
-
+    System.out.println("Inserting ItemStacks");
     // get definition of all itesm
     int[] def = new int[stack.length];
     for (int i = 0; i < def.length; i++) {
       def[i] = defineItem(stack[i]);
+      System.out.println("Defined " + def[i]);
     }
 
     // scan all neithernet tiles for data storage
@@ -322,6 +324,14 @@ public class Mainframe {
       }
     }
     return defs;
+  }
+
+  public void writeToNBT(NBTTagCompound tag) {
+    tag.setInteger("nextDefId", nextDefId);
+  }
+
+  public void readFromNBT(NBTTagCompound tag) {
+    nextDefId = tag.getInteger("nextDefId");
   }
 
 }

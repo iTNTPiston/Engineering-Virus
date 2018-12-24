@@ -3,6 +3,7 @@ package com.tntp.mnm.gui;
 import com.tntp.mnm.api.TileEntityConnection;
 import com.tntp.mnm.api.ek.HeatPipe;
 import com.tntp.mnm.api.ek.IHeatNode;
+import com.tntp.mnm.api.neither.NeitherPipe;
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.block.IBlockBidirectionalPipe;
 import com.tntp.mnm.gui.conf.ContainerConfigHeatDistributor;
@@ -18,6 +19,7 @@ import com.tntp.mnm.gui.structure.ContainerStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.tileentity.STileHeatNode;
+import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
 import com.tntp.mnm.util.BlockUtil;
 
@@ -53,6 +55,12 @@ public class HandlerServer implements IGuiHandler {
           outSide0 = STileHeatNode.findHeatNode((HeatPipe) pipe0, side0, 3, world);
           pipe1 = new HeatPipe(x, y, z);
           outSide1 = STileHeatNode.findHeatNode((HeatPipe) pipe1, side1, 3, world);
+        }
+        if (b == MNMBlocks.neithernet_cable) {
+          pipe0 = new NeitherPipe(x, y, z);
+          outSide0 = STileNeithernet.findNeither((NeitherPipe) pipe0, side0, world);
+          pipe1 = new NeitherPipe(x, y, z);
+          outSide1 = STileNeithernet.findNeither((NeitherPipe) pipe1, side1, world);
         }
         if (outSide0 != -1) {
           TileEntity tile = (TileEntity) pipe0.getTileEntity(world);

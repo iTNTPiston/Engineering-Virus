@@ -92,7 +92,7 @@ public enum GuiTabType {
         name = "GuiHeat";
       break;
     case CONNECTION:
-      if (block == MNMBlocks.heat_pipe)
+      if (block == MNMBlocks.heat_pipe || block == MNMBlocks.neithernet_cable)
         name = "GuiConnection";
       break;
     case STRUCTURE:
