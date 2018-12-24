@@ -35,4 +35,8 @@ public class TileEntityConnection {
     TileEntity tile = world.getTileEntity(x, y, z);
     return tile;
   }
+
+  public String toString() {
+    return "[" + x + ", " + y + ", " + z + "]";
+  }
 }

@@ -32,6 +32,10 @@ public class STileNeithernet extends STile {
   private int rescanCD;
   private boolean rescaned;
 
+  public STileNeithernet() {
+    rescanTotal = RESCAN;
+  }
+
   public void updateEntity() {
     super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {
@@ -39,10 +43,9 @@ public class STileNeithernet extends STile {
         rescanCD = rescanTotal;
         rescaned = false;
       }
-      if (rescanCD == 0) {
+      if (rescanCD <= 0) {
         rescanNeither();
         markDirty();
-        rescanTotal = RESCAN;
       } else {
         rescanCD--;
       }
@@ -67,6 +70,7 @@ public class STileNeithernet extends STile {
       if (findNeither(p, portSide, worldObj) != -1) {
         pipe = p;
       }
+      System.out.println(pipe);
     }
   }
 
@@ -87,16 +91,16 @@ public class STileNeithernet extends STile {
     if (world.getChunkFromBlockCoords(pipe.x, pipe.z).isChunkLoaded) {
       Block b = world.getBlock(pipe.x, pipe.y, pipe.z);
       if (b == MNMBlocks.neithernet_cable) {
-        endOutSide = BlockUtil.pipeScan(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, 0, MNMBlocks.heat_pipe);
+        endOutSide = BlockUtil.pipeScan(world, Integer.MAX_VALUE, 0, 0, pipe, comingFrom, 0,
+            MNMBlocks.neithernet_cable);
       }
     }
     return endOutSide;
   }
 
   public int connectPipe(TileEntityConnection tecon, int comingFrom) {
-    int inSide = comingFrom ^ 1;
-    if (inSide == getPortSide())
-      return inSide;
+    if (comingFrom == getPortSide())
+      return comingFrom ^ 1;
     return -1;
   }
 

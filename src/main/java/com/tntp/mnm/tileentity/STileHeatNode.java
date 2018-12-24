@@ -42,7 +42,7 @@ public class STileHeatNode extends STile implements IHeatNode {
         rescanCD = rescanTotal;
         rescaned = false;
       }
-      if (rescanCD == 0) {
+      if (rescanCD <= 0) {
         rescan();
         markDirty();
       } else {

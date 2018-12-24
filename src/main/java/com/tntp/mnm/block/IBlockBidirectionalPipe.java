@@ -10,7 +10,7 @@ public interface IBlockBidirectionalPipe {
    * 
    * @param world
    * @param tecon
-   * @param comingFrom the side this pipe comes from
+   * @param comingFrom the side of the BLOCK connecting to this pipe
    * @param extra      extra information
    * @return The side that the pipe sticks into the final block
    */
