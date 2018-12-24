@@ -67,6 +67,7 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
       ItemStack s = stack.copy();
       s.stackSize = 1;
       item.id = id;
+      item.stack = stack;
       definedItems.add(item);
       return true;// defined
     }

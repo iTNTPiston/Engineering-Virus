@@ -56,16 +56,16 @@ public class MainframeTPQuery implements IQuery {
       } else {
         System.out.println("Executing PUT");
         // put
-        ItemStack[] is = new ItemStack[inv.getSizeInventory()];
-        for (int i = startSlot; i <= endSlot; i++) {
-          is[i] = inv.getStackInSlot(i);
+        ItemStack[] is = new ItemStack[endSlot - startSlot + 1];
+        for (int i = 0; i < is.length; i++) {
+          is[i] = inv.getStackInSlot(i + startSlot);
         }
         mf.insertItemStack(is);
         System.out.println("Applying changes");
-        for (int i = startSlot; i <= endSlot; i++) {
-          if (is[i].stackSize == 0)
+        for (int i = 0; i < is.length; i++) {
+          if (is[i] != null && is[i].stackSize == 0)
             is[i] = null;
-          inv.setInventorySlotContents(i, is[i]);
+          inv.setInventorySlotContents(i + startSlot, is[i]);
         }
       }
     }
