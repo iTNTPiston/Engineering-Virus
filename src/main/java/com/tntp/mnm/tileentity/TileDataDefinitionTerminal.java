@@ -6,6 +6,7 @@ import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
+import com.tntp.mnm.util.ItemUtil;
 
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileDataDefinitionTerminal extends STileNeithernetInventory implements ITileSecuredCont {
   private ItemStack[] cachedDefinition;
+  private int clientDefinitionLengthCache;
   private int rowTotal;
   private int rowCurrent;
   private boolean needsUpdate;
@@ -29,11 +31,13 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
 
   @Override
   public void updateEntity() {
+    super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {
       if (needsUpdate) {
         if (scanCD <= 0) {
           scanCD = scanTotal;
           updateCache();
+          markDirty();
         } else {
           scanCD--;
         }
@@ -50,12 +54,17 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
     rowCurrent = row;
     int startIndex = rowCurrent * 8;
     int end = Math.min(startIndex + 32, cachedDefinition.length);
-    for (int i = 0, j = startIndex; j < end; i++, j++) {
-      this.setInventorySlotContents(i, cachedDefinition[j]);
+    for (int i = 0, j = startIndex; j < startIndex + 32; i++, j++) {
+      if (j < end)
+        this.setInventorySlotContents(i, cachedDefinition[j]);
+      else
+        this.setInventorySlotContents(i, null);
     }
+
   }
 
   public void updateCache() {
+    // server only
     Mainframe mf = connectToMainframe();
     if (mf != null) {
       cachedDefinition = mf.getDefinitions();
@@ -70,6 +79,7 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
   @Override
   public void openInventory() {
     needsUpdate = true;
+    scanCD = 0;
   }
 
   @Override
@@ -107,6 +117,43 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
     super.readFromNBT(tag);
     security = new Security(this);
     security.readFromNBT(tag);
+  }
+
+  public void setDefinitionLengthCache(int c) {
+    clientDefinitionLengthCache = c;
+    rowTotal = (int) Math.max(4, Math.ceil(c / 8.0));
+  }
+
+  public int getDefinitionLengthCache() {
+    return clientDefinitionLengthCache;
+  }
+
+  public int getCurrentRow() {
+    return rowCurrent;
+  }
+
+  public void setCurrentRowForClient(int r) {
+    rowCurrent = r;
+  }
+
+  public int getTotalRow() {
+    return rowTotal;
+  }
+
+  public int getDefinitionLength() {
+    if (cachedDefinition == null)
+      return 0;
+    return cachedDefinition.length;
+  }
+
+  public int getDefinedIDForClient(ItemStack stack) {
+    if (stack == null)
+      return -1;
+    for (int i = 0; i < getSizeInventory(); i++) {
+      if (ItemUtil.areItemAndTagEqual(getStackInSlot(i), stack))
+        return i + rowCurrent * 8;
+    }
+    return -1;
   }
 
 }

@@ -32,7 +32,7 @@ public class GuiContData extends GuiCont {
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     super.drawGuiContainerForegroundLayer(mx, my);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    int color = RenderUtil.arbg(255, 20, 20, 20);
+    int color = RenderUtil.argb(255, 20, 20, 20);
     STileData t = getTile();
     int y = 42;
     int h = 10;

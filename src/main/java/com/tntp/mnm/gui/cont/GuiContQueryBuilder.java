@@ -17,12 +17,12 @@ public class GuiContQueryBuilder extends GuiCont {
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mx, int my) {
-    super.drawGuiContainerForegroundLayer(mx, my);
+  protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int x, int y) {
+    super.drawGuiContainerBackgroundLayer(p_146976_1_, x, y);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    int color = RenderUtil.arbg(255, 0, 181, 0);
-    drawCenteredStringNoShadow(fontRendererObj, "<L>PUT", 91, 96, color);
-    drawCenteredStringNoShadow(fontRendererObj, "<L>TAKE", 140, 96, color);
+    int color = RenderUtil.argb(255, 0, 181, 0);
+    drawCenteredStringNoShadow(fontRendererObj, "<L>PUT", 91 + guiLeft, 96 + guiTop, color);
+    drawCenteredStringNoShadow(fontRendererObj, "<L>TAKE", 140 + guiLeft, 96 + guiTop, color);
   }
 
   @Override

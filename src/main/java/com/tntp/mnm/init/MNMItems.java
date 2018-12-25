@@ -32,7 +32,7 @@ public class MNMItems {
   public static final ItemSmallHammer small_hammer = null;
   public static final ItemDataGroupChip data_group_chip = null;
 
-  public static final ItemDisk disk = null;
+  public static final ItemDisk disk_4mb = null;
   public static final ItemIDCard id_card = null;
   public static final ItemEraserCard eraser_card = null;
 
@@ -47,10 +47,14 @@ public class MNMItems {
     regItem(new ItemScrewDriver(), "screw_driver");
     regItem(new ItemDataReader(), "data_reader");
     regItem(new ItemSmallHammer(), "small_hammer");
-    regItem(new ItemDataGroupChip(), "data_group_chip");
-    regItem(new ItemDisk(4), "disk");
     regItem(new ItemIDCard(), "id_card");
     regItem(new ItemEraserCard(), "eraser_card");
+    regItem(new ItemDataGroupChip(), "data_group_chip");
+    regItem(new ItemDisk(4), "disk_4mb");
+    regItem(new ItemDisk(64), "disk_64mb");
+    regItem(new ItemDisk(256), "disk_256mb");
+    regItem(new ItemDisk(1024), "disk_1024mb");
+    regItem(new ItemDisk(2048), "disk_2048mb");
   }
 
   private static void regItem(Item item, String name) {

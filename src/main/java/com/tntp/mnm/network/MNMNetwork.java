@@ -22,14 +22,18 @@ public class MNMNetwork {
       regMS(MSDataGroupDefine.class);
       regMS(MSGuiQueryBuilder.class);
       regMS(MSGuiDataStorageRequest.class);
+      regMS(MSGuiDataDefinitionRequest.class);
       if (clientSide) {
         // regMCC all messages received on client side
         regMCC(MCChatMsg.class, new MCChatMsgHandler());
         regMCC(MCGuiDataStorageResponse.class, new MCGuiDataStorageResponseHandler());
+        regMCC(MCGuiDataDefinitionResponse.class, new MCGuiDataDefinitionResponseHandler());
+
       } else {
         // regMCS all messages received on client side
         regMCS(MCChatMsg.class);
         regMCS(MCGuiDataStorageResponse.class);
+        regMCS(MCGuiDataDefinitionResponse.class);
       }
     } catch (Exception e) {
       throw new RuntimeException("MetalNetworkMainframe-Network: Cannot inst message: " + e.getMessage());

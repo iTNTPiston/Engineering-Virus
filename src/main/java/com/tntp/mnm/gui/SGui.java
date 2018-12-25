@@ -3,6 +3,7 @@ package com.tntp.mnm.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.init.MNMGuis;
@@ -177,6 +178,24 @@ public class SGui extends GuiContainer {
 
   protected void playButtonSound() {
     mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+  }
+
+  /**
+   * Add wheel events.
+   */
+  @Override
+  public void handleMouseInput() {
+    super.handleMouseInput();
+    int delta = Mouse.getEventDWheel();
+    if (delta != 0) {
+      int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
+      int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+      mouseWheeled(x, y, (int) Math.signum(delta));
+    }
+  }
+
+  protected void mouseWheeled(int x, int y, int wheel) {
+
   }
 
 }

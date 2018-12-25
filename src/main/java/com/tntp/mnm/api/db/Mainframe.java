@@ -1,7 +1,9 @@
 package com.tntp.mnm.api.db;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMItems;
@@ -34,7 +36,7 @@ public class Mainframe {
 
   // private ArrayList<Object> structureList;
 
-  private int nextDefId;
+  private int maxID;
   private boolean scanedInTick;
 
   public Mainframe(TileCentralProcessor cpu) {
@@ -80,6 +82,8 @@ public class Mainframe {
         STileNeithernet portTile = nnetport.getTile();
         portTile.addFinalTilesTo(allNnetTiles);
       }
+
+      checkDefinitions();
     }
   }
 
@@ -235,7 +239,7 @@ public class Mainframe {
    * @return the definition id of the stack, or -1 if space is full
    */
   public int defineItem(ItemStack stack) {
-    if (nextDefId < 0)// integer overflow safety
+    if (maxID == Integer.MAX_VALUE - 1000)// integer overflow safety
       return -1;
     if (stack == null)
       return -1;
@@ -251,12 +255,12 @@ public class Mainframe {
     }
 
     // if definition not found, define new
-    int id = nextDefId;
+    int id = maxID + 1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
         boolean defined = ((TileDataDefinitionStorage) tile).defineItem(stack, id);
         if (defined) {
-          nextDefId++;
+          maxID = id;
           return id;
         }
       }
@@ -310,28 +314,45 @@ public class Mainframe {
     return false;
   }
 
-  public ItemStack[] getDefinitions() {
-    ItemStack[] defs = new ItemStack[nextDefId];
+  public HashMap<Integer, ItemStack> checkDefinitions() {
+    HashMap<Integer, ItemStack> hashmap = new HashMap<Integer, ItemStack>();
     scan();
     // scan data definers for definition
+    int maxID = -1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
         List<ItemDef> list = ((TileDataDefinitionStorage) tile).getDefinedItems();
         for (ItemDef d : list) {
-          if (defs[d.id] == null)
-            defs[d.id] = d.stack;
+          if (d.id > maxID) {
+            maxID = d.id;
+          }
+          if (!hashmap.containsKey(d.id)) {
+            hashmap.put(d.id, d.stack);
+          } else {
+            // integrity violated
+          }
         }
       }
     }
-    return defs;
+    this.maxID = maxID;
+    return hashmap;
+  }
+
+  public ItemStack[] getDefinitions() {
+    HashMap<Integer, ItemStack> map = checkDefinitions();
+    ItemStack[] stacks = new ItemStack[maxID + 1];
+    for (Entry<Integer, ItemStack> e : map.entrySet()) {
+      stacks[e.getKey()] = e.getValue();
+    }
+    return stacks;
   }
 
   public void writeToNBT(NBTTagCompound tag) {
-    tag.setInteger("nextDefId", nextDefId);
+
   }
 
   public void readFromNBT(NBTTagCompound tag) {
-    nextDefId = tag.getInteger("nextDefId");
+
   }
 
 }
