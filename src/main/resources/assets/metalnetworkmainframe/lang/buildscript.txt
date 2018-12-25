@@ -108,6 +108,76 @@ Items
 	item
 	#SUFFIX
 		.name
+	#NAME
+		meter_stick
+		Meter Stick
+		大尺
+		
+	#NAME
+		tool_universal
+		Universal Tool
+		通用工具
+		
+	#NAME
+		common_wrench
+		Common Wrench
+		普通扳手
+		
+	#NAME
+		screw_driver
+		Screw Driver
+		螺丝刀
+		
+	#NAME
+		data_reader
+		Data Reader
+		数据读取器
+		
+	#NAME
+		small_hammer
+		Small Hammer
+		小锤
+		
+	#NAME
+		id_card
+		ID Card
+		ID卡
+		
+	#NAME
+		eraser_card
+		Eraser Card
+		消除卡
+		
+	#NAME
+		data_group_chip
+		Data Group Chip
+		数据组芯片
+		
+	#NAME
+		disk_4mb
+		Disk 4MB
+		硬盘 4MB
+		
+	#NAME
+		disk_64mb
+		Disk 64MB
+		硬盘 64MB
+	
+	#NAME
+		disk_256mb
+		Disk 256MB
+		硬盘 256MB
+	
+	#NAME
+		disk_1024mb
+		Disk 1024MB
+		硬盘 1024MB
+	
+	#NAME
+		disk_2048mb
+		Disk 2048MB
+		硬盘 2048MB
+	
 	#SUFFIX
 	
 #RETURN
@@ -208,7 +278,86 @@ Mod Specific
 					
 			#RETURN geo_thermal_smelter
 		#RETURN struct
+		
+		#GROUP
+			data
+			#NAME
+				capacity_arg_d
+				Max Capacity: %d
+				最多存储 %d 个硬盘
+				
+			#NAME
+				mcbyte
+				Minecraft Bytes
+				MC字节
+				
+			#NAME
+				total
+				Total Space
+				总容量
+				
+			#NAME
+				used
+				Used Space
+				已使用
+		
+		#RETURN data
+		#GROUP
+			data_group_definer
+			#NAME
+				chip
+				Put Chip Here
+				在此放置芯片
+				
+			#NAME
+				define
+				Define
+				定义
+				
+			#NAME
+				icon
+				Put Item As Icon
+				放入作为图标的物品
+				
+			#NAME
+				name
+				Group Name
+				组名
+			
+		#RETURN data_group_definer
+		#NAME
+			ddt.info_arg_d_d_d
+			Defined: %d ,Row %d-%d
+			已定义: %d ,显示第 %d-%d 行
+			
+		#GROUP
+			query_builder
+			#NAME
+				put
+				PUT
+				存放
+				
+			#NAME
+				take
+				TAKE
+				取出
+				
+		#RETURN query builder
+		
 	#RETURN gui
+	
+	Tooltips
+	
+	#GROUP
+		tooltip
+		#NAME
+			ddt.definition_arg_d
+			Definition: %d
+			定义: %d
+			
+	#RETURN tooltip
+			
+	
 #RETURN mnm
 #END
 

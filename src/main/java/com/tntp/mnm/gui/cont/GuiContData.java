@@ -45,12 +45,12 @@ public class GuiContData extends GuiCont {
     }
     fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.capacity_arg_d", t.getSizeInventory()), 7, y, color);
     fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.used"), 7, y + h, color);
-    fontRendererObj.drawString(String.valueOf(t.getUsedSpaceCache()), 7, y + h * 2, color);
-    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.mcbyte"), 7, y + h * 3, color);
+    fontRendererObj.drawString(String.valueOf(t.getUsedSpaceCache()), 27, y + h * 2, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.mcbyte"), 27, y + h * 3, color);
 
-    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.total"), 7, y + h * 5, color);
-    fontRendererObj.drawString(String.valueOf(cachedTotalSpace), 7, y + h * 6, color);
-    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.mcbyte"), 7, y + h * 7, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.total"), 7, y + h * 4, color);
+    fontRendererObj.drawString(String.valueOf(cachedTotalSpace), 27, y + h * 5, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.mcbyte"), 27, y + h * 6, color);
   }
 
 }

@@ -2,12 +2,9 @@ package com.tntp.mnm.init;
 
 import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.item.ItemDataGroupChip;
-import com.tntp.mnm.item.ItemToolBag;
-import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
 import com.tntp.mnm.item.tools.ItemDataReader;
-import com.tntp.mnm.item.tools.ItemEKToolUniversal;
 import com.tntp.mnm.item.tools.ItemEraserCard;
 import com.tntp.mnm.item.tools.ItemIDCard;
 import com.tntp.mnm.item.tools.ItemMeterStick;
@@ -23,7 +20,6 @@ import net.minecraft.item.Item;
 public class MNMItems {
   // public static final ItemWrench wrench = null;
   // public static final ItemToolBag toolBag = null;
-  public static final SItemTool ek_tool_universal = null;
   public static final ItemMeterStick meter_stick = null;
   public static final ItemToolUniversal tool_universal = null;
   public static final ItemCommonWrench common_wrench = null;
@@ -40,7 +36,6 @@ public class MNMItems {
     // GameRegistry.registerItem(new ItemWrench(), "wrench");
     // GameRegistry.registerItem(new ItemToolBag("toolBag", 5), "toolBag");
 
-    regItem(new ItemEKToolUniversal(), "ek_tool_universal");
     regItem(new ItemMeterStick(), "meter_stick");
     regItem(new ItemToolUniversal(), "tool_universal");
     regItem(new ItemCommonWrench(), "common_wrench");

@@ -24,7 +24,8 @@ public class GuiContDataGroupDefiner extends GuiCont {
   @Override
   public void initGui() {
     super.initGui();
-    button = new GuiButton(0, guiLeft + 38, guiTop + 95, 100, 18, LocalUtil.localize("send<LOCAL>"));
+    button = new GuiButton(0, guiLeft + 38, guiTop + 95, 100, 18,
+        LocalUtil.localize("mnm.gui.data_group_definer.define"));
     this.textField = new GuiTextField(this.fontRendererObj, guiLeft + 24, guiTop + 80, 128, 12);
     this.textField.setTextColor(-1);
     this.textField.setDisabledTextColour(-1);

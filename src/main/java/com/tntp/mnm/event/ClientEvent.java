@@ -18,7 +18,7 @@ public class ClientEvent {
       if (t instanceof TileDataDefinitionTerminal) {
         int i = ((TileDataDefinitionTerminal) t).getDefinedIDForClient(e.itemStack);
         if (i != -1) {
-          e.toolTip.add(LocalUtil.localize("mnm.tooltip.ddt.definition", i));
+          e.toolTip.add(LocalUtil.localize("mnm.tooltip.ddt.definition_arg_d", i));
         }
       }
     }
