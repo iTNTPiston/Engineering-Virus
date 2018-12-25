@@ -46,9 +46,9 @@ public class GuiContDataGroupDefiner extends GuiCont {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
-    this.fontRendererObj.drawString("<LOCAL>Group Icon", 29, 22, 0);
-    this.fontRendererObj.drawString("<LOCAL>Chip", 29, 52, 0);
-    this.fontRendererObj.drawString("<LOCAL>Group Name", 8, 65, 0);
+    this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data_group_definer.icon"), 29, 22, 0);
+    this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data_group_definer.chip"), 29, 52, 0);
+    this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data_group_definer.name"), 8, 65, 0);
     GL11.glTranslatef(-guiLeft, -guiTop, 0);
     textField.drawTextBox();
     GL11.glTranslatef(guiLeft, guiTop, 0);

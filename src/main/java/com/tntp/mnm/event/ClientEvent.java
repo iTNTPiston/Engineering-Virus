@@ -3,6 +3,7 @@ package com.tntp.mnm.event;
 import com.tntp.mnm.gui.cont.ContainerCont;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
+import com.tntp.mnm.util.LocalUtil;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.inventory.Container;
@@ -17,7 +18,7 @@ public class ClientEvent {
       if (t instanceof TileDataDefinitionTerminal) {
         int i = ((TileDataDefinitionTerminal) t).getDefinedIDForClient(e.itemStack);
         if (i != -1) {
-          e.toolTip.add("<L>Definition: " + i);
+          e.toolTip.add(LocalUtil.localize("mnm.tooltip.ddt.definition", i));
         }
       }
     }

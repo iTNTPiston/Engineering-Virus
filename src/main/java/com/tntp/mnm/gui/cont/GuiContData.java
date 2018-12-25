@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.tntp.mnm.network.MNMNetwork;
 import com.tntp.mnm.network.MSGuiDataStorageRequest;
 import com.tntp.mnm.tileentity.STileData;
+import com.tntp.mnm.util.LocalUtil;
 import com.tntp.mnm.util.RenderUtil;
 
 import net.minecraft.inventory.IInventory;
@@ -42,9 +43,14 @@ public class GuiContData extends GuiCont {
     if (cachedTotalSpace == -1) {
       cachedTotalSpace = t.getTotalSpaceFromDisks();
     }
-    fontRendererObj.drawString("<L>Capacity: " + t.getSizeInventory(), 7, y, color);
-    fontRendererObj.drawString("<L>Used Space: " + t.getUsedSpaceCache() + " Minecraft Bytes", 7, y + h, color);
-    fontRendererObj.drawString("<L>Total Space:" + cachedTotalSpace + " Minecraft Bytes", 7, y + 2 * h, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.capacity_arg_d", t.getSizeInventory()), 7, y, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.used"), 7, y + h, color);
+    fontRendererObj.drawString(String.valueOf(t.getUsedSpaceCache()), 7, y + h * 2, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.mcbyte"), 7, y + h * 3, color);
+
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.total"), 7, y + h * 5, color);
+    fontRendererObj.drawString(String.valueOf(cachedTotalSpace), 7, y + h * 6, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data.mcbyte"), 7, y + h * 7, color);
   }
 
 }

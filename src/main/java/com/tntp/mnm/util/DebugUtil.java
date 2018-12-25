@@ -7,7 +7,6 @@ import org.junit.Test;
 import com.tntp.mnm.block.BlockHeatPipe;
 
 public class DebugUtil {
-  public static final int VERSION = 1;
   public static Logger log = LogManager.getLogger("MNM");
 
 }

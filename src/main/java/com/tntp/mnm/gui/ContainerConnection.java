@@ -1,8 +1,4 @@
-package com.tntp.mnm.gui.heat;
-
-import com.tntp.mnm.gui.InventoryDisplay;
-import com.tntp.mnm.gui.SContainer;
-import com.tntp.mnm.gui.SlotDecorative;
+package com.tntp.mnm.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

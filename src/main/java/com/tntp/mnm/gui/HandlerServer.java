@@ -12,7 +12,6 @@ import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.gui.heat.ContainerHeat;
-import com.tntp.mnm.gui.heat.ContainerConnection;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ContainerStructure;

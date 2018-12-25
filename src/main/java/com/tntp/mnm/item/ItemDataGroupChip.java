@@ -3,6 +3,7 @@ package com.tntp.mnm.item;
 import java.util.List;
 
 import com.tntp.mnm.init.MNMItems;
+import com.tntp.mnm.util.LocalUtil;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +23,7 @@ public class ItemDataGroupChip extends SItem {
   public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
     String groupName = getGroupName(stack);
     if (groupName.length() != 0) {
-      list.add("<LOCAL>Group: " + groupName);
+      list.add(LocalUtil.localize("mnm.tooltip.data_group_arg_s", groupName));
     }
   }
 

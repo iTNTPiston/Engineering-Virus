@@ -1,0 +1,246 @@
+MetalNetworkMainframe Language File Generation SCRIPT
+
+
+#SCRIPT
+en_US
+zh_CN
+
+Creative Tab Name
+
+#NAME
+	itemGroup.metalnetworkmainframe
+	Metal Network Mainframe
+	金属网络主机
+
+Blocks
+	
+#GROUP
+	tile
+	#SUFFIX
+		.name
+	#NAME
+		firewall
+		Firewall
+		防火墙
+
+	#NAME
+		heat_collector_firewall
+		Firewall Heat Collector
+		防火墙集热器
+		
+	#NAME
+		geo_thermal_smelter
+		Geothermal Smelter
+		地热熔炉
+		
+	#NAME
+		chimney
+		Chimney
+		烟囱
+		
+	#NAME
+		heat_pipe
+		Heat Pipe
+		热管道
+		
+	#NAME
+		heat_distributor
+		Heat Distributor
+		热分配器
+		
+	#NAME
+		mother_board
+		Motherboard
+		主板
+		
+	#NAME
+		central_processor
+		Central Processor
+		中央处理器
+		
+	#NAME
+		data_group_definer
+		Data Group Definer
+		数据组定义器
+		
+	#NAME
+		security_encoder
+		Security Encoder
+		安全编码器
+		
+	#NAME
+		neithernet_cable
+		Neithernet Cable
+		拟钛网线
+		
+	#NAME
+		neithernet_port
+		Neithernet Port
+		拟钛网口
+		
+	#NAME
+		data_definition_terminal
+		Data Definition Terminal
+		数据定义终端
+		
+	#NAME
+		query_builder
+		Query Builder
+		查询机
+		
+	#NAME
+		disk_storage
+		Disk Storage
+		硬盘存储机
+		
+	#NAME
+		data_definition_storage
+		Data Definition Storage
+		数据定义存储机
+		
+	#SUFFIX
+	
+#RETURN tile
+
+Items
+
+#GROUP
+	item
+	#SUFFIX
+		.name
+	#SUFFIX
+	
+#RETURN
+
+Mod Specific
+
+#GROUP
+	mnm
+	
+	GUIs
+	
+	#GROUP 
+		gui
+		#Name
+			heat
+			Heat Stored:
+			存储热量:
+		
+		#GROUP
+			heat
+			#NAME
+				value_arg_d_d
+				%d / %d EK
+				%d / %d EK
+			
+		#RETURN heat
+		
+		#GROUP
+			label
+			#NAME
+				heat
+				Heat
+				热能
+				
+			#NAME
+				connection
+				Connection
+				连接
+				
+			#NAME
+				structure
+				Structure
+				结构
+				
+			#NAME
+				process
+				Process
+				处理进度
+				
+			#NAME
+				config
+				Configuration
+				配置
+				
+			#NAME
+				graphic_interface
+				Graphic Interface
+				图形界面
+				
+		#RETURN label
+		
+		#GROUP   For Structure guis
+			struct
+			#GROUP
+				heat_collector
+				#NAMEENUM
+					main_
+					§74 EK/t, +2 EK/t for each
+					§7Optional Firewall (Max 8)
+					
+					§74 EK/t, 每增加一个防火墙
+					§7+2 EK/t (可选, 最多8个)
+					
+				#NAME
+					boost
+					§7Optional
+					§7可选
+					
+			#RETURN
+			#GROUP
+				geo_thermal_smelter
+				#NAMEENUM
+					main_
+					§7Smelt up to 4 items together using EK
+					§7The second layer and the chimney is optional for speed-boost
+					§7Normal Speed: 400t at 20 EK/t
+					§7Boosted Speed: 240t at 40 EK/t
+					
+				#NAME
+					down_pipe
+					§7EK Input
+					§7EK 输入
+					
+				#NAME
+					top_pipe
+					§7Must be up-down & unobstructed
+					§7必须为上下朝向且不能堵塞
+					
+			#RETURN geo_thermal_smelter
+		#RETURN struct
+	#RETURN gui
+#RETURN mnm
+#END
+
+SCRIPT head define langs
+lang1
+lang2
+...
+
+END end
+
+
+NAME define => group.name[suffix][enum]=<name>
+name
+lang1
+lang2
+...
+
+GROUP forward group
+groupname
+
+SUFFIX change suffix
+suffixname
+
+NAMEENUM start enum
+name
+lang1line0
+lang1line1
+lang1line...
+
+lang2line0
+...
+
+RETURN return group
+RETURNALL return all groups
+

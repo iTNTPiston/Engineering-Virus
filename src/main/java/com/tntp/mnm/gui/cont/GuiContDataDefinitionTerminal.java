@@ -8,6 +8,7 @@ import com.tntp.mnm.network.MSGuiDataDefinitionRequest;
 import com.tntp.mnm.network.MSGuiDataStorageRequest;
 import com.tntp.mnm.tileentity.STileData;
 import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
+import com.tntp.mnm.util.LocalUtil;
 import com.tntp.mnm.util.RenderUtil;
 
 import net.minecraft.inventory.IInventory;
@@ -41,9 +42,8 @@ public class GuiContDataDefinitionTerminal extends GuiCont {
     if (t.getDefinitionLengthCache() == -1) {
       MNMNetwork.network.sendToServer(new MSGuiDataDefinitionRequest(this.inventorySlots.windowId, -1));
     }
-    fontRendererObj.drawString(
-        "<L>Defined: " + t.getDefinitionLengthCache() + " Row " + t.getCurrentRow() + "-" + (t.getCurrentRow() + 3),
-        12 + guiLeft, 93 + guiTop, color);
+    fontRendererObj.drawString(LocalUtil.localize("mnm.gui.ddt.info_arg_d_d_d", t.getDefinitionLengthCache(),
+        t.getCurrentRow(), t.getCurrentRow() + 3), 12 + guiLeft, 93 + guiTop, color);
     // render scroll bar
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(foreground);

@@ -1,4 +1,4 @@
-package com.tntp.mnm.gui.heat;
+package com.tntp.mnm.gui;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tntp.mnm.gui.SGui;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMResources;
 import com.tntp.mnm.util.LocalUtil;
@@ -19,7 +18,7 @@ public class GuiConnection extends SGui {
   protected ResourceLocation foreground = MNMResources.getResource("textures/guis/gui_connection_overlay.png");
 
   public GuiConnection(ContainerConnection container, int x, int y, int z) {
-    super(container, "mnm.gui.title.connection", x, y, z);
+    super(container, "mnm.gui.label.connection", x, y, z);
   }
 
   @Override

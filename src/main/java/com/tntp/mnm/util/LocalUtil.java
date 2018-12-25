@@ -1,5 +1,7 @@
 package com.tntp.mnm.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class LocalUtil {
         break;
       list.add(loc);
     }
+    if (list.isEmpty())
+      reportMissingLocalization(key);
     return list;
   }
 
@@ -26,6 +30,22 @@ public class LocalUtil {
   }
 
   public static String localize(String key, Object... objects) {
-    return I18n.format(key, objects);
+    String localized = I18n.format(key, objects);
+    if (localized.equals(key))
+      reportMissingLocalization(key);
+    return localized;
+  }
+
+  private static void reportMissingLocalization(String missing) {
+    File f = new File("missing_local");
+    if (!f.exists())
+      f.mkdirs();
+    f = f.toPath().resolve(missing).toFile();
+    if (!f.exists())
+      try {
+        f.createNewFile();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
   }
 }

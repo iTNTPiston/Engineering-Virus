@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.tntp.mnm.init.MNMResources;
 import com.tntp.mnm.network.MNMNetwork;
 import com.tntp.mnm.network.MSGuiQueryBuilder;
+import com.tntp.mnm.util.LocalUtil;
 import com.tntp.mnm.util.RenderUtil;
 
 import net.minecraft.inventory.IInventory;
@@ -21,8 +22,10 @@ public class GuiContQueryBuilder extends GuiCont {
     super.drawGuiContainerBackgroundLayer(p_146976_1_, x, y);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     int color = RenderUtil.argb(255, 0, 181, 0);
-    drawCenteredStringNoShadow(fontRendererObj, "<L>PUT", 91 + guiLeft, 96 + guiTop, color);
-    drawCenteredStringNoShadow(fontRendererObj, "<L>TAKE", 140 + guiLeft, 96 + guiTop, color);
+    drawCenteredStringNoShadow(fontRendererObj, LocalUtil.localize("mnm.gui.query_builder.put"), 91 + guiLeft,
+        96 + guiTop, color);
+    drawCenteredStringNoShadow(fontRendererObj, LocalUtil.localize("mnm.gui.query_builder.take"), 140 + guiLeft,
+        96 + guiTop, color);
   }
 
   @Override
