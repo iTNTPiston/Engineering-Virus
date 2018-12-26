@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.tntp.mnm.init.MNMResources;
 import com.tntp.mnm.item.ItemDataGroupChip;
 import com.tntp.mnm.network.MNMNetwork;
-import com.tntp.mnm.network.MSDataGroupDefine;
+import com.tntp.mnm.network.MSGuiDataGroupDefine;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.client.gui.GuiButton;
@@ -47,7 +47,7 @@ public class GuiContDataGroupDefiner extends GuiCont {
     if (button == this.button) {
       String groupName = textField.getText();
       if (groupName.length() > 0) {
-        MSDataGroupDefine mes = new MSDataGroupDefine(this.inventorySlots.windowId, groupName);
+        MSGuiDataGroupDefine mes = new MSGuiDataGroupDefine(this.inventorySlots.windowId, groupName);
         MNMNetwork.network.sendToServer(mes);
       }
     }

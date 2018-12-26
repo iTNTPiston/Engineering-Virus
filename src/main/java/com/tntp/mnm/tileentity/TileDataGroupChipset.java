@@ -46,6 +46,33 @@ public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
     return returnStack;
   }
 
+  /**
+   * Get all groups that begins with the prefix, not necessary to be in the next
+   * level
+   * 
+   * @param groups
+   * @param prefix
+   * @return an itemstack containing exactly the prefix group, if none returns
+   *         null
+   */
+  public ItemStack findGroupBeginWith(List<ItemStack> groups, String prefix) {
+    ItemDataGroupChip chip = MNMItems.data_group_chip;
+    ItemStack returnStack = null;
+    for (int i = 0; i < getSizeInventory(); i++) {
+      ItemStack stack = getStackInSlot(i);
+      if (stack != null && stack.getItem() == chip) {
+        String group = chip.getGroupName(stack);
+        if (group.startsWith(prefix)) {// must be prefixed
+          groups.add(stack);
+          if (group.length() == prefix.length()) {
+            returnStack = stack;
+          }
+        }
+      }
+    }
+    return returnStack;
+  }
+
   @Override
   public String getContainerGui() {
     return "GuiContDataGroupChipset";

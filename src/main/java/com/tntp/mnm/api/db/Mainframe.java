@@ -307,7 +307,6 @@ public class Mainframe {
         result.getGroupChipList().add(groupChip);
       }
       groupNames.add(group);
-      System.out.println(group);
     }
 
     // search for items in group using data group mapping
@@ -322,6 +321,26 @@ public class Mainframe {
     result.setGroupItems(getQuantityFor(allIDs));
 
     return result;
+  }
+
+  public ItemStack searchGroupChip(String groupName) {
+    if (groupName == null || groupName.length() == 0)
+      return null;
+    scan();
+    List<ItemStack> allGroups = new ArrayList<ItemStack>();
+
+    // search tile data group
+    for (Port<STilePOB> port : boardPorts) {
+      STilePOB tile = port.getTile();
+      if (tile instanceof TileDataGroupChipset) {
+        ItemStack thisGroup = ((TileDataGroupChipset) tile).findGroupBeginWith(allGroups, groupName);
+        if (thisGroup != null)
+          return thisGroup;
+      }
+    }
+    if (!allGroups.isEmpty())
+      return allGroups.get(0);
+    return null;
   }
 
   public boolean sendQueryToCPU(QueryExecuter query) {
