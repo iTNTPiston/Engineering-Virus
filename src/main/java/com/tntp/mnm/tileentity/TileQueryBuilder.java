@@ -61,6 +61,17 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
     selectGroup(currentGroupName);
   }
 
+  @Override
+  public void openInventory() {
+    needsUpdate = true;
+    scanCD = 0;
+  }
+
+  @Override
+  public void closeInventory() {
+    needsUpdate = false;
+  }
+
   public IMessage receiveClientGuiMessage(int buttonID) {
     // server only
     if (buttonID == 0)

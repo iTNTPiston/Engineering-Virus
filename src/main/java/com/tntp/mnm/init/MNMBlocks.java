@@ -5,6 +5,7 @@ import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockChimney;
 import com.tntp.mnm.block.BlockDataDefinitionStorage;
 import com.tntp.mnm.block.BlockDataDefinitionTerminal;
+import com.tntp.mnm.block.BlockDataGroupChipset;
 import com.tntp.mnm.block.BlockDataGroupDefiner;
 import com.tntp.mnm.block.BlockDiskStorage;
 import com.tntp.mnm.block.BlockFirewall;
@@ -22,6 +23,7 @@ import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
+import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileDiskStorage;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
@@ -49,9 +51,10 @@ public class MNMBlocks {
   public static final BlockNeithernetCable neithernet_cable = null;
   public static final Block mother_board = null;
   public static final Block central_processor = null;
-
   public static final Block data_group_definer = null;
   public static final Block security_encoder = null;
+  public static final Block data_group_chipset = null;
+
   public static final Block query_builder = null;
 
   public static void loadBlocks() {
@@ -71,9 +74,11 @@ public class MNMBlocks {
     regTileEntity(TileCentralProcessor.class);
     regBlock(new BlockDataGroupDefiner(), "data_group_definer");
     regTileEntity(TileDataGroupDefiner.class);
-
     regBlock(new BlockSecurityEncoder(), "security_encoder");
     regTileEntity(TileSecurityEncoder.class);
+    regBlock(new BlockDataGroupChipset(), "data_group_chipset");
+    regTileEntity(TileDataGroupChipset.class);
+
     regBlock(new BlockNeithernetCable(), "neithernet_cable");
     regBlock(new BlockNeithernetPort(), "neithernet_port");
     regTileEntity(TileNeithernetPort.class);

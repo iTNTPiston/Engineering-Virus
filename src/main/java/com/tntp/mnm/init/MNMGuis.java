@@ -26,7 +26,7 @@ public class MNMGuis {
   }
 
   public static void loadGuis() {
-
+    // don't use class here to prevent server side from loading those classes
     assignGuiID("GuiHeat");
     assignGuiID("GuiConnection");
     assignGuiID("GuiStructureHeatCollectorFirewall");
@@ -39,6 +39,7 @@ public class MNMGuis {
     assignGuiID("GuiContQueryBuilder");
     assignGuiID("GuiContDiskStorage");
     assignGuiID("GuiContDataDefinitionStorage");
+    assignGuiID("GuiContDataGroupChipset");
 
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 

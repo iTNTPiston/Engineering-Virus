@@ -56,6 +56,14 @@ public class MNMRender {
     i = simple.registerWaveObj(securityRender);
     simple.bindWaveObj(MNMBlocks.security_encoder, 0, i);
 
+    WavefrontObject dataGroupChipset = getWaveObj("data_group_chipset/0");
+    ResourceLocation dataGroupChipsetTex = getBlockTexture("data_group_chipset");
+    WaveObjRenderer dataGroupChipsetRender = new MotherboardComponentRenderer(motherboard, dataGroupChipset,
+        dataGroupChipsetTex);
+    dataGroupChipsetRender.enableMetaRotation();
+    i = simple.registerWaveObj(dataGroupChipsetRender);
+    simple.bindWaveObj(MNMBlocks.data_group_chipset, 0, i);
+
     RenderingRegistry.registerBlockHandler(simple);
 
     ItemRenderingHelper itemRender = ItemRenderingHelper.instance;

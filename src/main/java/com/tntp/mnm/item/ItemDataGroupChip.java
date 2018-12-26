@@ -41,12 +41,16 @@ public class ItemDataGroupChip extends SItem {
    * @return group name, or empty string if there is no group name
    */
   public String getGroupName(ItemStack stack) {
+    if (stack == null)
+      return "";
     if (!stack.hasTagCompound())
       return "";
     return getGroupNameFromNBT(stack.getTagCompound());
   }
 
   public ItemStack getGroupIcon(ItemStack stack) {
+    if (stack == null)
+      return null;
     if (!stack.hasTagCompound())
       return null;
     return getGroupIconFromNBT(stack.getTagCompound());
