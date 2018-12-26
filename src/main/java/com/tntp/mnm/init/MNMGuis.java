@@ -37,7 +37,7 @@ public class MNMGuis {
     assignGuiID("GuiContDataGroupDefiner");
     assignGuiID("GuiContDataDefinitionTerminal");
     assignGuiID("GuiContQueryBuilder");
-    assignGuiID("GuiContDiskStorage");
+    assignGuiID("GuiContBasicDiskStorage");
     assignGuiID("GuiContDataDefinitionStorage");
     assignGuiID("GuiContDataGroupChipset");
 

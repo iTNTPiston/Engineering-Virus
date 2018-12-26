@@ -5,9 +5,9 @@ import com.tntp.mnm.tileentity.STileData;
 
 import net.minecraft.inventory.IInventory;
 
-public class GuiContDiskStorage extends GuiContData {
+public class GuiContBasicDiskStorage extends GuiContData {
 
-  public GuiContDiskStorage(IInventory playerInventory, STileData machine, int x, int y, int z) {
+  public GuiContBasicDiskStorage(IInventory playerInventory, STileData machine, int x, int y, int z) {
     super(playerInventory, machine, x, y, z);
     this.foreground = MNMResources.getResource("textures/guis/gui_disk_storage_overlay.png");
   }

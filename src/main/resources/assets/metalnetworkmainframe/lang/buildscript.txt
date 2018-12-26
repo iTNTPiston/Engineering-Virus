@@ -71,12 +71,12 @@ Blocks
 	#NAME
 		neithernet_cable
 		Neithernet Cable
-		拟钛网线
+		拟太网线
 		
 	#NAME
 		neithernet_port
 		Neithernet Port
-		拟钛网口
+		拟太网口
 		
 	#NAME
 		data_definition_terminal
@@ -89,9 +89,9 @@ Blocks
 		查询机
 		
 	#NAME
-		disk_storage
-		Disk Storage
-		硬盘存储机
+		basic_disk_storage
+		Basic Disk Storage
+		基础硬盘存储机
 		
 	#NAME
 		data_definition_storage

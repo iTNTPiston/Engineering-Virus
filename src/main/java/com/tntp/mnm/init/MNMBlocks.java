@@ -7,7 +7,7 @@ import com.tntp.mnm.block.BlockDataDefinitionStorage;
 import com.tntp.mnm.block.BlockDataDefinitionTerminal;
 import com.tntp.mnm.block.BlockDataGroupChipset;
 import com.tntp.mnm.block.BlockDataGroupDefiner;
-import com.tntp.mnm.block.BlockDiskStorage;
+import com.tntp.mnm.block.BlockBasicDiskStorage;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockGeoThermalSmelter;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
@@ -25,7 +25,7 @@ import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
-import com.tntp.mnm.tileentity.TileDiskStorage;
+import com.tntp.mnm.tileentity.TileBasicDiskStorage;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
@@ -87,8 +87,8 @@ public class MNMBlocks {
     regTileEntity(TileDataDefinitionTerminal.class);
     regBlock(new BlockQueryBuilder(), "query_builder");
     regTileEntity(TileQueryBuilder.class);
-    regBlock(new BlockDiskStorage(), "disk_storage");
-    regTileEntity(TileDiskStorage.class);
+    regBlock(new BlockBasicDiskStorage(), "basic_disk_storage");
+    regTileEntity(TileBasicDiskStorage.class);
     regBlock(new BlockDataDefinitionStorage(), "data_definition_storage");
     regTileEntity(TileDataDefinitionStorage.class);
 

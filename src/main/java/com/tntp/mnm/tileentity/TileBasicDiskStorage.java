@@ -9,17 +9,17 @@ import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileDiskStorage extends STileDataStorage implements ITileSecuredCont {
+public class TileBasicDiskStorage extends STileDataStorage implements ITileSecuredCont {
   private Security security;
 
-  public TileDiskStorage() {
+  public TileBasicDiskStorage() {
     super(1);
     security = new Security(this);
   }
 
   @Override
   public String getContainerGui() {
-    return "GuiContDiskStorage";
+    return "GuiContBasicDiskStorage";
   }
 
   @Override
