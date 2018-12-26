@@ -40,27 +40,26 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
     GL11.glPopMatrix();
   }
 
-  public void tessellateExtensionFor(Tessellator tes, IIcon icon, int side) {
+  public void tessellateExtensionFor(Tessellator tes, IIcon icon, int side, int meta) {
     extRender.setRotationFor(side);
-    extRender.tessellate(tes, icon);
+    extRender.tessellate(tes, icon, meta);
     extRender.clearRotation();
   }
 
-  public void tessellateCoverFor(Tessellator tes, IIcon icon, int side) {
+  public void tessellateCoverFor(Tessellator tes, IIcon icon, int side, int meta) {
     setRotationFor(side);
-    tessellate(tes, icon);
+    tessellate(tes, icon, meta);
     clearRotation();
   }
 
-  public void tessellatePlugFor(Tessellator tes, IIcon icon, int side) {
+  public void tessellatePlugFor(Tessellator tes, IIcon icon, int side, int meta) {
     setPlugRotationFor(side);
-    plugRender.tessellate(tes, icon);
+    plugRender.tessellate(tes, icon, meta);
     plugRender.clearRotation();
   }
 
   public void setPlugRotationFor(int side) {
     plugRender.setRotationOnlyYFor(side);
-
   }
 
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -80,7 +79,8 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
     tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
     IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, 0);
 
-    int s = BlockUtil.pipeMetaToSide(world.getBlockMetadata(x, y, z));
+    int meta = world.getBlockMetadata(x, y, z);
+    int s = BlockUtil.pipeMetaToSide(meta);
     int s1 = s >> 4;
     int s2 = s & 15;
     for (int d = 0; d < 6; d++) {
@@ -97,11 +97,11 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
             plug = true;
         }
         if (plug)
-          tessellatePlugFor(tes, icon, d);
+          tessellatePlugFor(tes, icon, d, meta);
         else
-          tessellateExtensionFor(tes, icon, d);
+          tessellateExtensionFor(tes, icon, d, meta);
       } else {
-        tessellateCoverFor(tes, icon, d);
+        tessellateCoverFor(tes, icon, d, meta);
       }
     }
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);

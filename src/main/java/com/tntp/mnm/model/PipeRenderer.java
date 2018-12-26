@@ -34,10 +34,10 @@ public class PipeRenderer extends WaveObjRenderer {
     }
   }
 
-  public void tessellateExtensionFor(Tessellator tes, IIcon icon, int... sides) {
+  public void tessellateExtensionFor(Tessellator tes, IIcon icon, int meta, int... sides) {
     for (int s : sides) {
       extRender.setRotationFor(s);
-      extRender.tessellate(tes, icon);
+      extRender.tessellate(tes, icon, meta);
     }
     extRender.clearRotation();
   }
@@ -53,11 +53,12 @@ public class PipeRenderer extends WaveObjRenderer {
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
     tes.setColorOpaque_F(1, 1, 1);
     tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, 0);
+    int meta = world.getBlockMetadata(x, y, z);
+    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, meta);
 
     int[] sides = getSideCodeFromBlock(block, world, x, y, z);
-    tessellate(tes, icon);
-    tessellateExtensionFor(tes, icon, sides);
+    tessellate(tes, icon, meta);
+    tessellateExtensionFor(tes, icon, meta, sides);
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;
   }

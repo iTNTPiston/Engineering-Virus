@@ -24,18 +24,21 @@ public class RenderUtil {
     }
     float cos = (float) MathHelper.cos(rad);
     float sin = (float) MathHelper.sin(rad);
+    float x = v.x;
+    float y = v.y;
+    float z = v.z;
     if (axis == DirUtil.EAST_PX) {
-      vObj.x = v.x;
-      vObj.y = cos * v.y - sin * v.z;
-      vObj.z = sin * v.y + cos * v.z;
+      vObj.x = x;
+      vObj.y = cos * y - sin * z;
+      vObj.z = sin * y + cos * z;
     } else if (axis == DirUtil.UP_PY) {
-      vObj.x = cos * v.x + sin * v.z;
-      vObj.y = v.y;
-      vObj.z = -sin * v.x + cos * v.z;
+      vObj.x = cos * x + sin * z;
+      vObj.y = y;
+      vObj.z = -sin * x + cos * z;
     } else if (axis == DirUtil.SOUTH_PZ) {
-      vObj.x = cos * v.x - sin * v.y;
-      vObj.y = sin * v.x + cos * v.y;
-      vObj.z = v.z;
+      vObj.x = cos * x - sin * y;
+      vObj.y = sin * x + cos * y;
+      vObj.z = z;
     }
     return vObj;
   }

@@ -46,16 +46,37 @@ public class WaveObjRenderer {
     Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
   }
 
-  public void tessellate(Tessellator tes, IIcon icon) {
+  public void tessellate(Tessellator tes, IIcon icon, int blockMetadata) {
+    float metaRotate = 0;
+    if (metaRotation) {
+      switch (blockMetadata) {
+      case 2:
+        metaRotate = (float) (Math.PI / 2);
+        break;
+      case 3:
+        metaRotate = (float) -Math.PI / 2;
+        break;
+      case 4:
+        metaRotate = (float) Math.PI;
+        break;
+      }
+    }
     Vertex vRot = null;
+    Vertex vRot2 = null;
     for (GroupObject go : obj.groupObjects) {
       for (Face f : go.faces) {
         Vertex n = f.faceNormal;
         vRot = RenderUtil.rotate(n, rotation, rotationAxis, vRot);
+        if (metaRotation) {
+          vRot = RenderUtil.rotate(vRot, metaRotate, DirUtil.UP_PY, vRot2);
+        }
         tes.setNormal(vRot.x, vRot.y, vRot.z);
         for (int i = 0; i < f.vertices.length; i++) {
           Vertex vert = f.vertices[i];
           vRot = RenderUtil.rotate(vert, rotation, rotationAxis, vRot);
+          if (metaRotation) {
+            vRot = RenderUtil.rotate(vRot, metaRotate, DirUtil.UP_PY, vRot2);
+          }
           TextureCoordinate t = f.textureCoordinates[i];
           tes.addVertexWithUV(vRot.x, vRot.y, vRot.z, icon.getInterpolatedU(t.u * 16), icon.getInterpolatedV(t.v * 16));
         }
@@ -144,13 +165,7 @@ public class WaveObjRenderer {
     tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
     int meta = world.getBlockMetadata(x, y, z);
     IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, meta);
-    GL11.glPushMatrix();
-    if (metaRotation) {
-      setRotationOnlyYFor(meta);
-    }
-    tessellate(tes, icon);
-    clearRotation();
-    GL11.glPopMatrix();
+    tessellate(tes, icon, meta);
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;
   }
