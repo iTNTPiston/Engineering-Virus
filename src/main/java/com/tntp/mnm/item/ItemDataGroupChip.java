@@ -56,6 +56,43 @@ public class ItemDataGroupChip extends SItem {
     return getGroupIconFromNBT(stack.getTagCompound());
   }
 
+  /**
+   * Return the iconStack, with an NBTTag containing the last part of the group
+   * name (the part after last dot)
+   * 
+   * @param stack
+   * @return
+   */
+  public ItemStack getGroupIconWithNameTag(ItemStack stack) {
+    ItemStack iconStack = getGroupIcon(stack);
+    if (iconStack == null)
+      return null;
+    NBTTagCompound stackTag = iconStack.hasTagCompound() ? iconStack.getTagCompound() : new NBTTagCompound();
+    String groupName = MNMItems.data_group_chip.getGroupName(stack);
+    // get last part
+    groupName = groupName.substring(groupName.lastIndexOf('.') + 1);
+    stackTag.setString("MNM|DataGroupNameTag", groupName);
+    iconStack.setTagCompound(stackTag);
+    return iconStack;
+  }
+
+  /**
+   * Get group name from an iconstack returned from getGroupIconWithNameTag. If it
+   * is not such stack, null is returned
+   * 
+   * @param iconStack
+   * @return
+   */
+  public String getTaggedNameFromIcon(ItemStack iconStack) {
+    if (iconStack == null || !iconStack.hasTagCompound())
+      return null;
+    NBTTagCompound tag = iconStack.getTagCompound();
+    if (tag.hasKey("MNM|DataGroupNameTag")) {
+      return tag.getString("MNM|DataGroupNameTag");
+    }
+    return null;
+  }
+
   private static String getGroupNameFromNBT(NBTTagCompound stackTag) {
     NBTTagCompound groupTag = stackTag.getCompoundTag("MNM|DataGroup");
     String groupName = groupTag.getString("group_name");
@@ -80,8 +117,9 @@ public class ItemDataGroupChip extends SItem {
       return;
     if (stack == null || stack.getItem() != MNMItems.data_group_chip)
       return;
-    if (group == null || group.length() == 0 || group.endsWith("."))
+    if (!isGroupNameValid(group))
       return;
+
     NBTTagCompound groupTag = new NBTTagCompound();
     groupTag.setString("group_name", group);
     ItemStack s = icon.copy();
@@ -94,5 +132,18 @@ public class ItemDataGroupChip extends SItem {
     }
     stackTag.setTag("MNM|DataGroup", groupTag);
     stack.setTagCompound(stackTag);
+  }
+
+  public static boolean isGroupNameValid(String group) {
+    if (group == null || group.length() == 0 || group.endsWith("."))
+      return false;
+    int dotPos = group.indexOf('.');
+    while (dotPos != -1) {// cannot have two consecutive dots
+      int nextDotPos = group.indexOf('.', dotPos + 1);
+      if (nextDotPos == dotPos + 1)
+        return false;
+      dotPos = nextDotPos;
+    }
+    return true;
   }
 }

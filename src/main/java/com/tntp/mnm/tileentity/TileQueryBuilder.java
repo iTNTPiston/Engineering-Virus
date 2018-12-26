@@ -10,11 +10,8 @@ import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.init.MNMItems;
-import com.tntp.mnm.network.SMessage;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,7 +22,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   private int currentFirstGroupIndex;
   private int currentScrollIndex;
 
-  private ItemStack[] cachedGroupIcons;
+  private ItemStack[] cachedGroupChips;
   private ItemStack[] cachedItemGroup;
   private ItemStack cachedCurrentGroupIcon;
 
@@ -74,12 +71,51 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
 
   public IMessage receiveClientGuiMessage(int buttonID) {
     // server only
-    if (buttonID == 0)
+    if (buttonID == 0) {
       executePut();
+    } else if (buttonID == 2) {
+      if (currentGroupName != null && currentGroupName.length() > 0) {
+        int dotPos = currentGroupName.lastIndexOf('.');
+        if (dotPos == -1)
+          selectGroup("");
+        else
+          selectGroup(currentGroupName.substring(0, dotPos));
+      }
+    } else if (buttonID >= 3 && buttonID <= 7) {
+      int groupIndex = currentFirstGroupIndex + buttonID - 3;
+      if (groupIndex < cachedGroupChips.length) {
+        String groupName = MNMItems.data_group_chip.getGroupName(cachedGroupChips[groupIndex]);
+        selectGroup(groupName);
+      }
+    } else if (buttonID == 8) {
+      scrollGroupTo(currentFirstGroupIndex - 1);
+    } else if (buttonID == 9) {
+      scrollGroupTo(currentFirstGroupIndex + 1);
+    }
     return null;
   }
 
   public void scroll(int direction) {
+
+  }
+
+  public void scrollGroupTo(int firstGroupIndex) {
+    if (firstGroupIndex + 5 > cachedGroupChips.length) {
+      firstGroupIndex = cachedGroupChips.length - 5;
+    }
+    if (firstGroupIndex < 0)
+      firstGroupIndex = 0;
+    currentFirstGroupIndex = firstGroupIndex;
+    for (int i = 0; i < 5; i++) {
+      int j = currentFirstGroupIndex + i;
+      ItemStack iconStack;
+      if (j < cachedGroupChips.length) {
+        iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(cachedGroupChips[j]);
+      } else {
+        iconStack = null;
+      }
+      this.setInventorySlotContents(28 + i, iconStack);
+    }
 
   }
 
@@ -89,34 +125,22 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
     Mainframe mf = connectToMainframe();
     if (mf != null) {
       GroupSearchResult result = mf.getGroup(str);
-      cachedGroupIcons = new ItemStack[result.getGroupChipList().size()];
-      result.getGroupChipList().toArray(cachedGroupIcons);
+      cachedGroupChips = new ItemStack[result.getGroupChipList().size()];
+      result.getGroupChipList().toArray(cachedGroupChips);
       cachedItemGroup = result.getGroupItems();
       cachedCurrentGroupIcon = result.getCurrentGroup();
       currentGroupName = str;
     } else {
-      cachedGroupIcons = new ItemStack[5];
+      cachedGroupChips = new ItemStack[5];
       currentFirstGroupIndex = 0;
       cachedItemGroup = null;
       cachedCurrentGroupIcon = null;
       currentGroupName = "";
     }
-    if (currentFirstGroupIndex + 5 > cachedGroupIcons.length) {
-      currentFirstGroupIndex = cachedGroupIcons.length - 5;
-    }
-    if (currentFirstGroupIndex < 0)
-      currentFirstGroupIndex = 0;
-    for (int i = 0; i < 5; i++) {
-      int j = currentFirstGroupIndex + i;
-      ItemStack iconStack;
-      if (j < cachedGroupIcons.length)
-        iconStack = MNMItems.data_group_chip.getGroupIcon(cachedGroupIcons[j]);
-      else
-        iconStack = null;
-      this.setInventorySlotContents(28 + i, iconStack);
-    }
-    ItemStack currentGroup = MNMItems.data_group_chip.getGroupIcon(cachedCurrentGroupIcon);
+    scrollGroupTo(0);
+    ItemStack currentGroup = MNMItems.data_group_chip.getGroupIconWithNameTag(cachedCurrentGroupIcon);
     this.setInventorySlotContents(27, currentGroup);
+
   }
 
   public void executePut() {
@@ -142,8 +166,9 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
         slots.add(new Slot(this, j + i * 3, 12 + j * 18, 41 + i * 18));
       }
     }
-    for (int i = 0; i < 6; i++) {
-      slots.add(new SlotDecorative(this, i + 27, 43 + i * 18, 20));
+    slots.add(new SlotDecorative(this, 27, 27, 20));
+    for (int i = 0; i < 5; i++) {
+      slots.add(new SlotDecorative(this, i + 28, 61 + i * 18, 20));
     }
 
   }

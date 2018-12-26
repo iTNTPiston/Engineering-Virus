@@ -295,18 +295,19 @@ public class Mainframe {
           result.setCurrentGroup(thisGroup);
       }
     }
-
     // add to result only those with exactly one more layer
     // but later add items in all groups to item list
     ItemDataGroupChip chip = MNMItems.data_group_chip;
     List<String> groupNames = new ArrayList<String>();
     for (ItemStack groupChip : allGroups) {
       String group = chip.getGroupName(groupChip);
-      if (group.lastIndexOf('.') == prefix.length()) {
+      int dotPos = group.lastIndexOf('.');
+      if (dotPos == prefix.length() || (prefix.length() == 0 && dotPos == -1)) {
         // must contain exactly one more layer than prefix
         result.getGroupChipList().add(groupChip);
       }
       groupNames.add(group);
+      System.out.println(group);
     }
 
     // search for items in group using data group mapping

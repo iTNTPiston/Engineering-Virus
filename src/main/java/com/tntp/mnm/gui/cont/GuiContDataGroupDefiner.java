@@ -3,6 +3,7 @@ package com.tntp.mnm.gui.cont;
 import org.lwjgl.opengl.GL11;
 
 import com.tntp.mnm.init.MNMResources;
+import com.tntp.mnm.item.ItemDataGroupChip;
 import com.tntp.mnm.network.MNMNetwork;
 import com.tntp.mnm.network.MSDataGroupDefine;
 import com.tntp.mnm.util.LocalUtil;
@@ -32,6 +33,13 @@ public class GuiContDataGroupDefiner extends GuiCont {
     this.textField.setEnableBackgroundDrawing(true);
     this.textField.setMaxStringLength(64);
     this.buttonList.add(button);
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    String text = this.textField.getText();
+    button.enabled = ItemDataGroupChip.isGroupNameValid(text);
   }
 
   @Override

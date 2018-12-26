@@ -98,6 +98,11 @@ Blocks
 		Data Definition Storage
 		数据定义存储机
 		
+	#NAME
+		data_group_chipset
+		Data Group Chipset
+		数据分组芯片集
+		
 	#SUFFIX
 	
 #RETURN tile
@@ -321,8 +326,8 @@ Mod Specific
 				
 			#NAME
 				name
-				Group Name
-				组名
+				Group Name ('.' For Subgroups)
+				组名 (用 '.' 表示分组层次)
 			
 		#RETURN data_group_definer
 		#NAME
@@ -355,6 +360,24 @@ Mod Specific
 			Definition: %d
 			定义: %d
 			
+		#NAME
+			data_group_arg_s
+			Group: %s
+			组: %s
+		
+		#GROUP
+			query_builder
+			#NAME
+				default_data_group
+				Default Group
+				默认分组
+			
+			#NAME
+				group_arg_s
+				%s
+				%s
+		
+		#RETURN query_builder
 	#RETURN tooltip
 			
 	

@@ -59,7 +59,7 @@ public class SGui extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     super.drawGuiContainerForegroundLayer(mx, my);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.fontRendererObj.drawString(LocalUtil.localize(unlocalizedTitle), 8, 6, 0);
+    this.fontRendererObj.drawString(getLocalizedTitle(unlocalizedTitle), 8, 6, 0);
     for (int i = 0; i < MAX_TABS; i++) {
       if (tabs[i] != null) {
         this.mc.getTextureManager().bindTexture(background);
@@ -196,6 +196,10 @@ public class SGui extends GuiContainer {
 
   protected void mouseWheeled(int x, int y, int wheel) {
 
+  }
+
+  protected String getLocalizedTitle(String unlocalizedTitle) {
+    return LocalUtil.localize(unlocalizedTitle);
   }
 
 }

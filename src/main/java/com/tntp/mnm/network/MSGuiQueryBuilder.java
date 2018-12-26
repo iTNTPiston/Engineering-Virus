@@ -11,6 +11,14 @@ public class MSGuiQueryBuilder extends MAInt2<MSGuiQueryBuilder> {
 
   public MSGuiQueryBuilder(int windowID, int buttonID) {
     super(windowID, buttonID);
+    // 0 - PUT
+    // 1 - TAKE
+    // 2 - RETURN
+    // 3,4,5,6,7 - groups
+    // 8 - group scroll left
+    // 9 group scroll right
+    // 10 items scroll up
+    // 11 items scroll down
   }
 
   public MSGuiQueryBuilder() {

@@ -36,7 +36,7 @@ public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
             groups.add(stack);
             returnStack = stack;
           } else if (group.length() > prefix.length()) {
-            if (group.charAt(prefix.length()) == '.') {
+            if (prefix.length() == 0 || group.charAt(prefix.length()) == '.') {
               groups.add(stack);
             }
           }
