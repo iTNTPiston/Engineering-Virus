@@ -76,12 +76,11 @@ public class ItemDataGroupChip extends SItem {
       return;
     if (stack == null || stack.getItem() != MNMItems.data_group_chip)
       return;
-    if (group == null || group.length() == 0)
+    if (group == null || group.length() == 0 || group.endsWith("."))
       return;
     NBTTagCompound groupTag = new NBTTagCompound();
     groupTag.setString("group_name", group);
     ItemStack s = icon.copy();
-    s.stackSize = 1;
     s.writeToNBT(groupTag);
     NBTTagCompound stackTag;
     if (!stack.hasTagCompound()) {

@@ -50,6 +50,12 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
     return -1;
   }
 
+  /**
+   * Return a new copy of the defined item
+   * 
+   * @param id
+   * @return
+   */
   public ItemStack getItemDef(int id) {
     for (int i = 0; i < definedItems.size(); i++) {
       if (definedItems.get(i).id == id) {

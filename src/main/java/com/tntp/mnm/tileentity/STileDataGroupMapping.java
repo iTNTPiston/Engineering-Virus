@@ -2,6 +2,7 @@ package com.tntp.mnm.tileentity;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.tntp.mnm.api.db.GroupItemMapping;
 
@@ -26,7 +27,7 @@ public class STileDataGroupMapping extends STileData {
     return false;
   }
 
-  public void findMapping(List<Integer> itemIDS, String groupName) {
+  public void findMapping(Set<Integer> itemIDS, String groupName) {
     for (GroupItemMapping mapping : definedItems) {
       if (mapping.groupId.equals(groupName)) {
         itemIDS.add(mapping.itemId);

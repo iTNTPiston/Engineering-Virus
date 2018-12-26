@@ -51,7 +51,9 @@ public class MNMRender {
 
     WavefrontObject security = getWaveObj("security_encoder/0");
     ResourceLocation securityTex = getBlockTexture("security_encoder");
-    i = simple.registerWaveObj(new MotherboardComponentRenderer(motherboard, security, securityTex));
+    WaveObjRenderer securityRender = new MotherboardComponentRenderer(motherboard, security, securityTex);
+    securityRender.enableMetaRotation();
+    i = simple.registerWaveObj(securityRender);
     simple.bindWaveObj(MNMBlocks.security_encoder, 0, i);
 
     RenderingRegistry.registerBlockHandler(simple);

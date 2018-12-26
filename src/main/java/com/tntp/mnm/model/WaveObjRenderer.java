@@ -29,6 +29,7 @@ public class WaveObjRenderer {
 
   protected float rotation;
   protected int rotationAxis;
+  private boolean metaRotation;
 
   public WaveObjRenderer(WavefrontObject obj, ResourceLocation texture) {
     this.obj = obj;
@@ -113,6 +114,24 @@ public class WaveObjRenderer {
     }
   }
 
+  public void setRotationOnlyYFor(int side) {
+    switch (side) {
+    case 2:
+      setRotation((float) Math.PI / 2, DirUtil.UP_PY);
+      break;
+    case 3:
+      setRotation((float) -Math.PI / 2, DirUtil.UP_PY);
+      break;
+    case 4:
+      setRotation((float) Math.PI, DirUtil.UP_PY);
+      break;
+    case 5:
+      setRotation(0, DirUtil.UP_PY);
+      break;
+
+    }
+  }
+
   public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
     render();
   }
@@ -123,10 +142,19 @@ public class WaveObjRenderer {
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
     tes.setColorOpaque_F(1, 1, 1);
     tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture
-        : block.getIcon(0, world.getBlockMetadata(x, y, z));
+    int meta = world.getBlockMetadata(x, y, z);
+    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, meta);
+    GL11.glPushMatrix();
+    if (metaRotation) {
+      setRotationOnlyYFor(meta);
+    }
     tessellate(tes, icon);
+    GL11.glPopMatrix();
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;
+  }
+
+  public void enableMetaRotation() {
+    metaRotation = true;
   }
 }

@@ -51,6 +51,8 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
     if (row + 4 > rowTotal) {
       row = rowTotal - 4;
     }
+    if (row < 0)
+      row = 0;
     rowCurrent = row;
     int startIndex = rowCurrent * 8;
     int end = Math.min(startIndex + 32, cachedDefinition.length);

@@ -3,8 +3,11 @@ package com.tntp.mnm.tileentity;
 import java.util.List;
 
 import com.tntp.mnm.gui.cont.ITileDataCont;
+import com.tntp.mnm.init.MNMItems;
+import com.tntp.mnm.item.ItemDataGroupChip;
 
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
@@ -13,25 +16,51 @@ public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
     super(3);
   }
 
-  public void addGroups(List<ItemStack> groups, String prefix) {
-
+  /**
+   * Get all groups in all next levels
+   * 
+   * @param groups
+   * @param prefix
+   * @return an itemstack containing exactly the prefix group, if none returns
+   *         null
+   */
+  public ItemStack addGroups(List<ItemStack> groups, String prefix) {
+    ItemDataGroupChip chip = MNMItems.data_group_chip;
+    ItemStack returnStack = null;
+    for (int i = 0; i < getSizeInventory(); i++) {
+      ItemStack stack = getStackInSlot(i);
+      if (stack != null && stack.getItem() == chip) {
+        String group = chip.getGroupName(stack);
+        if (group.startsWith(prefix)) {// must be prefixed
+          if (group.length() == prefix.length()) {
+            groups.add(stack);
+            returnStack = stack;
+          } else if (group.length() > prefix.length()) {
+            if (group.charAt(prefix.length()) == '.') {
+              groups.add(stack);
+            }
+          }
+        }
+      }
+    }
+    return returnStack;
   }
 
   @Override
   public String getContainerGui() {
-    // TODO Auto-generated method stub
-    return null;
+    return "GuiContDataGroupChipset";
   }
 
   @Override
   public void addContainerSlots(List<Slot> slots) {
-    // TODO Auto-generated method stub
+    for (int i = 0; i < 3; i++) {
+      slots.add(new Slot(this, i, 39 + i * 41, 52));
+    }
 
   }
 
   @Override
   public boolean canReadData() {
-    // TODO Auto-generated method stub
-    return false;
+    return true;
   }
 }
