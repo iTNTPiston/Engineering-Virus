@@ -1,13 +1,13 @@
 package com.tntp.mnm.init;
 
-import com.tntp.mnm.block.BlockAuxiliaryComputingUnit;
+import com.tntp.mnm.block.BlockBasicDiskStorage;
+import com.tntp.mnm.block.BlockBasicGroupMappingStorage;
 import com.tntp.mnm.block.BlockCentralProcessor;
 import com.tntp.mnm.block.BlockChimney;
 import com.tntp.mnm.block.BlockDataDefinitionStorage;
 import com.tntp.mnm.block.BlockDataDefinitionTerminal;
 import com.tntp.mnm.block.BlockDataGroupChipset;
 import com.tntp.mnm.block.BlockDataGroupDefiner;
-import com.tntp.mnm.block.BlockBasicDiskStorage;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockGeoThermalSmelter;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
@@ -16,16 +16,16 @@ import com.tntp.mnm.block.BlockHeatPipe;
 import com.tntp.mnm.block.BlockMotherboard;
 import com.tntp.mnm.block.BlockNeithernetCable;
 import com.tntp.mnm.block.BlockNeithernetPort;
-import com.tntp.mnm.block.BlockNetworkMainframe;
 import com.tntp.mnm.block.BlockQueryBuilder;
 import com.tntp.mnm.block.BlockSecurityEncoder;
 import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.tileentity.TileBasicDiskStorage;
+import com.tntp.mnm.tileentity.TileBasicGroupMappingStorage;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
-import com.tntp.mnm.tileentity.TileBasicDiskStorage;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
@@ -91,6 +91,8 @@ public class MNMBlocks {
     regTileEntity(TileBasicDiskStorage.class);
     regBlock(new BlockDataDefinitionStorage(), "data_definition_storage");
     regTileEntity(TileDataDefinitionStorage.class);
+    regBlock(new BlockBasicGroupMappingStorage(), "basic_group_mapping_storage");
+    regTileEntity(TileBasicGroupMappingStorage.class);
 
     // GameRegistry.registerBlock(new BlockNetworkMainframe(false),
     // "networkMainframeOff");

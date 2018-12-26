@@ -40,6 +40,7 @@ public class MNMGuis {
     assignGuiID("GuiContBasicDiskStorage");
     assignGuiID("GuiContDataDefinitionStorage");
     assignGuiID("GuiContDataGroupChipset");
+    assignGuiID("GuiContBasicGroupMappingStorage");
 
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 

@@ -9,7 +9,7 @@ public class GuiContBasicDiskStorage extends GuiContData {
 
   public GuiContBasicDiskStorage(IInventory playerInventory, STileData machine, int x, int y, int z) {
     super(playerInventory, machine, x, y, z);
-    this.foreground = MNMResources.getResource("textures/guis/gui_disk_storage_overlay.png");
+    this.foreground = MNMResources.getResource("textures/guis/gui_basic_disk_storage_overlay.png");
   }
 
 }

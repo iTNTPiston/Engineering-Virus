@@ -10,6 +10,7 @@ import com.tntp.mnm.gui.cont.GuiContDataDefinitionTerminal;
 import com.tntp.mnm.gui.cont.GuiContDataGroupChipset;
 import com.tntp.mnm.gui.cont.GuiContDataGroupDefiner;
 import com.tntp.mnm.gui.cont.GuiContBasicDiskStorage;
+import com.tntp.mnm.gui.cont.GuiContBasicGroupMappingStorage;
 import com.tntp.mnm.gui.cont.GuiContQueryBuilder;
 import com.tntp.mnm.gui.cont.GuiContSecurityEncoder;
 import com.tntp.mnm.gui.cont.ITileCont;
@@ -23,12 +24,14 @@ import com.tntp.mnm.gui.structure.GuiStructureHeatCollectorFirewall;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.item.SItemTool;
+import com.tntp.mnm.tileentity.STileData;
 import com.tntp.mnm.tileentity.STileHeatNode;
 import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileBasicDiskStorage;
+import com.tntp.mnm.tileentity.TileBasicGroupMappingStorage;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
@@ -101,6 +104,10 @@ public class HandlerClient extends HandlerServer {
     } else if (ID == MNMGuis.getGuiID("GuiContDataGroupChipset")) {
       if (tile instanceof TileDataGroupChipset) {
         gui = new GuiContDataGroupChipset(player.inventory, (ITileCont) tile, x, y, z);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiContBasicGroupMappingStorage")) {
+      if (tile instanceof TileBasicGroupMappingStorage) {
+        gui = new GuiContBasicGroupMappingStorage(player.inventory, (STileData) tile, x, y, z);
       }
     }
     if (gui != null) {
