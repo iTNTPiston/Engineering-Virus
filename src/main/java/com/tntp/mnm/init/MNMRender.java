@@ -64,8 +64,16 @@ public class MNMRender {
     i = simple.registerWaveObj(dataGroupChipsetRender);
     simple.bindWaveObj(MNMBlocks.data_group_chipset, 0, i);
 
+    WavefrontObject neithernetPort = getWaveObj("neithernet_port/0");
+    ResourceLocation neithernetPortTex = getBlockTexture("neithernet_port");
+    WaveObjRenderer neithernetPortRender = new MotherboardComponentRenderer(motherboard, neithernetPort,
+        neithernetPortTex);
+    neithernetPortRender.enableMetaRotation();
+    i = simple.registerWaveObj(neithernetPortRender);
+    simple.bindWaveObj(MNMBlocks.neithernet_port, 0, i);
+
     WavefrontObject dataGroupDefiner = getWaveObj("data_group_definer/0");
-    ResourceLocation dataGroupDefinerTex = getBlockTexture("data_group_chipset");
+    ResourceLocation dataGroupDefinerTex = getBlockTexture("data_group_definer");
     WaveObjRenderer dataGroupDefinerRender = new MotherboardComponentRenderer(motherboard, dataGroupDefiner,
         dataGroupDefinerTex);
     dataGroupDefinerRender.enableMetaRotation();

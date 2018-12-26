@@ -49,6 +49,7 @@ public class MNMBlocks {
   public static final Block heat_distributor = null;
 
   public static final BlockNeithernetCable neithernet_cable = null;
+  public static final Block neithernet_port = null;
   public static final Block mother_board = null;
   public static final Block central_processor = null;
   public static final Block data_group_definer = null;

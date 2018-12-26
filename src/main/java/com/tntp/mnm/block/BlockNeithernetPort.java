@@ -10,10 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockNeithernetPort extends SBlock implements ITileEntityProvider {
+public class BlockNeithernetPort extends SBlockModelSpecial implements ITileEntityProvider {
 
   public BlockNeithernetPort() {
     super(Material.iron);
+
   }
 
   @Override

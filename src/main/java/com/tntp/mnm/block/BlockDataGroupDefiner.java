@@ -9,12 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockDataGroupDefiner extends SBlockContainer {
+public class BlockDataGroupDefiner extends SBlockContainerModelSpecial {
 
   public BlockDataGroupDefiner() {
     super(Material.iron);
     this.setBlockBounds(0, 0, 0, 1, 5 / 16f, 1);
-
   }
 
   @Override
