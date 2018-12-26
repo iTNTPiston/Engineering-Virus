@@ -23,4 +23,9 @@ public class MotherboardComponentRenderer extends WaveObjRenderer {
     componentRender.tessellate(tes, icon);
   }
 
+  public void enableMetaRotation() {
+    super.enableMetaRotation();
+    componentRender.enableMetaRotation();
+  }
+
 }

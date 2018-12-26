@@ -149,6 +149,7 @@ public class WaveObjRenderer {
       setRotationOnlyYFor(meta);
     }
     tessellate(tes, icon);
+    clearRotation();
     GL11.glPopMatrix();
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;
