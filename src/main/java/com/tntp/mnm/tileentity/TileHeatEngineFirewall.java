@@ -23,8 +23,7 @@ public class TileHeatEngineFirewall extends STileHeatNode implements IHeatSink {
   }
 
   @Override
-  public void rescan() {
-    super.rescan();
+  public void rescanSubtypes() {
 
     int structure = 0;
     for (int xx = xCoord - 1; xx <= xCoord + 1; xx++) {

@@ -35,8 +35,8 @@ public class TileHeatCollectorFirewall extends STileHeatNode implements IHeatSou
   }
 
   @Override
-  public void rescan() {
-    super.rescan();
+  public void rescanSubtypes() {
+
     if (worldObj.getBlock(xCoord, yCoord - 1, zCoord) != Blocks.fire) {
       rate = 0;
     } else {

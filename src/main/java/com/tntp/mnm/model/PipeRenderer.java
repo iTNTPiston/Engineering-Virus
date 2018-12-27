@@ -53,7 +53,8 @@ public class PipeRenderer extends WaveObjRenderer {
     Tessellator tes = Tessellator.instance;
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
     int meta = world.getBlockMetadata(x, y, z);
-    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, meta);
+    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture
+        : getBlockIcon(world, x, y, z, block);
 
     int[] sides = getSideCodeFromBlock(block, world, x, y, z);
     tessellate(renderer, tes, block, x, y, z, icon, meta);

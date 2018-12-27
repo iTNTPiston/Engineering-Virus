@@ -83,8 +83,8 @@ public class TileGeoThermalSmelter extends STileHeatNodeInventory implements IHe
   }
 
   @Override
-  public void rescan() {
-    super.rescan();
+  public void rescanSubtypes() {
+
     formed = false;
     boosted = false;
     int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);

@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont {
+
   private List<ItemDef> definedItems;
   private Security security;
 

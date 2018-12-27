@@ -47,8 +47,7 @@ public class STileNeithernet extends STile {
       }
       if (rescanCD <= 0) {
         rescanNeither();
-        connectedToMainframe = connectToMainframe() != null;
-        this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, connectedToMainframe ? 1 : 0);
+
         markDirty();
       } else {
         rescanCD--;
@@ -77,7 +76,14 @@ public class STileNeithernet extends STile {
       if (findNeither(p, portSide, worldObj) != -1) {
         pipe = p;
       }
+      rescanSubtypes();
     }
+  }
+
+  public void rescanSubtypes() {
+    connectedToMainframe = connectToMainframe() != null;
+    this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), EVENT_MF_CONNECTION,
+        connectedToMainframe ? 1 : 0);
   }
 
   /**
@@ -182,7 +188,7 @@ public class STileNeithernet extends STile {
 
   @Override
   public boolean receiveClientEvent(int id, int param) {
-    if (id == 0) {
+    if (id == EVENT_MF_CONNECTION) {
       setConnectedToMainframe(param == 1);
       return true;
     }

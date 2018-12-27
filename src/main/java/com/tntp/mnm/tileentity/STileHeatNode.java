@@ -100,7 +100,12 @@ public class STileHeatNode extends STile implements IHeatNode {
           }
         }
       }
+      rescanSubtypes();
     }
+
+  }
+
+  public void rescanSubtypes() {
 
   }
 

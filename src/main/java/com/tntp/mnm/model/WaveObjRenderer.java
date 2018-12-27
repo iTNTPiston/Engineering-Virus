@@ -160,7 +160,8 @@ public class WaveObjRenderer {
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
 
     int meta = world.getBlockMetadata(x, y, z);
-    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, meta);
+    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture
+        : getBlockIcon(world, x, y, z, block);
     tessellate(renderer, tes, block, x, y, z, icon, meta);
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;
@@ -168,5 +169,9 @@ public class WaveObjRenderer {
 
   public void enableMetaRotation() {
     metaRotation = true;
+  }
+
+  public IIcon getBlockIcon(IBlockAccess world, int x, int y, int z, Block block) {
+    return block.getIcon(world, x, y, z, 0);
   }
 }

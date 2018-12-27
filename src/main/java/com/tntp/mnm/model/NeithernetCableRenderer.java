@@ -78,7 +78,8 @@ public class NeithernetCableRenderer extends WaveObjRenderer {
       RenderBlocks renderer) {
     Tessellator tes = Tessellator.instance;
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
-    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, 0);
+    IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture
+        : getBlockIcon(world, x, y, z, block);
 
     int meta = world.getBlockMetadata(x, y, z);
     int s = BlockUtil.pipeMetaToSide(meta);

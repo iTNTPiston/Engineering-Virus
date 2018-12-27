@@ -9,6 +9,8 @@ import net.minecraft.tileentity.TileEntity;
  *
  */
 public class STile extends TileEntity {
+  protected static final int EVENT_MF_CONNECTION = 0, EVENT_DISK_NUM = 1;
+
   public boolean isValidInWorld() {
     return this.hasWorldObj() && this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
   }

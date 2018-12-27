@@ -5,11 +5,23 @@ import com.tntp.mnm.item.disk.ItemDisk;
 import net.minecraft.item.ItemStack;
 
 public abstract class STileData extends STileNeithernetInventory {
+  private int diskNum;
 
   private int clientUsedSpaceCache;
 
   public STileData(int size) {
     super(size);
+  }
+
+  @Override
+  public void rescanSubtypes() {
+    super.rescanSubtypes();
+    diskNum = 0;
+    for (int i = 0; i < this.getSizeInventory(); i++) {
+      if (this.getStackInSlot(i) != null)
+        diskNum++;
+    }
+    worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), EVENT_DISK_NUM, diskNum);
   }
 
   public int getTotalSpaceFromDisks() {
@@ -57,4 +69,24 @@ public abstract class STileData extends STileNeithernetInventory {
   public int receiveDataPullRequest() {
     return getUsedSpace();
   }
+
+  @Override
+  public boolean receiveClientEvent(int event, int param) {
+    if (super.receiveClientEvent(event, param))
+      return true;
+    if (event == EVENT_DISK_NUM) {
+      if (diskNum != param) {
+        diskNum = param;
+        if (worldObj != null)
+          worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
+      }
+      return true;
+    }
+    return false;
+  }
+
+  public int getNumDisk() {
+    return diskNum;
+  }
+
 }

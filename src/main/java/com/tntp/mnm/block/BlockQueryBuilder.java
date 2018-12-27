@@ -1,6 +1,7 @@
 package com.tntp.mnm.block;
 
 import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileQueryBuilder;
 import com.tntp.mnm.util.BlockUtil;
 
@@ -12,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockQueryBuilder extends SBlockContainer {
@@ -19,6 +21,7 @@ public class BlockQueryBuilder extends SBlockContainer {
   private IIcon port;
   private IIcon top;
   private IIcon front;
+  private IIcon front_off;
 
   public BlockQueryBuilder() {
     super(Material.iron);
@@ -52,7 +55,26 @@ public class BlockQueryBuilder extends SBlockContainer {
     this.blockIcon = reg.registerIcon(MNMMod.MODID + ":machine_0");
     port = reg.registerIcon(MNMMod.MODID + ":neithernet_port_block");
     front = reg.registerIcon(tex + "_front");
+    front_off = reg.registerIcon(tex + "_front_off");
     top = reg.registerIcon(tex + "_top");
+  }
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+    int meta = world.getBlockMetadata(x, y, z);
+    int frontSide = meta & 7;
+    if ((side ^ 1) == frontSide || side == 1) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof TileQueryBuilder) {
+        if (((TileQueryBuilder) tile).isConnectedToMainframe()) {
+          return side == 1 ? top : front;
+        }
+      }
+      return side == 1 ? blockIcon : front_off;
+    } else {
+      return getIcon(side, meta);
+    }
   }
 
   @Override
