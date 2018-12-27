@@ -20,14 +20,6 @@ public abstract class SBlockContainer extends SBlock implements ITileEntityProvi
     this.isBlockContainer = true;
   }
 
-  @Override
-  public boolean onBlockEventReceived(World p_149696_1_, int p_149696_2_, int p_149696_3_, int p_149696_4_,
-      int p_149696_5_, int p_149696_6_) {
-    super.onBlockEventReceived(p_149696_1_, p_149696_2_, p_149696_3_, p_149696_4_, p_149696_5_, p_149696_6_);
-    TileEntity tileentity = p_149696_1_.getTileEntity(p_149696_2_, p_149696_3_, p_149696_4_);
-    return tileentity != null ? tileentity.receiveClientEvent(p_149696_5_, p_149696_6_) : false;
-  }
-
   public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
     // drop all items
     TileEntity tile = (TileEntity) world.getTileEntity(x, y, z);

@@ -6,17 +6,15 @@ import javax.annotation.Nonnull;
 
 import com.tntp.mnm.api.TileEntityConnection;
 import com.tntp.mnm.api.db.Mainframe;
-import com.tntp.mnm.api.ek.HeatPipe;
-import com.tntp.mnm.api.ek.IHeatNode;
-import com.tntp.mnm.api.ek.IHeatSource;
 import com.tntp.mnm.api.neither.NeitherPipe;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.util.BlockUtil;
 import com.tntp.mnm.util.DirUtil;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
@@ -31,6 +29,10 @@ public class STileNeithernet extends STile {
   private int rescanTotal;
   private int rescanCD;
   private boolean rescaned;
+  /**
+   * For Client to render only! For server use, always call connectToMainframe()
+   */
+  private boolean connectedToMainframe;
 
   public STileNeithernet() {
     rescanTotal = RESCAN;
@@ -45,6 +47,8 @@ public class STileNeithernet extends STile {
       }
       if (rescanCD <= 0) {
         rescanNeither();
+        connectedToMainframe = connectToMainframe() != null;
+        this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, connectedToMainframe ? 1 : 0);
         markDirty();
       } else {
         rescanCD--;
@@ -161,6 +165,28 @@ public class STileNeithernet extends STile {
       }
     }
     return null;
+  }
+
+  @SideOnly(Side.CLIENT)
+  public boolean isConnectedToMainframe() {
+    return connectedToMainframe;
+  }
+
+  public void setConnectedToMainframe(boolean connected) {
+    if (connectedToMainframe != connected) {
+      connectedToMainframe = connected;
+      if (worldObj != null)
+        worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
+    }
+  }
+
+  @Override
+  public boolean receiveClientEvent(int id, int param) {
+    if (id == 0) {
+      setConnectedToMainframe(param == 1);
+      return true;
+    }
+    return false;
   }
 
 }

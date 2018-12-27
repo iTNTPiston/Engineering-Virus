@@ -9,6 +9,7 @@ import com.tntp.mnm.gui.cont.GuiContDataDefinitionStorage;
 import com.tntp.mnm.gui.cont.GuiContDataDefinitionTerminal;
 import com.tntp.mnm.gui.cont.GuiContDataGroupChipset;
 import com.tntp.mnm.gui.cont.GuiContDataGroupDefiner;
+import com.tntp.mnm.gui.cont.GuiContGroupMapper;
 import com.tntp.mnm.gui.cont.GuiContBasicDiskStorage;
 import com.tntp.mnm.gui.cont.GuiContBasicGroupMappingStorage;
 import com.tntp.mnm.gui.cont.GuiContQueryBuilder;
@@ -33,6 +34,7 @@ import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileBasicDiskStorage;
 import com.tntp.mnm.tileentity.TileBasicGroupMappingStorage;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
+import com.tntp.mnm.tileentity.TileGroupMapper;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
 import com.tntp.mnm.tileentity.TileQueryBuilder;
@@ -108,6 +110,10 @@ public class HandlerClient extends HandlerServer {
     } else if (ID == MNMGuis.getGuiID("GuiContBasicGroupMappingStorage")) {
       if (tile instanceof TileBasicGroupMappingStorage) {
         gui = new GuiContBasicGroupMappingStorage(player.inventory, (STileData) tile, x, y, z);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiContGroupMapper")) {
+      if (tile instanceof TileGroupMapper) {
+        gui = new GuiContGroupMapper(player.inventory, (ITileCont) tile, x, y, z);
       }
     }
     if (gui != null) {

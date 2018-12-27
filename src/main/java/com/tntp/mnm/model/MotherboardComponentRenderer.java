@@ -1,5 +1,7 @@
 package com.tntp.mnm.model;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
@@ -13,16 +15,20 @@ public class MotherboardComponentRenderer extends WaveObjRenderer {
     componentRender = new WaveObjRenderer(component, texture);
   }
 
+  @Override
   public void render() {
     super.render();
     componentRender.render();
   }
 
-  public void tessellate(Tessellator tes, IIcon icon, int meta) {
-    super.tessellate(tes, icon, meta);
-    componentRender.tessellate(tes, icon, meta);
+  @Override
+  public void tessellate(RenderBlocks renderer, Tessellator tes, Block block, int x, int y, int z, IIcon icon,
+      int meta) {
+    super.tessellate(renderer, tes, block, x, y, z, icon, meta);
+    componentRender.tessellate(renderer, tes, block, x, y, z, icon, meta);
   }
 
+  @Override
   public void enableMetaRotation() {
     super.enableMetaRotation();
     componentRender.enableMetaRotation();

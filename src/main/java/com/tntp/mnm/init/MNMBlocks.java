@@ -10,6 +10,7 @@ import com.tntp.mnm.block.BlockDataGroupChipset;
 import com.tntp.mnm.block.BlockDataGroupDefiner;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockGeoThermalSmelter;
+import com.tntp.mnm.block.BlockGroupMapper;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatDistributor;
 import com.tntp.mnm.block.BlockHeatPipe;
@@ -27,6 +28,7 @@ import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
+import com.tntp.mnm.tileentity.TileGroupMapper;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
@@ -93,6 +95,8 @@ public class MNMBlocks {
     regTileEntity(TileDataDefinitionStorage.class);
     regBlock(new BlockBasicGroupMappingStorage(), "basic_group_mapping_storage");
     regTileEntity(TileBasicGroupMappingStorage.class);
+    regBlock(new BlockGroupMapper(), "group_mapper");
+    regTileEntity(TileGroupMapper.class);
 
     // GameRegistry.registerBlock(new BlockNetworkMainframe(false),
     // "networkMainframeOff");

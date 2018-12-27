@@ -46,7 +46,8 @@ public class WaveObjRenderer {
     Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
   }
 
-  public void tessellate(Tessellator tes, IIcon icon, int blockMetadata) {
+  public void tessellate(RenderBlocks renderBlock, Tessellator tes, Block block, int x, int y, int z, IIcon icon,
+      int blockMetadata) {
     float metaRotate = 0;
     if (metaRotation) {
       switch (blockMetadata) {
@@ -71,15 +72,11 @@ public class WaveObjRenderer {
           vRot = RenderUtil.rotate(vRot, metaRotate, DirUtil.UP_PY, vRot2);
         }
         tes.setNormal(vRot.x, vRot.y, vRot.z);
-        for (int i = 0; i < f.vertices.length; i++) {
-          Vertex vert = f.vertices[i];
-          vRot = RenderUtil.rotate(vert, rotation, rotationAxis, vRot);
-          if (metaRotation) {
-            vRot = RenderUtil.rotate(vRot, metaRotate, DirUtil.UP_PY, vRot2);
-          }
-          TextureCoordinate t = f.textureCoordinates[i];
-          tes.addVertexWithUV(vRot.x, vRot.y, vRot.z, icon.getInterpolatedU(t.u * 16), icon.getInterpolatedV(t.v * 16));
-        }
+        int normal = RenderUtil.determineFace(vRot);
+
+        RenderUtil.tessellateWithAmbientOcclusion(renderBlock, tes, block, x, y, z, normal, f.vertices,
+            f.textureCoordinates, rotation, rotationAxis, metaRotate, icon);
+
       }
     }
   }
@@ -161,11 +158,10 @@ public class WaveObjRenderer {
       RenderBlocks renderer) {
     Tessellator tes = Tessellator.instance;
     tes.addTranslation(x + 0.5f, y + 0.5f, z + 0.5f);
-    tes.setColorOpaque_F(1, 1, 1);
-    tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
+
     int meta = world.getBlockMetadata(x, y, z);
     IIcon icon = renderer.hasOverrideBlockTexture() ? renderer.overrideBlockTexture : block.getIcon(0, meta);
-    tessellate(tes, icon, meta);
+    tessellate(renderer, tes, block, x, y, z, icon, meta);
     tes.addTranslation(-x - 0.5f, -y - 0.5f, -z - 0.5f);
     return true;
   }
