@@ -8,7 +8,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import net.minecraft.client.Minecraft;
 
 public class MNMNetwork {
   public static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(MNMMod.MODID);
@@ -31,14 +30,14 @@ public class MNMNetwork {
         regMCC(MCGuiDataStorageResponse.class, new MCGuiDataStorageResponseHandler());
         regMCC(MCGuiDataDefinitionResponse.class, new MCGuiDataDefinitionResponseHandler());
         regMCC(MCGuiGroupMapperItemDef.class, new MCGuiGroupMapperItemDefHandler());
-
+        regMCC(MCGuiQueryBuilderRow.class, new MCGuiQueryBuilderRowHandler());
       } else {
         // regMCS all messages received on client side
         regMCS(MCChatMsg.class);
         regMCS(MCGuiDataStorageResponse.class);
         regMCS(MCGuiDataDefinitionResponse.class);
         regMCS(MCGuiGroupMapperItemDef.class);
-
+        regMCS(MCGuiQueryBuilderRow.class);
       }
     } catch (Exception e) {
       throw new RuntimeException("MetalNetworkMainframe-Network: Cannot inst message: " + e.getMessage());

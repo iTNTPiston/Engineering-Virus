@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class STileDataStorage extends STileData {
+  private static final int ITEM_PER_BYTE = 128;
   private HashMap<Integer, Integer> map;
 
   public STileDataStorage(int size) {
@@ -93,13 +94,13 @@ public class STileDataStorage extends STileData {
   }
 
   public int spaceNeeded(int stackSize) {
-    return (int) Math.ceil(stackSize / 256.0);
+    return (int) Math.ceil(stackSize / (double) ITEM_PER_BYTE);
   }
 
   public int itemCapacity(int dataspace) {
     if (dataspace < 0)
       return 0;
-    return dataspace * 256;
+    return dataspace * ITEM_PER_BYTE;
   }
 
   @Override

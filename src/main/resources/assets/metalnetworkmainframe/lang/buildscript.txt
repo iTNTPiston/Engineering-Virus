@@ -103,6 +103,16 @@ Blocks
 		Data Group Chipset
 		数据分组芯片集
 		
+	#NAME
+		basic_group_mapping_storage
+		Basic Group Mapping Storage
+		基础组配对存储机
+	
+	#NAME
+		group_mapper
+		Group Mapper
+		组配对机
+		
 	#SUFFIX
 	
 #RETURN tile
@@ -347,8 +357,45 @@ Mod Specific
 				TAKE
 				取出
 				
+			#NAME
+				return
+				Return
+				返回
+				
 		#RETURN query builder
-		
+		#GROUP
+			group_mapper
+			#NAME
+				add
+				Add
+				添加
+			
+			#NAME
+				definition
+				Definition:
+				定义:
+				
+			#NAME
+				group
+				Search Group:
+				搜索组:
+				
+			#NAME
+				remove
+				Remove
+				移除
+			
+			#NAME
+				remove_all
+				Remove All
+				移除所有
+				
+			#NAME
+				search
+				Search
+				搜索
+				
+		#RETURN group_mapper
 	#RETURN gui
 	
 	Tooltips
@@ -376,6 +423,11 @@ Mod Specific
 				group_arg_s
 				%s
 				%s
+				
+			#NAME
+				stack_size_arg_d
+				Quantity: %d
+				数量: %d
 		
 		#RETURN query_builder
 	#RETURN tooltip

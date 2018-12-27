@@ -136,4 +136,17 @@ public abstract class SContainer extends Container {
     return putIn;
   }
 
+  /**
+   * Override to handle decorative slots
+   */
+  @Override
+  public ItemStack slotClick(int slotID, int p_75144_2_, int p_75144_3_, EntityPlayer p_75144_4_) {
+    if (slotID >= 0) {
+      Slot slot = (Slot) this.inventorySlots.get(slotID);
+      if (slot instanceof SlotDecorative)
+        return null;
+    }
+    return super.slotClick(slotID, p_75144_2_, p_75144_3_, p_75144_4_);
+  }
+
 }

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 public class GroupSearchResult {
   private ArrayList<ItemStack> groupChipList;
   private ItemStack[] groupItems;
+  private int[] groupItemsDef;
   private ItemStack currentGroup;
   private String searchedGroup;
 
@@ -23,8 +24,16 @@ public class GroupSearchResult {
     return groupItems;
   }
 
+  public int[] getGroupItemsDef() {
+    return groupItemsDef;
+  }
+
   public void setGroupItems(ItemStack[] stacks) {
     groupItems = stacks;
+  }
+
+  public void setGroupItemsDef(int[] d) {
+    groupItemsDef = d;
   }
 
   public String getGroup() {

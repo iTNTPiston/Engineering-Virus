@@ -19,6 +19,10 @@ public class MSGuiQueryBuilder extends MAInt2<MSGuiQueryBuilder> {
     // 9 group scroll right
     // 10 items scroll up
     // 11 items scroll down
+    // 12-26 add 1 stack
+    // 27+[0-14] subtract 1 stack
+    // 42+[0-14] add 1
+    // 57+[0-14] subtract 1
   }
 
   public MSGuiQueryBuilder() {
@@ -31,7 +35,7 @@ public class MSGuiQueryBuilder extends MAInt2<MSGuiQueryBuilder> {
     if (player.openContainer.windowId == message.getI1()) {
       ContainerCont cont = (ContainerCont) player.openContainer;
       TileQueryBuilder tile = (TileQueryBuilder) cont.getTile();
-      return tile.receiveClientGuiMessage(message.getI2());
+      return tile.receiveClientGuiMessage(message.getI1(), message.getI2());
     }
     return null;
   }

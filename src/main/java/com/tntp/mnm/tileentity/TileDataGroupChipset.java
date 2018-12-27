@@ -61,7 +61,7 @@ public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
     for (int i = 0; i < getSizeInventory(); i++) {
       ItemStack stack = getStackInSlot(i);
       if (stack != null && stack.getItem() == chip) {
-        String group = chip.getGroupName(stack);
+        String group = chip.getGroupName(stack).toLowerCase();
         if (group.startsWith(prefix)) {// must be prefixed
           groups.add(stack);
           if (group.length() == prefix.length()) {

@@ -10,6 +10,7 @@ import com.tntp.mnm.init.MNMGuis;
 import com.tntp.mnm.init.MNMResources;
 import com.tntp.mnm.network.MNMNetwork;
 import com.tntp.mnm.network.MSPlayerGui;
+import com.tntp.mnm.util.ItemUtil;
 import com.tntp.mnm.util.LocalUtil;
 
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,9 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -86,6 +89,7 @@ public class SGui extends GuiContainer {
     this.drawTexturedModalRect(guiLeft, guiTop + 117, 0, 117, xSize, ySize - 117);
   }
 
+  @Override
   public void drawScreen(int mx, int my, float p_73863_3_) {
     super.drawScreen(mx, my, p_73863_3_);
     GL11.glDisable(GL11.GL_LIGHTING);
@@ -200,6 +204,28 @@ public class SGui extends GuiContainer {
 
   protected String getLocalizedTitle(String unlocalizedTitle) {
     return LocalUtil.localize(unlocalizedTitle);
+  }
+
+  protected void drawOverridenDisplaySize(Slot s) {
+    drawOverridenDisplaySize(s.getStack(), s.xDisplayPosition, s.yDisplayPosition);
+  }
+
+  protected void drawOverridenDisplaySize(ItemStack stack, int x, int y) {
+    if (stack == null || !stack.hasTagCompound())
+      return;
+    NBTTagCompound tag = stack.getTagCompound();
+    if (!tag.hasKey("MNM|OverridenDisplaySize"))
+      return;
+    String size = ItemUtil.toTwoDigitStackSizeDisplay(tag.getInteger("MNM|OverridenDisplaySize"));
+    this.zLevel = 200.0F;
+    itemRender.zLevel = 200.0F;
+    FontRenderer font = stack.getItem().getFontRenderer(stack);
+    if (font == null)
+      font = fontRendererObj;
+    itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), stack, x, y, size);
+    this.zLevel = 0.0F;
+    itemRender.zLevel = 0.0F;
+
   }
 
 }

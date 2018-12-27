@@ -1,6 +1,7 @@
 package com.tntp.mnm.tileentity;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import com.tntp.mnm.api.db.GroupItemMapping;
@@ -22,12 +23,24 @@ public class STileDataGroupMapping extends STileData {
     return definedItems.size() * 4;
   }
 
-  public boolean define(GroupItemMapping def) {
-    if (this.getUsedSpace() + 4 < this.getTotalSpaceFromDisks()) {
+  public boolean addMapping(GroupItemMapping def) {
+    if (this.getUsedSpace() + 4 <= this.getTotalSpaceFromDisks()) {
       definedItems.add(def);
       return true;
     }
     return false;
+  }
+
+  public void removeMapping(GroupItemMapping def) {
+    definedItems.remove(def);
+  }
+
+  public void removeAll(int definition) {
+    for (Iterator<GroupItemMapping> iter = definedItems.iterator(); iter.hasNext();) {
+      GroupItemMapping gim = iter.next();
+      if (gim.itemId == definition)
+        iter.remove();
+    }
   }
 
   public void findMapping(Set<Integer> itemIDS, String groupName) {
@@ -57,7 +70,7 @@ public class STileDataGroupMapping extends STileData {
     definedItems = new HashSet<GroupItemMapping>();
     for (int i = 0; i < list.tagCount(); i++) {
       NBTTagCompound mappingTag = list.getCompoundTagAt(i);
-      GroupItemMapping mapping = new GroupItemMapping();
+      GroupItemMapping mapping = new GroupItemMapping("", 0);
       mapping.fromNBT(mappingTag);
       definedItems.add(mapping);
     }

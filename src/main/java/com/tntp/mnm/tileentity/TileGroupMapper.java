@@ -18,6 +18,7 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
 
   private Security security;
   private int cachedItemDef;
+  private ItemStack groupChip;
 
   public TileGroupMapper() {
     super(3);
@@ -35,13 +36,41 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
     return def;
   }
 
+  public void openInventory() {
+    this.setInventorySlotContents(1, null);
+    this.setInventorySlotContents(2, null);
+    groupChip = null;
+    cachedItemDef = -1;
+  }
+
   public IMessage receiveClientGuiMessage(int buttonID) {
     // server only
     // 0 - search
     // 1 - add
     // 2 - remove
     // 3 -remove all
-    if (buttonID == 0) {
+    if (groupChip == null)
+      return null;
+    String groupName = MNMItems.data_group_chip.getGroupName(groupChip);
+    if (buttonID != 3 && (groupName == null || groupName.length() == 0))
+      return null;// remove all does not require group
+    if (getStackInSlot(1) == null)
+      return null;
+    ItemStack stack = getStackInSlot(1);
+
+    Mainframe mf = connectToMainframe();
+    if (mf != null) {
+      switch (buttonID) {
+      case 1:
+        mf.addToGroup(groupName, stack);
+        break;
+      case 2:
+        mf.removeFromGroup(groupName, stack);
+        break;
+      case 3:
+        mf.removeFromAllGroups(stack);
+        break;
+      }
 
     }
     return null;
@@ -57,6 +86,7 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
     } else {
       foundGroup = null;
     }
+    groupChip = foundGroup;
     ItemStack iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(foundGroup);
     this.setInventorySlotContents(2, iconStack);
   }
@@ -68,6 +98,10 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
    * @return the definition of the item
    */
   public int searchItem() {
+    if (getStackInSlot(0) == null) {
+      this.setInventorySlotContents(1, null);
+      return -1;
+    }
     ItemStack toSearch = getStackInSlot(0).copy();
     toSearch.stackSize = 1;
     Mainframe mf = connectToMainframe();

@@ -18,8 +18,10 @@ import com.tntp.mnm.tileentity.TileCentralProcessor;
 import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
+import com.tntp.mnm.util.ItemUtil;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -194,7 +196,15 @@ public class Mainframe {
     return stack;
   }
 
-  public ItemStack[] getQuantityFor(Set<Integer> idSet) {
+  /**
+   * Get the stacks with the defIDs in the idSet, and fill the validIDs list with
+   * those def IDs
+   * 
+   * @param idSet
+   * @param validIDs
+   * @return
+   */
+  public ItemStack[] getQuantityFor(Set<Integer> idSet, List<Integer> validIDs) {
     // check
     scan();
 
@@ -220,8 +230,14 @@ public class Mainframe {
     // to array
     ItemStack[] array = new ItemStack[qtyMap.size()];
     int i = 0;
-    for (ItemStack s : qtyMap.values()) {
+    for (Entry<Integer, ItemStack> e : qtyMap.entrySet()) {
+      ItemStack s = e.getValue();
       array[i] = s;
+      NBTTagCompound tag = s.hasTagCompound() ? s.getTagCompound() : new NBTTagCompound();
+      tag.setInteger("MNM|OverridenDisplaySize", s.stackSize);
+      s.stackSize = 1;
+      s.setTagCompound(tag);
+      validIDs.add(e.getKey());
       i++;
     }
     return array;
@@ -311,15 +327,27 @@ public class Mainframe {
 
     // search for items in group using data group mapping
     Set<Integer> allIDs = new HashSet<Integer>();
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataGroupMapping) {
-        for (String group : groupNames)
-          ((STileDataGroupMapping) tile).findMapping(allIDs, group);
+    if (prefix.length() == 0) {
+      // get everything
+      allIDs.addAll(checkDefinitions().keySet());
+    } else {
+      for (STileNeithernet tile : allNnetTiles) {
+        if (tile instanceof STileDataGroupMapping) {
+          for (String group : groupNames)
+            ((STileDataGroupMapping) tile).findMapping(allIDs, group);
+        }
       }
     }
-
-    result.setGroupItems(getQuantityFor(allIDs));
-
+    List<Integer> groupItemDef = new ArrayList<Integer>();
+    result.setGroupItems(getQuantityFor(allIDs, groupItemDef));
+    // convert to array
+    int[] d = new int[groupItemDef.size()];
+    int i = 0;
+    for (Integer n : groupItemDef) {
+      d[i] = n;
+      i++;
+    }
+    result.setGroupItemsDef(d);
     return result;
   }
 
@@ -328,7 +356,7 @@ public class Mainframe {
       return null;
     scan();
     List<ItemStack> allGroups = new ArrayList<ItemStack>();
-
+    groupName = groupName.toLowerCase();
     // search tile data group
     for (Port<STilePOB> port : boardPorts) {
       STilePOB tile = port.getTile();
@@ -380,6 +408,51 @@ public class Mainframe {
       stacks[e.getKey()] = e.getValue();
     }
     return stacks;
+  }
+
+  /**
+   * Add the stack to the group, even if the group doesn't exist. However if the
+   * stack is not defined nothing will happen
+   * 
+   * @param group
+   * @param stack
+   */
+  public void addToGroup(String group, ItemStack stack) {
+    int def = defineItem(stack);
+    if (def < 0)
+      return;
+    GroupItemMapping gim = new GroupItemMapping(group, def);
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataGroupMapping) {
+        if (((STileDataGroupMapping) tile).addMapping(gim))
+          return;// once successful, return
+      }
+    }
+  }
+
+  public void removeFromGroup(String group, ItemStack stack) {
+    int def = defineItem(stack);
+    if (def < 0)
+      return;
+    GroupItemMapping gim = new GroupItemMapping(group, def);
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataGroupMapping) {
+        ((STileDataGroupMapping) tile).removeMapping(gim);
+        // do not break here because the same mapping can exist across different drives
+      }
+    }
+  }
+
+  public void removeFromAllGroups(ItemStack stack) {
+    int def = defineItem(stack);
+    if (def < 0)
+      return;
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataGroupMapping) {
+        ((STileDataGroupMapping) tile).removeAll(def);
+        // do not break here because the same mapping can exist across different drives
+      }
+    }
   }
 
   public void writeToNBT(NBTTagCompound tag) {

@@ -45,10 +45,12 @@ public class GuiContDataDefinitionTerminal extends GuiCont {
     fontRendererObj.drawString(LocalUtil.localize("mnm.gui.ddt.info_arg_d_d_d", t.getDefinitionLengthCache(),
         t.getCurrentRow(), t.getCurrentRow() + 3), 12 + guiLeft, 93 + guiTop, color);
     // render scroll bar
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(foreground);
-    float scrollBarPos = t.getCurrentRow() * 62f / (t.getTotalRow() - 4);
-    this.drawTexturedModalRect(guiLeft + 161, (int) (guiTop + 26 + scrollBarPos), xSize, 0, 6, 12);
+    if (t.getTotalRow() > 4) {
+      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      this.mc.getTextureManager().bindTexture(foreground);
+      float scrollBarPos = t.getCurrentRow() * 62f / (t.getTotalRow() - 4);
+      this.drawTexturedModalRect(guiLeft + 161, (int) (guiTop + 26 + scrollBarPos), xSize, 0, 6, 12);
+    }
   }
 
   /**

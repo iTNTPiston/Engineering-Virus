@@ -7,6 +7,11 @@ public class GroupItemMapping {
   public String groupId;
   public int itemId;
 
+  public GroupItemMapping(String g, int i) {
+    groupId = g;
+    itemId = i;
+  }
+
   public void toNBT(NBTTagCompound tag) {
     tag.setString("group", groupId);
     tag.setInteger("item", itemId);
