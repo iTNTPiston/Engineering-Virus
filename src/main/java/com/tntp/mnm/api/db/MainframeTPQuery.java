@@ -46,6 +46,7 @@ public class MainframeTPQuery implements IQuery {
     System.out.println("Analyzing Query");
     for (Take t : takeList) {
       if (t.id >= 0) {
+        System.out.println("Executing TAKE");
         ItemStack s = mf.takeItemStack(t.id, t.qty);
         if (s != null) {
           putStackInInventory(inv, s, startSlot, endSlot);
@@ -74,10 +75,15 @@ public class MainframeTPQuery implements IQuery {
   private void putStackInInventory(IInventory inv, ItemStack s, int startSlot, int endSlot) {
     if (s == null)
       return;
+    System.out.println("Putting stacks in inventory");
     for (int i = startSlot; i <= endSlot; i++) {
       ItemStack slot = inv.getStackInSlot(i);
-      if (ItemUtil.areItemAndTagEqual(slot, s)) {
-        int max = Math.max(inv.getInventoryStackLimit(), slot.getMaxStackSize());
+      int max = Math.min(inv.getInventoryStackLimit(), s.getMaxStackSize());
+
+      if (slot == null) {
+        int size = Math.min(max, s.stackSize);
+        inv.setInventorySlotContents(i, s.splitStack(size));
+      } else if (ItemUtil.areItemAndTagEqual(slot, s)) {
         int space = max - slot.stackSize;
         if (s.stackSize <= space) {
           slot.stackSize += s.stackSize;

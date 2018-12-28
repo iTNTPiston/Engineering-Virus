@@ -41,7 +41,6 @@ public abstract class STileData extends STileNeithernetInventory {
       if (this.getStackInSlot(i) == null) {
         ItemStack s = stack.splitStack(1);
         this.setInventorySlotContents(i, s);
-        stack.stackSize--;
         break;
       }
     }

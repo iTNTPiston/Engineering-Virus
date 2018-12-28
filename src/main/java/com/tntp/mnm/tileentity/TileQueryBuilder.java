@@ -64,7 +64,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   }
 
   public void updateCache() {
-    selectGroup(currentGroupName);
+    selectGroup(currentGroupName, true, true);
 
   }
 
@@ -88,8 +88,10 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
     // i is 0-14 inclusive
     // qty is either -1,1 or 2 (1stack) 3(half) 4(clear)
     int defIndex = currentScrollIndex * 5 + i;
+    System.out.println(defIndex);
     if (defIndex < cachedItemsInGroupDef.length && getStackInSlot(i + 12) != null) {
       int maxStackSize = getStackInSlot(i + 12).getMaxStackSize();
+      System.out.println(maxStackSize);
       int def = cachedItemsInGroupDef[defIndex];
       Integer v = takeMap.get(def);
       int takeQty = v == null ? 0 : v;
@@ -114,7 +116,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
       else
         takeMap.put(def, takeQty);
     }
-    scanCD = 1;
+    scanCD = 0;
   }
 
   @Override
@@ -133,20 +135,20 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
     if (buttonID == 0) {
       executePut();
     } else if (buttonID == 1) {
-      // take
+      executeTake();
     } else if (buttonID == 2) {
       if (currentGroupName != null && currentGroupName.length() > 0) {
         int dotPos = currentGroupName.lastIndexOf('.');
         if (dotPos == -1)
-          selectGroup("");
+          selectGroup("", false, false);
         else
-          selectGroup(currentGroupName.substring(0, dotPos));
+          selectGroup(currentGroupName.substring(0, dotPos), false, false);
       }
     } else if (buttonID >= 3 && buttonID <= 7) {
       int groupIndex = currentFirstGroupIndex + buttonID - 3;
       if (groupIndex < cachedGroupChips.length) {
         String groupName = MNMItems.data_group_chip.getGroupName(cachedGroupChips[groupIndex]);
-        selectGroup(groupName);
+        selectGroup(groupName, false, false);
       }
     } else if (buttonID == 8) {
       scrollGroupTo(currentFirstGroupIndex - 1);
@@ -157,7 +159,12 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
     } else if (buttonID == 11) {
       scrollItemsTo(currentScrollIndex + 1);
     } else {
-
+      // select slots
+      int qtyCode = (buttonID - 12) / 15;
+      if (qtyCode == 0)
+        qtyCode = -1;
+      int slot = (buttonID - 12) % 15;
+      selectSlot(slot, qtyCode);
     }
     return new MCGuiQueryBuilderRow(windowID, currentScrollIndex, rowTotal());
   }
@@ -185,7 +192,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
         this.setInventorySlotContents(j, null);
       }
     }
-
+    updateSelectedItems();
   }
 
   private int rowTotal() {
@@ -213,7 +220,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
 
   }
 
-  public void selectGroup(String str) {
+  public void selectGroup(String str, boolean keepGroupIndex, boolean keepItemIndex) {
     if (str == null)
       str = "";
     Mainframe mf = connectToMainframe();
@@ -233,11 +240,11 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
       cachedCurrentGroupIcon = null;
       currentGroupName = "";
     }
-    scrollGroupTo(0);
+    scrollGroupTo(keepGroupIndex ? currentFirstGroupIndex : 0);
     ItemStack currentGroup = MNMItems.data_group_chip.getGroupIconWithNameTag(cachedCurrentGroupIcon);
     this.setInventorySlotContents(27, currentGroup);
 
-    scrollItemsTo(0);
+    scrollItemsTo(keepItemIndex ? currentScrollIndex : 0);
 
   }
 
@@ -266,6 +273,7 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
       QueryExecuter qe = new QueryExecuter(query, this, 0, 8);
       mf.sendQueryToCPU(qe);
     }
+    scanCD = 5;
   }
 
   @Override

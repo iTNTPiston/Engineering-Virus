@@ -222,7 +222,14 @@ public class SGui extends GuiContainer {
     FontRenderer font = stack.getItem().getFontRenderer(stack);
     if (font == null)
       font = fontRendererObj;
-    itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), stack, x, y, size);
+
+    GL11.glDisable(GL11.GL_LIGHTING);
+    GL11.glDisable(GL11.GL_DEPTH_TEST);
+    GL11.glDisable(GL11.GL_BLEND);
+    font.drawStringWithShadow(size, x + 19 - 2 - font.getStringWidth(size), y + 6 + 3, 16777215);
+    GL11.glEnable(GL11.GL_LIGHTING);
+    GL11.glEnable(GL11.GL_DEPTH_TEST);
+
     this.zLevel = 0.0F;
     itemRender.zLevel = 0.0F;
 

@@ -19,10 +19,11 @@ public class MSGuiQueryBuilder extends MAInt2<MSGuiQueryBuilder> {
     // 9 group scroll right
     // 10 items scroll up
     // 11 items scroll down
-    // 12-26 add 1 stack
-    // 27+[0-14] subtract 1 stack
-    // 42+[0-14] add 1
-    // 57+[0-14] subtract 1
+    // 0 12-26 -1
+    // 15 27+[0-14] +1
+    // 30 42+[0-14] +S
+    // 45 57+[0-14] +S/2
+    // 60 72+[0-14] clear
   }
 
   public MSGuiQueryBuilder() {
