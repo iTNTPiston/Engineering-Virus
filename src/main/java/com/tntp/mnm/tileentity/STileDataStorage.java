@@ -51,6 +51,7 @@ public class STileDataStorage extends STileData {
       qty = 0;
       map.put(id, stock);
     }
+    markDirty();
     // return qty not taken
     return qty;
   }
@@ -86,7 +87,7 @@ public class STileDataStorage extends STileData {
       map.put(id, stock + maximumPut);
       qty -= maximumPut;
     }
-
+    markDirty();
     return qty;
   }
 

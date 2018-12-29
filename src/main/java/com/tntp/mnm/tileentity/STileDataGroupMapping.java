@@ -28,14 +28,17 @@ public class STileDataGroupMapping extends STileData {
       return false;
     if (this.getUsedSpace() + 4 <= this.getTotalSpaceFromDisks()) {
       definedItems.add(def);
+      markDirty();
       return true;
     }
     return false;
   }
 
   public void removeMapping(GroupItemMapping def) {
-    if (!isTransferringData)
-      definedItems.remove(def);
+    if (isTransferringData)
+      return;
+    definedItems.remove(def);
+    markDirty();
   }
 
   public void removeAll(int definition) {
@@ -46,6 +49,7 @@ public class STileDataGroupMapping extends STileData {
       if (gim.itemId == definition)
         iter.remove();
     }
+    markDirty();
   }
 
   public void findMapping(Set<Integer> itemIDS, String groupName) {

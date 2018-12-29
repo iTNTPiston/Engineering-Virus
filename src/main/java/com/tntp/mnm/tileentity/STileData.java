@@ -1,7 +1,9 @@
 package com.tntp.mnm.tileentity;
 
 import com.tntp.mnm.item.disk.ItemDisk;
+import com.tntp.mnm.util.DirUtil;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -13,10 +15,23 @@ public abstract class STileData extends STileNeithernetInventory {
   /**
    * The data is being transferred using a disk key
    */
-  protected boolean isTransferringData;
+  public boolean isTransferringData;
+  public boolean pendingDiskEjection;
 
   public STileData(int size) {
     super(size);
+  }
+
+  public void updateEntity() {
+    super.updateEntity();
+    if (worldObj != null && !worldObj.isRemote) {
+      if (pendingDiskEjection) {
+        ejectDisks();
+        pendingDiskEjection = false;
+        isTransferringData = false;
+        markDirty();
+      }
+    }
   }
 
   @Override
@@ -56,6 +71,24 @@ public abstract class STileData extends STileNeithernetInventory {
       stack = null;
     }
     return stack;
+  }
+
+  public void ejectDisks() {
+    // server only
+    int side = getBlockMetadata() & 7;
+    int[] off = DirUtil.OFFSETS[side];
+    int x = xCoord + off[0];
+    int y = yCoord + off[1];
+    int z = zCoord + off[2];
+    for (int i = 0; i < this.getSizeInventory(); i++) {
+      if (this.getStackInSlot(i) != null) {
+        ItemStack s = getStackInSlot(i).copy();
+        EntityItem entity = new EntityItem(worldObj, x + 0.5, y + 0.5, z + 0.5, s);
+        worldObj.spawnEntityInWorld(entity);
+        this.setInventorySlotContents(i, null);
+        break;
+      }
+    }
   }
 
   public abstract int getUsedSpace();
@@ -111,5 +144,11 @@ public abstract class STileData extends STileNeithernetInventory {
     super.writeToNBT(tag);
     writeDataToNBT(tag);
   }
+
+  public boolean hasData() {
+    return getUsedSpace() != 0;
+  }
+
+  public abstract void clearData();
 
 }
