@@ -1,5 +1,6 @@
 package com.tntp.mnm.tileentity;
 
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.util.DirUtil;
 

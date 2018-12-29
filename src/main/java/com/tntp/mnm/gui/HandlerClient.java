@@ -15,6 +15,8 @@ import com.tntp.mnm.gui.cont.GuiContBasicGroupMappingStorage;
 import com.tntp.mnm.gui.cont.GuiContQueryBuilder;
 import com.tntp.mnm.gui.cont.GuiContSecurityEncoder;
 import com.tntp.mnm.gui.cont.ITileCont;
+import com.tntp.mnm.gui.diskkey.GuiDiskKey;
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.gui.heat.GuiHeat;
 import com.tntp.mnm.gui.process.ContainerProcess;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
@@ -114,6 +116,10 @@ public class HandlerClient extends HandlerServer {
     } else if (ID == MNMGuis.getGuiID("GuiContGroupMapper")) {
       if (tile instanceof TileGroupMapper) {
         gui = new GuiContGroupMapper(player.inventory, (ITileCont) tile, x, y, z);
+      }
+    } else if (ID == MNMGuis.getGuiID("GuiDiskKey")) {
+      if (tile instanceof ITileDiskKeyable) {
+        gui = new GuiDiskKey(player.inventory, (ITileDiskKeyable) tile, x, y, z);
       }
     }
     if (gui != null) {

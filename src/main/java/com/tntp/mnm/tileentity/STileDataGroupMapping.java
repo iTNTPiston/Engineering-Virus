@@ -5,12 +5,14 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.tntp.mnm.api.db.GroupItemMapping;
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class STileDataGroupMapping extends STileData {
+public class STileDataGroupMapping extends STileData implements ITileDiskKeyable {
   private HashSet<GroupItemMapping> definedItems;
 
   public STileDataGroupMapping(int size) {
@@ -81,6 +83,36 @@ public class STileDataGroupMapping extends STileData {
       mapping.fromNBT(mappingTag);
       definedItems.add(mapping);
     }
+  }
+
+  @Override
+  public void clearData() {
+    definedItems.clear();
+    markDirty();
+  }
+
+  @Override
+  public String diskKeyType() {
+    return "mapping";
+  }
+
+  @Override
+  public boolean onPreTransferToDiskKey(ItemStack validDiskKey) {
+    return true;
+  }
+
+  @Override
+  public void onPostTransferToDiskKey(ItemStack validDiskKey) {
+
+  }
+
+  @Override
+  public boolean onPreTransferFromDiskKey(ItemStack validDiskKey) {
+    return true;
+  }
+
+  @Override
+  public void onPostTransferFromDiskKey(ItemStack validDiskKey) {
   }
 
 }

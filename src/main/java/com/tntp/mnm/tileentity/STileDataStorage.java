@@ -132,4 +132,10 @@ public class STileDataStorage extends STileData {
     }
   }
 
+  @Override
+  public void clearData() {
+    map.clear();
+    markDirty();
+  }
+
 }

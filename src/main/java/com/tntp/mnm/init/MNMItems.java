@@ -5,6 +5,7 @@ import com.tntp.mnm.item.ItemDataGroupChip;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
 import com.tntp.mnm.item.tools.ItemDataReader;
+import com.tntp.mnm.item.tools.ItemDiskKey;
 import com.tntp.mnm.item.tools.ItemEraserCard;
 import com.tntp.mnm.item.tools.ItemIDCard;
 import com.tntp.mnm.item.tools.ItemMeterStick;
@@ -31,6 +32,7 @@ public class MNMItems {
   public static final ItemDisk disk_4mb = null;
   public static final ItemIDCard id_card = null;
   public static final ItemEraserCard eraser_card = null;
+  public static final ItemDiskKey disk_key = null;
 
   public static void loadItems() {
     // GameRegistry.registerItem(new ItemWrench(), "wrench");
@@ -44,6 +46,7 @@ public class MNMItems {
     regItem(new ItemSmallHammer(), "small_hammer");
     regItem(new ItemIDCard(), "id_card");
     regItem(new ItemEraserCard(), "eraser_card");
+    regItem(new ItemDiskKey(), "disk_key");
     regItem(new ItemDataGroupChip(), "data_group_chip");
     regItem(new ItemDisk(4), "disk_4mb");
     regItem(new ItemDisk(64), "disk_64mb");

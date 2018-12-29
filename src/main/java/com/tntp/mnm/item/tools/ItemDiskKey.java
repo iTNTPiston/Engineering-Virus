@@ -3,6 +3,7 @@ package com.tntp.mnm.item.tools;
 import java.util.List;
 
 import com.tntp.mnm.block.SBlock;
+import com.tntp.mnm.gui.GuiTabType;
 import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.tileentity.STileData;
@@ -17,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class ItemDiskKey extends SItemTool {
 
   public ItemDiskKey() {
-    super();
+    super(GuiTabType.DISK_KEY);
   }
 
   @Override
@@ -166,6 +167,10 @@ public class ItemDiskKey extends SItemTool {
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.type." + type));
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.space_arg_d", space));
     }
+  }
+
+  public boolean isDiskKey(ItemStack stack) {
+    return stack != null && stack.getItem() == this;
   }
 
 }

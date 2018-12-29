@@ -11,6 +11,8 @@ import com.tntp.mnm.gui.cont.ContainerCont;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
+import com.tntp.mnm.gui.diskkey.ContainerDiskKey;
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.gui.heat.ContainerHeat;
 import com.tntp.mnm.gui.process.ContainerProcessGeoThermalSmelter;
 import com.tntp.mnm.gui.process.ITileProcess;
@@ -105,6 +107,11 @@ public class HandlerServer implements IGuiHandler {
       }
     } else if (MNMGuis.getGui(ID).startsWith("GuiStructure")) {
       return new ContainerStructure(player.inventory);
+    } else if (ID == MNMGuis.getGuiID("GuiDiskKey")) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof ITileDiskKeyable) {
+        return new ContainerDiskKey(player.inventory, (ITileDiskKeyable) tile);
+      }
     }
     return null;
   }

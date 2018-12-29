@@ -1,8 +1,9 @@
 package com.tntp.mnm.gui.diskkey;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public interface ITileDiskKeyable {
+public interface ITileDiskKeyable extends IInventory {
   public String diskKeyType();
 
   /**

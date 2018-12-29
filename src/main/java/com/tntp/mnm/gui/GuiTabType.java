@@ -7,6 +7,7 @@ import com.tntp.mnm.gui.conf.ITileConfig;
 import com.tntp.mnm.gui.cont.ITileCont;
 import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ITileStructure;
 import com.tntp.mnm.init.MNMBlocks;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 public enum GuiTabType {
   HEAT("heat", 1f, 0.7f, 0.5f), CONNECTION("connection", 1f, 0.8f, 0.7f), STRUCTURE("structure", 0.8f, 1f, 0.8f),
   PROCESS("process", 1f, 1f, 0.8f), CONFIG("config", 0, 0.5f, 1f), CARD_ACCESS("graphic_interface", 0.8f, 0.8f, 1f),
-  DATA_ACCESS("graphic_interface", 0.7f, 0.7f, 1f);
+  DATA_ACCESS("graphic_interface", 0.7f, 0.7f, 1f), DISK_KEY("disk_key", 1, 0.5f, 1);
   @SideOnly(Side.CLIENT)
   private static RenderItem itemRender;
   @SideOnly(Side.CLIENT)
@@ -63,6 +64,8 @@ public enum GuiTabType {
       return new ItemStack(MNMItems.screw_driver);
     case DATA_ACCESS:
       return new ItemStack(MNMItems.data_reader);
+    case DISK_KEY:
+      return new ItemStack(MNMItems.disk_key);
     default:
       return new ItemStack(Items.apple);
     }
@@ -119,6 +122,10 @@ public enum GuiTabType {
         name = ((ITileCont) tile).getContainerGui();
       }
       break;
+    case DISK_KEY:
+      if (tile instanceof ITileDiskKeyable) {
+        name = "GuiDiskKey";
+      }
     }
     return name;
   }

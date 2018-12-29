@@ -139,4 +139,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
     }
   }
 
+  @Override
+  public void clearData() {
+    definedItems.clear();
+    markDirty();
+  }
+
 }
