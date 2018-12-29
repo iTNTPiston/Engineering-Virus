@@ -396,6 +396,14 @@ public class Mainframe {
             // integrity violated
           }
         }
+      } else if (tile instanceof STileDataStorage) {
+        // Also search data because data may contain undefined items
+        HashMap<Integer, Integer> raw = ((STileDataStorage) tile).getData();
+        for (int id : raw.keySet()) {
+          if (id > maxID) {
+            maxID = id;
+          }
+        }
       }
     }
     this.maxID = maxID;

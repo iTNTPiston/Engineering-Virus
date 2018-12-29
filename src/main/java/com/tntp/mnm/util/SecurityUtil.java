@@ -47,6 +47,15 @@ public class SecurityUtil {
     return i == codeToMatch;
   }
 
+  public static boolean isEncoded(ItemStack stack) {
+    if (!canEncode(stack))
+      return false;
+    if (!stack.hasTagCompound()) {
+      return false;
+    }
+    return stack.getTagCompound().hasKey("MNM|Security");
+  }
+
   public static int getCode(ItemStack stack) {
     if (!stack.hasTagCompound())
       return 0;

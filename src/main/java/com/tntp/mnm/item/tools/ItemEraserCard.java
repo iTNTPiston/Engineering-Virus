@@ -5,9 +5,11 @@ import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.network.MCChatMsg;
 import com.tntp.mnm.network.MNMNetwork;
+import com.tntp.mnm.util.SecurityUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -22,15 +24,20 @@ public class ItemEraserCard extends SItemTool implements ISecurityItem {
         Security s = ((ITileSecuredCont) tile).getSecurity();
         if (s.securityCheck(stack)) {
           s.resetSecurity();
-          MCChatMsg mes = new MCChatMsg("<local>Security reset.");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.reset");
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         } else {
-          MCChatMsg mes = new MCChatMsg("<local>This block is secured.");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.secured");
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         }
       }
       return true;
     }
     return false;
+  }
+
+  @Override
+  public EnumRarity getRarity(ItemStack stack) {
+    return SecurityUtil.isEncoded(stack) ? EnumRarity.rare : EnumRarity.common;
   }
 }

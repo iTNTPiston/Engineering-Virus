@@ -102,9 +102,10 @@ public class ItemRenderingHelper implements IItemRenderer {
   public void renderFirstPersonItem(ItemStack stack, RenderBlocks render, EntityLivingBase entity) {
     WaveObjRenderer obj = getRenderer(stack);
     GL11.glPushMatrix();
-    GL11.glTranslatef(0, 0.9f, 0);
-    GL11.glRotatef(45, 0, 1, 0);
-    GL11.glTranslatef(0, 0, 1);
+    // GL11.glTranslatef(0, 0.9f, 0);
+    GL11.glTranslatef(0.3f, 0.9f, 0.4f);
+    GL11.glRotatef(-110, 0, 1, 0);
+
     obj.render();
     GL11.glPopMatrix();
   }

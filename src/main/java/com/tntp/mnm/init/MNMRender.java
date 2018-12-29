@@ -106,6 +106,9 @@ public class MNMRender {
     i = itemRender.registerWaveObj(getWaveObjRenderer("accessor/0"));
     itemRender.bindWaveObj(MNMItems.accessor, i);
 
+    i = itemRender.registerWaveObj(getWaveObjRenderer("disk_key/0"));
+    itemRender.bindWaveObj(MNMItems.disk_key, i);
+
   }
 
   public static WaveObjRenderer getWaveObjRenderer(String name) {

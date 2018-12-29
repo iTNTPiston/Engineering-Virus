@@ -10,6 +10,7 @@ import com.tntp.mnm.util.SecurityUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -17,6 +18,11 @@ import net.minecraft.world.World;
 public class ItemIDCard extends SItemTool implements ISecurityItem {
   public ItemIDCard() {
     super(GuiTabType.CARD_ACCESS);
+  }
+
+  @Override
+  public EnumRarity getRarity(ItemStack stack) {
+    return SecurityUtil.isEncoded(stack) ? EnumRarity.uncommon : EnumRarity.common;
   }
 
   @Override
@@ -29,10 +35,10 @@ public class ItemIDCard extends SItemTool implements ISecurityItem {
         if (!s.isSecured()) {
           int code = SecurityUtil.getCode(stack);
           s.setSecurityCode(code);
-          MCChatMsg mes = new MCChatMsg("<local>Block secured.");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.set");
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         } else {
-          MCChatMsg mes = new MCChatMsg("<local>This block is secured.");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.secured");
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         }
       }

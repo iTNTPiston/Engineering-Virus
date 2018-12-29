@@ -12,6 +12,7 @@ import com.tntp.mnm.util.LocalUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -22,8 +23,8 @@ public class ItemDiskKey extends SItemTool {
   }
 
   @Override
-  public boolean hasEffect(ItemStack stack) {
-    return getStoredTileType(stack).length() > 0;
+  public EnumRarity getRarity(ItemStack stack) {
+    return getStoredTileType(stack).length() > 0 ? EnumRarity.uncommon : EnumRarity.common;
   }
 
   public void clearDiskKey(ItemStack stack) {
