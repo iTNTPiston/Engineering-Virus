@@ -164,6 +164,11 @@ Items
 		消除卡
 		
 	#NAME
+		disk_key
+		Disk Key
+		磁盘密钥
+		
+	#NAME
 		data_group_chip
 		Data Group Chip
 		数据组芯片
@@ -251,6 +256,11 @@ Mod Specific
 				graphic_interface
 				Graphic Interface
 				图形界面
+				
+			#NAME
+				disk_key
+				Disk Management
+				磁盘管理
 				
 		#RETURN label
 		
@@ -396,6 +406,34 @@ Mod Specific
 				搜索
 				
 		#RETURN group_mapper
+		#GROUP
+			disk_key
+			#NAME
+				from_message
+				Key ==> Machine
+				从密钥到机器
+				
+			#NAME
+				instruction
+				Click the slot with Disk Key
+				用磁盘密钥点击槽
+				
+			#NAME
+				to_message
+				Machine ==> Key
+				从机器到密钥
+				
+			#NAME
+				warning
+				WARNING
+				警告!!!
+				
+			#NAME
+				warning_message
+				The emptied disks will be ejected!
+				清空后的磁盘将被弹出!
+				
+		#RETURN disk_key
 	#RETURN gui
 	
 	Tooltips
@@ -430,6 +468,27 @@ Mod Specific
 				数量: %d
 		
 		#RETURN query_builder
+		#GROUP
+			disk_key
+			#NAME
+				space_arg_d
+				File Size: %d
+				文件大小: %d
+				
+			#NAME
+				type_arg_s
+				Type: %s
+				类型: %s
+				
+			#GROUP
+				type
+				#NAME
+					mapping
+					Mapping
+					配对
+			
+			#RETURN type
+		#RETURN disk_key		
 	#RETURN tooltip
 			
 	

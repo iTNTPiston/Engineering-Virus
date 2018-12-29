@@ -87,7 +87,6 @@ public abstract class STileData extends STileNeithernetInventory {
         EntityItem entity = new EntityItem(worldObj, x + 0.5, y + 0.5, z + 0.5, s);
         worldObj.spawnEntityInWorld(entity);
         this.setInventorySlotContents(i, null);
-        break;
       }
     }
   }

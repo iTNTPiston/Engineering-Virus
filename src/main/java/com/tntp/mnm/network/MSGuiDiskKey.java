@@ -5,6 +5,7 @@ import com.tntp.mnm.gui.diskkey.ContainerDiskKey;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class MSGuiDiskKey extends MAInt2<MSGuiDiskKey> {
 
@@ -18,7 +19,7 @@ public class MSGuiDiskKey extends MAInt2<MSGuiDiskKey> {
 
   @Override
   public IMessage onMessage(MSGuiDiskKey message, MessageContext ctx) {
-    EntityPlayer player = ctx.getServerHandler().playerEntity;
+    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     if (player.openContainer.windowId == message.getI1()) {
       ContainerDiskKey cont = (ContainerDiskKey) player.openContainer;
       cont.receiveActionFromClient(message.getI2(), player);

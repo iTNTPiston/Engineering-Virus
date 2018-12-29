@@ -89,6 +89,7 @@ public class ItemDiskKey extends SItemTool {
       return false;// already has data
     diskKey.setString("type", type);
     diskKey.setTag("content", data);
+    diskKey.setInteger("space", space);
     tag.setTag("MNM|DiskKey", diskKey);
     stack.setTagCompound(tag);
     return true;
@@ -164,7 +165,8 @@ public class ItemDiskKey extends SItemTool {
     String type = getStoredTileType(stack);
     if (type.length() > 0) {
       int space = getStoredSpace(stack);
-      tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.type." + type));
+      tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.type_arg_s",
+          LocalUtil.localize("mnm.tooltip.disk_key.type." + type)));
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.space_arg_d", space));
     }
   }
