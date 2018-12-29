@@ -144,9 +144,9 @@ Items
 		螺丝刀
 		
 	#NAME
-		data_reader
-		Data Reader
-		数据读取器
+		accessor
+		Accessor
+		读取器
 		
 	#NAME
 		small_hammer
