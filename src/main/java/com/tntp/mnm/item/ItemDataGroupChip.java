@@ -69,8 +69,6 @@ public class ItemDataGroupChip extends SItem {
       return null;
     NBTTagCompound stackTag = iconStack.hasTagCompound() ? iconStack.getTagCompound() : new NBTTagCompound();
     String groupName = MNMItems.data_group_chip.getGroupName(stack);
-    // get last part
-    groupName = groupName.substring(groupName.lastIndexOf('.') + 1);
     stackTag.setString("MNM|DataGroupNameTag", groupName);
     iconStack.setTagCompound(stackTag);
     return iconStack;

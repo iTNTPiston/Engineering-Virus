@@ -377,8 +377,8 @@ Mod Specific
 				
 			#NAME
 				group
-				Search Group:
-				搜索组:
+				Group:
+				组:
 				
 			#NAME
 				remove

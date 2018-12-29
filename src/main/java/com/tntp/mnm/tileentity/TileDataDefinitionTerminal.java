@@ -46,8 +46,12 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
   }
 
   public void scrollTo(int row) {
-    if (cachedDefinition == null)
+    if (cachedDefinition == null) {
+      for (int i = 0; i < 32; i++) {
+        this.setInventorySlotContents(i, null);
+      }
       return;
+    }
     if (row + 4 > rowTotal) {
       row = rowTotal - 4;
     }

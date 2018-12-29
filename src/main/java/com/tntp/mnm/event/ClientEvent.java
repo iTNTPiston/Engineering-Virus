@@ -30,6 +30,7 @@ public class ClientEvent {
         if (taggedName != null) {
           if (taggedName.length() == 0)
             taggedName = LocalUtil.localize("mnm.tooltip.query_builder.default_data_group");
+          taggedName = taggedName.substring(taggedName.lastIndexOf('.') + 1);
           taggedName = LocalUtil.localize("mnm.tooltip.query_builder.group_arg_s", taggedName);
           e.toolTip.add(0, EnumChatFormatting.YELLOW + taggedName + EnumChatFormatting.RESET);
           e.toolTip.set(1, EnumChatFormatting.RESET + e.toolTip.get(1));

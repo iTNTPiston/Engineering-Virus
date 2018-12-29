@@ -55,22 +55,21 @@ public class TileDataGroupChipset extends STilePOB implements ITileDataCont {
    * @return an itemstack containing exactly the prefix group, if none returns
    *         null
    */
-  public ItemStack findGroupBeginWith(List<ItemStack> groups, String prefix) {
+  public void findGroupContains(List<ItemStack> groups, String prefix) {
     ItemDataGroupChip chip = MNMItems.data_group_chip;
-    ItemStack returnStack = null;
     for (int i = 0; i < getSizeInventory(); i++) {
       ItemStack stack = getStackInSlot(i);
       if (stack != null && stack.getItem() == chip) {
         String group = chip.getGroupName(stack).toLowerCase();
-        if (group.startsWith(prefix)) {// must be prefixed
-          groups.add(stack);
+        if (group.contains(prefix)) {
           if (group.length() == prefix.length()) {
-            returnStack = stack;
+            groups.add(0, stack);
+          } else {
+            groups.add(stack);
           }
         }
       }
     }
-    return returnStack;
   }
 
   @Override

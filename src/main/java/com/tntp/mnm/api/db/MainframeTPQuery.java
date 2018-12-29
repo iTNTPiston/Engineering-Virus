@@ -73,7 +73,7 @@ public class MainframeTPQuery implements IQuery {
   }
 
   private void putStackInInventory(IInventory inv, ItemStack s, int startSlot, int endSlot) {
-    if (s == null)
+    if (s == null || s.stackSize == 0)
       return;
     System.out.println("Putting stacks in inventory");
     for (int i = startSlot; i <= endSlot; i++) {

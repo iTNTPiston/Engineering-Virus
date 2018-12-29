@@ -1,5 +1,7 @@
 package com.tntp.mnm.tileentity;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.tntp.mnm.api.db.GroupSearchResult;
@@ -19,10 +21,12 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
   private Security security;
   private int cachedItemDef;
   private ItemStack groupChip;
+  private LinkedList<ItemStack> candidateChips;
 
   public TileGroupMapper() {
-    super(3);
+    super(9);
     security = new Security(this);
+    candidateChips = new LinkedList<ItemStack>();
   }
 
   @Override
@@ -30,20 +34,32 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
     return "GuiContGroupMapper";
   }
 
-  public int receiveClientGuiSearch(String searchGroup) {
-    searchGroup(searchGroup);
+  public int receiveClientGuiSearchItem() {
     int def = searchItem();
     return def;
   }
 
-  public void openInventory() {
-    this.setInventorySlotContents(1, null);
-    this.setInventorySlotContents(2, null);
-    groupChip = null;
-    cachedItemDef = -1;
+  public void receiveClientGuiSearchGroup(String searchGroup) {
+    searchGroup(searchGroup);
   }
 
-  public IMessage receiveClientGuiMessage(int buttonID) {
+  public void openInventory() {
+    for (int i = 1; i < 9; i++)
+      this.setInventorySlotContents(i, null);
+    groupChip = null;
+    cachedItemDef = -1;
+    candidateChips = new LinkedList<ItemStack>();
+  }
+
+  public void closeInventory() {
+    candidateChips = null;
+  }
+
+  public IMessage receiveClientGuiMessageButton(int buttonID) {
+    if (buttonID >= 5) {
+      switchGroup(buttonID - 5);
+      return null;
+    }
     // server only
     // 0 - search
     // 1 - add
@@ -76,19 +92,55 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
     return null;
   }
 
+  public void switchGroup(int id) {
+    if (id == 0) {
+      // kick out current group
+      if (!candidateChips.isEmpty()) {
+        // if has more candidates
+        groupChip = candidateChips.removeFirst();
+        ItemStack iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(groupChip);
+        this.setInventorySlotContents(2, iconStack);
+      }
+    } else {
+      if (id <= candidateChips.size()) {
+        // id=1 corresponds to the first in candidateChips, etc
+        groupChip = candidateChips.remove(id - 1);
+        ItemStack iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(groupChip);
+        this.setInventorySlotContents(2, iconStack);
+      }
+    }
+    setCandidateSlots();
+  }
+
+  public void setCandidateSlots() {
+    int i = 3;
+    for (Iterator<ItemStack> iter = candidateChips.iterator(); iter.hasNext() && i < 9;) {
+      ItemStack stack = iter.next();
+      ItemStack iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(stack);
+      this.setInventorySlotContents(i, iconStack);
+      i++;
+    }
+    for (; i < 9; i++) {
+      this.setInventorySlotContents(i, null);
+    }
+  }
+
   public void searchGroup(String group) {
     if (group == null)
       group = "";
     Mainframe mf = connectToMainframe();
-    ItemStack foundGroup;
+    candidateChips.clear();
     if (mf != null) {
-      foundGroup = mf.searchGroupChip(group);
-    } else {
-      foundGroup = null;
+      mf.searchGroupChip(group, candidateChips);
     }
-    groupChip = foundGroup;
-    ItemStack iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(foundGroup);
+    if (candidateChips.isEmpty()) {
+      groupChip = null;
+    } else {
+      groupChip = candidateChips.removeFirst();
+    }
+    ItemStack iconStack = MNMItems.data_group_chip.getGroupIconWithNameTag(groupChip);
     this.setInventorySlotContents(2, iconStack);
+    setCandidateSlots();
   }
 
   /**
@@ -118,9 +170,12 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
 
   @Override
   public void addContainerSlots(List<Slot> slots) {
-    slots.add(new Slot(this, 0, 13, 53));
-    slots.add(new SlotDecorative(this, 1, 49, 53));
-    slots.add(new SlotDecorative(this, 2, 49, 20));
+    slots.add(new Slot(this, 0, 13, 64));
+    slots.add(new SlotDecorative(this, 1, 49, 63));
+    slots.add(new SlotDecorative(this, 2, 68, 41));
+    for (int i = 0; i < 2; i++)
+      for (int j = 0; j < 3; j++)
+        slots.add(new SlotDecorative(this, 3 + i * 3 + j, 11 + j * 18, 22 + i * 18));
 
   }
 

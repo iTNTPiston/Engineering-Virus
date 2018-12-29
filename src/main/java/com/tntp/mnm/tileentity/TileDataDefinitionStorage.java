@@ -43,6 +43,8 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
    *         otherwise
    */
   public int getItemDefID(ItemStack stack) {
+    if (isTransferringData)
+      return -1;
     for (int i = 0; i < definedItems.size(); i++) {
       if (ItemUtil.areItemAndTagEqual(definedItems.get(i).stack, stack)) {
         return definedItems.get(i).id;
@@ -58,6 +60,8 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
    * @return
    */
   public ItemStack getItemDef(int id) {
+    if (isTransferringData)
+      return null;
     for (int i = 0; i < definedItems.size(); i++) {
       if (definedItems.get(i).id == id) {
         ItemStack s = definedItems.get(i).stack.copy();
@@ -69,12 +73,14 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
   }
 
   public boolean defineItem(ItemStack stack, int id) {
+    if (isTransferringData)
+      return false;
     if (getUsedSpace() + 4 <= getTotalSpaceFromDisks()) {
       ItemDef item = new ItemDef();
       ItemStack s = stack.copy();
       s.stackSize = 1;
       item.id = id;
-      item.stack = stack;
+      item.stack = s;
       definedItems.add(item);
       return true;// defined
     }
@@ -83,26 +89,11 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
 
   public void writeToNBT(NBTTagCompound tag) {
     super.writeToNBT(tag);
-    NBTTagList list = new NBTTagList();
-    for (int i = 0; i < definedItems.size(); i++) {
-      NBTTagCompound com = new NBTTagCompound();
-      definedItems.get(i).toNBT(com);
-      list.appendTag(com);
-    }
-    tag.setTag("defined_items", list);
     security.writeToNBT(tag);
   }
 
   public void readFromNBT(NBTTagCompound tag) {
     super.readFromNBT(tag);
-    NBTTagList list = tag.getTagList("defined_items", NBT.TAG_COMPOUND);
-    definedItems = new ArrayList<ItemDef>();
-    for (int i = 0; i < list.tagCount(); i++) {
-      NBTTagCompound com = list.getCompoundTagAt(i);
-      ItemDef def = new ItemDef();
-      def.fromNBT(com);
-      definedItems.add(def);
-    }
     security = new Security(this);
     security.readFromNBT(tag);
   }
@@ -122,6 +113,29 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
   @Override
   public Security getSecurity() {
     return security;
+  }
+
+  @Override
+  public void writeDataToNBT(NBTTagCompound tag) {
+    NBTTagList list = new NBTTagList();
+    for (int i = 0; i < definedItems.size(); i++) {
+      NBTTagCompound com = new NBTTagCompound();
+      definedItems.get(i).toNBT(com);
+      list.appendTag(com);
+    }
+    tag.setTag("defined_items", list);
+  }
+
+  @Override
+  public void readDataFromNBT(NBTTagCompound tag) {
+    NBTTagList list = tag.getTagList("defined_items", NBT.TAG_COMPOUND);
+    definedItems = new ArrayList<ItemDef>();
+    for (int i = 0; i < list.tagCount(); i++) {
+      NBTTagCompound com = list.getCompoundTagAt(i);
+      ItemDef def = new ItemDef();
+      def.fromNBT(com);
+      definedItems.add(def);
+    }
   }
 
 }

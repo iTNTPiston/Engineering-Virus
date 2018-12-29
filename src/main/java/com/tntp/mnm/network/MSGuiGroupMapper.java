@@ -47,10 +47,12 @@ public class MSGuiGroupMapper extends MAStr1<MSGuiGroupMapper> {
       ITileCont t = container.getTile();
       if (t instanceof TileGroupMapper) {
         if (message.buttonID == 0) {
-          return new MCGuiGroupMapperItemDef(message.windowID,
-              ((TileGroupMapper) t).receiveClientGuiSearch(message.getStr1()));
+          return new MCGuiGroupMapperItemDef(message.windowID, ((TileGroupMapper) t).receiveClientGuiSearchItem());
+        } else if (message.buttonID == 4) {
+          ((TileGroupMapper) t).receiveClientGuiSearchGroup(message.getStr1());
+        } else {
+          return ((TileGroupMapper) t).receiveClientGuiMessageButton(message.buttonID);
         }
-        return ((TileGroupMapper) t).receiveClientGuiMessage(message.buttonID);
       }
     }
     return null;

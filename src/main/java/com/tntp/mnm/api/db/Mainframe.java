@@ -3,6 +3,7 @@ package com.tntp.mnm.api.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -351,24 +352,24 @@ public class Mainframe {
     return result;
   }
 
-  public ItemStack searchGroupChip(String groupName) {
+  /**
+   * Search all group chips that contain the group name, put them in a list
+   * 
+   * @param groupName
+   * @param list
+   */
+  public void searchGroupChip(String groupName, LinkedList<ItemStack> list) {
     if (groupName == null || groupName.length() == 0)
-      return null;
+      return;
     scan();
-    List<ItemStack> allGroups = new ArrayList<ItemStack>();
     groupName = groupName.toLowerCase();
     // search tile data group
     for (Port<STilePOB> port : boardPorts) {
       STilePOB tile = port.getTile();
       if (tile instanceof TileDataGroupChipset) {
-        ItemStack thisGroup = ((TileDataGroupChipset) tile).findGroupBeginWith(allGroups, groupName);
-        if (thisGroup != null)
-          return thisGroup;
+        ((TileDataGroupChipset) tile).findGroupContains(list, groupName);
       }
     }
-    if (!allGroups.isEmpty())
-      return allGroups.get(0);
-    return null;
   }
 
   public boolean sendQueryToCPU(QueryExecuter query) {

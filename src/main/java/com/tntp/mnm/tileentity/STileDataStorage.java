@@ -36,6 +36,8 @@ public class STileDataStorage extends STileData {
    * @return quantity left to be taken away
    */
   public int takeAway(int id, int qty) {
+    if (isTransferringData)
+      return qty;
     // how much is stored
     int stock = map.containsKey(id) ? map.get(id) : 0;
     // stored is less than or equal need
@@ -60,6 +62,8 @@ public class STileDataStorage extends STileData {
    * @return qty that cannot be put in
    */
   public int putIn(int id, int qty) {
+    if (isTransferringData)
+      return qty;
     int additionalSpace = 0;// space needed to store the definition
     int stock = 0;// stored
 
@@ -87,6 +91,8 @@ public class STileDataStorage extends STileData {
   }
 
   public int findQuantityFor(int id) {
+    if (isTransferringData)
+      return 0;
     Integer qty = map.get(id);
     if (qty == null)
       return 0;
@@ -104,8 +110,7 @@ public class STileDataStorage extends STileData {
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound tag) {
-    super.writeToNBT(tag);
+  public void writeDataToNBT(NBTTagCompound tag) {
     NBTTagList hash = new NBTTagList();
     for (Entry<Integer, Integer> e : map.entrySet()) {
       NBTTagCompound t = new NBTTagCompound();
@@ -117,8 +122,7 @@ public class STileDataStorage extends STileData {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound tag) {
-    super.readFromNBT(tag);
+  public void readDataFromNBT(NBTTagCompound tag) {
     map = new HashMap<Integer, Integer>();
     NBTTagList hash = tag.getTagList("HashMap", NBT.TAG_COMPOUND);
     for (int i = 0; i < hash.tagCount(); i++) {

@@ -24,6 +24,8 @@ public class STileDataGroupMapping extends STileData {
   }
 
   public boolean addMapping(GroupItemMapping def) {
+    if (isTransferringData)
+      return false;
     if (this.getUsedSpace() + 4 <= this.getTotalSpaceFromDisks()) {
       definedItems.add(def);
       return true;
@@ -32,10 +34,13 @@ public class STileDataGroupMapping extends STileData {
   }
 
   public void removeMapping(GroupItemMapping def) {
-    definedItems.remove(def);
+    if (!isTransferringData)
+      definedItems.remove(def);
   }
 
   public void removeAll(int definition) {
+    if (isTransferringData)
+      return;
     for (Iterator<GroupItemMapping> iter = definedItems.iterator(); iter.hasNext();) {
       GroupItemMapping gim = iter.next();
       if (gim.itemId == definition)
@@ -52,8 +57,7 @@ public class STileDataGroupMapping extends STileData {
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound tag) {
-    super.writeToNBT(tag);
+  public void writeDataToNBT(NBTTagCompound tag) {
     NBTTagList list = new NBTTagList();
     for (GroupItemMapping mapping : definedItems) {
       NBTTagCompound mappingTag = new NBTTagCompound();
@@ -64,8 +68,7 @@ public class STileDataGroupMapping extends STileData {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound tag) {
-    super.readFromNBT(tag);
+  public void readDataFromNBT(NBTTagCompound tag) {
     NBTTagList list = tag.getTagList("defined_mappings", NBT.TAG_COMPOUND);
     definedItems = new HashSet<GroupItemMapping>();
     for (int i = 0; i < list.tagCount(); i++) {

@@ -3,11 +3,17 @@ package com.tntp.mnm.tileentity;
 import com.tntp.mnm.item.disk.ItemDisk;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class STileData extends STileNeithernetInventory {
   private int diskNum;
 
   private int clientUsedSpaceCache;
+
+  /**
+   * The data is being transferred using a disk key
+   */
+  protected boolean isTransferringData;
 
   public STileData(int size) {
     super(size);
@@ -37,6 +43,8 @@ public abstract class STileData extends STileNeithernetInventory {
   }
 
   public ItemStack insertDisk(ItemStack stack) {
+    if (isTransferringData)
+      return stack;
     for (int i = 0; i < this.getSizeInventory(); i++) {
       if (this.getStackInSlot(i) == null) {
         ItemStack s = stack.splitStack(1);
@@ -86,6 +94,22 @@ public abstract class STileData extends STileNeithernetInventory {
 
   public int getNumDisk() {
     return diskNum;
+  }
+
+  public abstract void writeDataToNBT(NBTTagCompound tag);
+
+  public abstract void readDataFromNBT(NBTTagCompound tag);
+
+  @Override
+  public void readFromNBT(NBTTagCompound tag) {
+    super.readFromNBT(tag);
+    readDataFromNBT(tag);
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound tag) {
+    super.writeToNBT(tag);
+    writeDataToNBT(tag);
   }
 
 }
