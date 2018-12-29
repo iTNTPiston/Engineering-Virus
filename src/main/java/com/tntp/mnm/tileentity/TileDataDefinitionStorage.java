@@ -7,6 +7,7 @@ import com.tntp.mnm.api.db.ItemDef;
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.util.ItemUtil;
 
@@ -16,7 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont {
+public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont, ITileDiskKeyable {
 
   private List<ItemDef> definedItems;
   private Security security;
@@ -143,6 +144,30 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
   public void clearData() {
     definedItems.clear();
     markDirty();
+  }
+
+  @Override
+  public String diskKeyType() {
+    return "definition";
+  }
+
+  @Override
+  public boolean onPreTransferToDiskKey(ItemStack validDiskKey) {
+    return true;
+  }
+
+  @Override
+  public void onPostTransferToDiskKey(ItemStack validDiskKey) {
+  }
+
+  @Override
+  public boolean onPreTransferFromDiskKey(ItemStack validDiskKey) {
+    return true;
+  }
+
+  @Override
+  public void onPostTransferFromDiskKey(ItemStack validDiskKey) {
+
   }
 
 }

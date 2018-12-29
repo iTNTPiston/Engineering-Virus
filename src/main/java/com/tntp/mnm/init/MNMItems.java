@@ -4,7 +4,7 @@ import com.tntp.mnm.core.MNMMod;
 import com.tntp.mnm.item.ItemDataGroupChip;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.item.tools.ItemCommonWrench;
-import com.tntp.mnm.item.tools.ItemDataReader;
+import com.tntp.mnm.item.tools.ItemAccessor;
 import com.tntp.mnm.item.tools.ItemDiskKey;
 import com.tntp.mnm.item.tools.ItemEraserCard;
 import com.tntp.mnm.item.tools.ItemIDCard;
@@ -25,7 +25,7 @@ public class MNMItems {
   public static final ItemToolUniversal tool_universal = null;
   public static final ItemCommonWrench common_wrench = null;
   public static final ItemScrewDriver screw_driver = null;
-  public static final ItemDataReader data_reader = null;
+  public static final ItemAccessor accessor = null;
   public static final ItemSmallHammer small_hammer = null;
   public static final ItemDataGroupChip data_group_chip = null;
 
@@ -42,7 +42,7 @@ public class MNMItems {
     regItem(new ItemToolUniversal(), "tool_universal");
     regItem(new ItemCommonWrench(), "common_wrench");
     regItem(new ItemScrewDriver(), "screw_driver");
-    regItem(new ItemDataReader(), "data_reader");
+    regItem(new ItemAccessor(), "accessor");
     regItem(new ItemSmallHammer(), "small_hammer");
     regItem(new ItemIDCard(), "id_card");
     regItem(new ItemEraserCard(), "eraser_card");

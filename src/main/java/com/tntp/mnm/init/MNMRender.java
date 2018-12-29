@@ -103,6 +103,9 @@ public class MNMRender {
     i = itemRender.registerWaveObj(new WaveObjRenderer(card, redCard));
     itemRender.bindWaveObj(MNMItems.eraser_card, i);
 
+    i = itemRender.registerWaveObj(getWaveObjRenderer("accessor/0"));
+    itemRender.bindWaveObj(MNMItems.accessor, i);
+
   }
 
   public static WaveObjRenderer getWaveObjRenderer(String name) {

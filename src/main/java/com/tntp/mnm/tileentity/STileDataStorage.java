@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class STileDataStorage extends STileData {
+public class STileDataStorage extends STileData implements ITileDiskKeyable {
   private static final int ITEM_PER_BYTE = 128;
   private HashMap<Integer, Integer> map;
 
@@ -136,6 +138,29 @@ public class STileDataStorage extends STileData {
   public void clearData() {
     map.clear();
     markDirty();
+  }
+
+  @Override
+  public String diskKeyType() {
+    return "items";
+  }
+
+  @Override
+  public boolean onPreTransferToDiskKey(ItemStack validDiskKey) {
+    return true;
+  }
+
+  @Override
+  public void onPostTransferToDiskKey(ItemStack validDiskKey) {
+  }
+
+  @Override
+  public boolean onPreTransferFromDiskKey(ItemStack validDiskKey) {
+    return true;
+  }
+
+  @Override
+  public void onPostTransferFromDiskKey(ItemStack validDiskKey) {
   }
 
 }

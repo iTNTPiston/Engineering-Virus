@@ -472,8 +472,8 @@ Mod Specific
 			disk_key
 			#NAME
 				space_arg_d
-				File Size: %d
-				文件大小: %d
+				File Size: %d MB
+				文件大小: %d MC字节
 				
 			#NAME
 				type_arg_s

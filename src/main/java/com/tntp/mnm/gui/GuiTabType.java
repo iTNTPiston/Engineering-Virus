@@ -63,7 +63,7 @@ public enum GuiTabType {
     case CONFIG:
       return new ItemStack(MNMItems.screw_driver);
     case DATA_ACCESS:
-      return new ItemStack(MNMItems.data_reader);
+      return new ItemStack(MNMItems.accessor);
     case DISK_KEY:
       return new ItemStack(MNMItems.disk_key);
     default:
