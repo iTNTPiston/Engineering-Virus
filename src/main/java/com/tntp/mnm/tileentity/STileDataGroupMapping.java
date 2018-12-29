@@ -1,5 +1,6 @@
 package com.tntp.mnm.tileentity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -43,6 +44,24 @@ public class STileDataGroupMapping extends STileData implements ITileDiskKeyable
     markDirty();
   }
 
+  public void modifyMapping(int oldID, int newID) {
+    if (isTransferringData)
+      return;
+    ArrayList<GroupItemMapping> change = new ArrayList<GroupItemMapping>();
+    for (Iterator<GroupItemMapping> iter = definedItems.iterator(); iter.hasNext();) {
+      GroupItemMapping mapping = iter.next();
+      if (mapping.itemId == oldID) {
+        if (newID >= 0)
+          change.add(new GroupItemMapping(mapping.groupId, newID));
+        iter.remove();
+      }
+    }
+    for (GroupItemMapping newMapping : change) {
+      definedItems.add(newMapping);
+    }
+    markDirty();
+  }
+
   public void removeAll(int definition) {
     if (isTransferringData)
       return;
@@ -79,8 +98,7 @@ public class STileDataGroupMapping extends STileData implements ITileDiskKeyable
     definedItems = new HashSet<GroupItemMapping>();
     for (int i = 0; i < list.tagCount(); i++) {
       NBTTagCompound mappingTag = list.getCompoundTagAt(i);
-      GroupItemMapping mapping = new GroupItemMapping("", 0);
-      mapping.fromNBT(mappingTag);
+      GroupItemMapping mapping = GroupItemMapping.fromNBT(mappingTag);
       definedItems.add(mapping);
     }
   }

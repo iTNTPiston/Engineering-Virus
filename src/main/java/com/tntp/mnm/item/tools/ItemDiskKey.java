@@ -2,6 +2,7 @@ package com.tntp.mnm.item.tools;
 
 import java.util.List;
 
+import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.block.SBlock;
 import com.tntp.mnm.gui.GuiTabType;
 import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
@@ -64,6 +65,15 @@ public class ItemDiskKey extends SItemTool {
     return getStoredSpaceFromNBT(tag.getCompoundTag("MNM|DiskKey"));
   }
 
+  public String getStoredMFID(ItemStack stack) {
+    if (stack == null || !stack.hasTagCompound())
+      return "";
+    NBTTagCompound tag = stack.getTagCompound();
+    if (!tag.hasKey("MNM|DiskKey"))
+      return "";
+    return getStoredMFIDFromNBT(tag.getCompoundTag("MNM|DiskKey"));
+  }
+
   public static String getStoredTileTypeFromNBT(NBTTagCompound diskKey) {
     return diskKey.getString("type");
   }
@@ -76,12 +86,16 @@ public class ItemDiskKey extends SItemTool {
     return diskKey.getInteger("space");
   }
 
+  public static String getStoredMFIDFromNBT(NBTTagCompound diskKey) {
+    return diskKey.getString("mfid");
+  }
+
   /**
    * 
    * @param stack
    * @return true if the data is written successfully
    */
-  public static boolean writeToDiskKey(ItemStack stack, String type, NBTTagCompound data, int space) {
+  public static boolean writeToDiskKey(ItemStack stack, String type, NBTTagCompound data, int space, String mfid) {
     if (stack == null)
       return false;
     NBTTagCompound tag = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
@@ -91,6 +105,7 @@ public class ItemDiskKey extends SItemTool {
     diskKey.setString("type", type);
     diskKey.setTag("content", data);
     diskKey.setInteger("space", space);
+    diskKey.setString("mfid", mfid);
     tag.setTag("MNM|DiskKey", diskKey);
     stack.setTagCompound(tag);
     return true;
@@ -108,11 +123,15 @@ public class ItemDiskKey extends SItemTool {
       return false;
     if (tile.onPreTransferToDiskKey(validDiskKey)) {
       STileData t = (STileData) tile;
+      Mainframe mf = t.connectToMainframe();
+      if (mf == null)
+        return false;
+      String mfid = mf.mainframeRandomID;
       t.isTransferringData = true;
       String type = tile.diskKeyType();
       NBTTagCompound data = new NBTTagCompound();
       t.writeDataToNBT(data);
-      if (writeToDiskKey(validDiskKey, type, data, t.getUsedSpace())) {
+      if (writeToDiskKey(validDiskKey, type, data, t.getUsedSpace(), mfid)) {
         t.clearData();
         t.pendingDiskEjection = true;
         t.markDirty();
@@ -136,21 +155,29 @@ public class ItemDiskKey extends SItemTool {
       return false;
     if (tile.onPreTransferFromDiskKey(validDiskKey)) {
       STileData t = (STileData) tile;
-      t.isTransferringData = true;
-      if (!t.hasData()) {
-        // tile must be empty
-        String type = getStoredTileType(validDiskKey);
-        if (tile.diskKeyType().equals(type)) {
-          // type must match
-          NBTTagCompound data = getStoredContent(validDiskKey);
-          if (t.getTotalSpaceFromDisks() >= getStoredSpace(validDiskKey)) {
-            // tile must have enough space
-            // read
-            t.readDataFromNBT(data);
-            t.markDirty();
-            t.isTransferringData = false;
-            clearDiskKey(validDiskKey);
-            return true;
+      Mainframe mf = t.connectToMainframe();
+      if (mf == null)
+        return false;
+      String mfid = mf.mainframeRandomID;
+      String mfiddisk = getStoredMFID(validDiskKey);
+      if (mfid.equals(mfiddisk)) {
+        // must be from the same mainframe
+        t.isTransferringData = true;
+        if (!t.hasData()) {
+          // tile must be empty
+          String type = getStoredTileType(validDiskKey);
+          if (tile.diskKeyType().equals(type)) {
+            // type must match
+            NBTTagCompound data = getStoredContent(validDiskKey);
+            if (t.getTotalSpaceFromDisks() >= getStoredSpace(validDiskKey)) {
+              // tile must have enough space
+              // read
+              t.readDataFromNBT(data);
+              t.markDirty();
+              t.isTransferringData = false;
+              clearDiskKey(validDiskKey);
+              return true;
+            }
           }
         }
       }
@@ -169,6 +196,9 @@ public class ItemDiskKey extends SItemTool {
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.type_arg_s",
           LocalUtil.localize("mnm.tooltip.disk_key.type." + type)));
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.space_arg_d", space));
+      if (player.isSneaking()) {
+        tooltip.add(getStoredMFID(stack));
+      }
     }
   }
 

@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GroupItemMapping {
-  public String groupId;
-  public int itemId;
+  public final String groupId;
+  public final int itemId;
 
   public GroupItemMapping(String g, int i) {
     groupId = g;
@@ -17,9 +17,10 @@ public class GroupItemMapping {
     tag.setInteger("item", itemId);
   }
 
-  public void fromNBT(NBTTagCompound tag) {
-    groupId = tag.getString("group");
-    itemId = tag.getInteger("item");
+  public static GroupItemMapping fromNBT(NBTTagCompound tag) {
+    String g = tag.getString("group");
+    int i = tag.getInteger("item");
+    return new GroupItemMapping(g, i);
   }
 
   public int hashCode() {

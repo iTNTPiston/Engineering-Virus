@@ -1,5 +1,6 @@
 package com.tntp.mnm.tileentity;
 
+import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -36,8 +37,14 @@ public class TileCentralProcessor extends STile {
   private int scanCD;
   private int scanTotal = 200;
 
+  /**
+   * Debug mode will prevent new query to be added to the queue. When the old
+   * queries finish executing, the Mainframe can be debugged.
+   */
+  private boolean debugMode;
+
   public TileCentralProcessor() {
-    mainframe = new Mainframe(this);
+    mainframe = new Mainframe(this, generateRandomMainframeID());
     queue = new PriorityQueue<QueryExecuter>();
     executionPerTick = 1;
     executionLeft = 0;
@@ -80,7 +87,8 @@ public class TileCentralProcessor extends STile {
 
   public boolean addQuery(QueryExecuter query) {
     System.out.println("CPU received Query");
-    if (queue.size() < maxQueueSize) {
+    if (!debugMode && queue.size() < maxQueueSize) {
+      // debug mode disallow new query to be queued.
       System.out.println("Query Queued");
       queue.add(query);
       return true;
@@ -94,13 +102,47 @@ public class TileCentralProcessor extends STile {
     NBTTagCompound mf = new NBTTagCompound();
     mainframe.writeToNBT(mf);
     tag.setTag("mainframe", mf);
+    tag.setString("mf_rid", mainframe.mainframeRandomID);
+    tag.setBoolean("debug", debugMode);
   }
 
   @Override
   public void readFromNBT(NBTTagCompound tag) {
     super.readFromNBT(tag);
+    String id = tag.getString("mf_rid");
     NBTTagCompound mf = (NBTTagCompound) tag.getTag("mainframe");
-    mainframe = new Mainframe(this);
+    mainframe = new Mainframe(this, id);
     mainframe.readFromNBT(mf);
+    debugMode = tag.getBoolean("debug");
+  }
+
+  public void setDebugMode(boolean mode) {
+    debugMode = mode;
+  }
+
+  /**
+   * 
+   * @return true if debug mode is enabled on the CPU
+   */
+  public boolean isDebugModeOn() {
+    return debugMode;
+  }
+
+  /**
+   * 
+   * @return true if debug mode is enabled and the queue is empty
+   */
+  public boolean isDebugModeReady() {
+    return debugMode && queue.isEmpty();
+  }
+
+  public static String generateRandomMainframeID() {
+    StringBuilder build = new StringBuilder();
+    SecureRandom random = new SecureRandom();
+    for (int i = 0; i < 50; i++) {
+      char next = (char) ('A' + random.nextInt(26));
+      build.append(next);
+    }
+    return build.toString();
   }
 }

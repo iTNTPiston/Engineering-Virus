@@ -21,8 +21,7 @@ import net.minecraft.world.World;
 public class BlockBasicDiskStorage extends SBlockContainer {
 
   private IIcon port;
-  private IIcon[] front;
-  private IIcon[] front_off;
+  private IIcon[][] front;// i - mf status j - disk
 
   public BlockBasicDiskStorage() {
     super(Material.iron);
@@ -39,11 +38,12 @@ public class BlockBasicDiskStorage extends SBlockContainer {
     String tex = this.getTextureName();
     this.blockIcon = reg.registerIcon(MNMMod.MODID + ":machine_0");
     port = reg.registerIcon(MNMMod.MODID + ":neithernet_port_block");
-    front = new IIcon[2];
-    front_off = new IIcon[front.length];
+    front = new IIcon[4][2];
+
     for (int i = 0; i < front.length; i++) {
-      front[i] = reg.registerIcon(tex + "_front_" + i);
-      front_off[i] = reg.registerIcon(tex + "_front_" + i + "_off");
+      for (int j = 0; j < front[j].length; j++) {
+        front[i][j] = reg.registerIcon(tex + "/" + i + "/" + j);
+      }
     }
   }
 
@@ -57,11 +57,11 @@ public class BlockBasicDiskStorage extends SBlockContainer {
       if (tile instanceof TileBasicDiskStorage) {
         int diskNum = ((STileData) tile).getNumDisk();
         if (diskNum >= 0 && diskNum < front.length) {
-          boolean connected = ((STileNeithernet) tile).isConnectedToMainframe();
-          return connected ? front[diskNum] : front_off[diskNum];
+          int s = ((STileNeithernet) tile).getMainframeStatus();
+          return front[s][diskNum];
         }
       }
-      return front_off[0];
+      return front[0][0];
     } else {
       return getIcon(side, meta);
     }
@@ -77,7 +77,7 @@ public class BlockBasicDiskStorage extends SBlockContainer {
       return port;
     }
     if ((side ^ 1) == fronts) {
-      return front[front.length - 1];
+      return front[1][1];
     }
     return blockIcon;
   }

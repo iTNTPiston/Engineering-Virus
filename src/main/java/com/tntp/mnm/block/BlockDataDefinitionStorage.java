@@ -44,25 +44,25 @@ public class BlockDataDefinitionStorage extends SBlockContainer {
     }
   }
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-    int meta = world.getBlockMetadata(x, y, z);
-    int frontSide = meta & 7;
-    if ((side ^ 1) == frontSide) {
-      TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile instanceof TileDataDefinitionStorage) {
-        int diskNum = ((TileDataDefinitionStorage) tile).getNumDisk();
-        if (diskNum >= 0 && diskNum < 6) {
-          boolean connected = ((TileDataDefinitionStorage) tile).isConnectedToMainframe();
-          return connected ? front[diskNum] : front_off[diskNum];
-        }
-      }
-      return front_off[0];
-    } else {
-      return getIcon(side, meta);
-    }
-  }
+//  @Override
+//  @SideOnly(Side.CLIENT)
+//  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+//    int meta = world.getBlockMetadata(x, y, z);
+//    int frontSide = meta & 7;
+//    if ((side ^ 1) == frontSide) {
+//      TileEntity tile = world.getTileEntity(x, y, z);
+//      if (tile instanceof TileDataDefinitionStorage) {
+//        int diskNum = ((TileDataDefinitionStorage) tile).getNumDisk();
+//        if (diskNum >= 0 && diskNum < 6) {
+//          boolean connected = ((TileDataDefinitionStorage) tile).isConnectedToMainframe();
+//          return connected ? front[diskNum] : front_off[diskNum];
+//        }
+//      }
+//      return front_off[0];
+//    } else {
+//      return getIcon(side, meta);
+//    }
+//  }
 
   @Override
   @SideOnly(Side.CLIENT)

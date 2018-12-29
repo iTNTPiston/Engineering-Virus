@@ -59,23 +59,23 @@ public class BlockQueryBuilder extends SBlockContainer {
     top = reg.registerIcon(tex + "_top");
   }
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-    int meta = world.getBlockMetadata(x, y, z);
-    int frontSide = meta & 7;
-    if ((side ^ 1) == frontSide || side == 1) {
-      TileEntity tile = world.getTileEntity(x, y, z);
-      if (tile instanceof TileQueryBuilder) {
-        if (((TileQueryBuilder) tile).isConnectedToMainframe()) {
-          return side == 1 ? top : front;
-        }
-      }
-      return side == 1 ? blockIcon : front_off;
-    } else {
-      return getIcon(side, meta);
-    }
-  }
+//  @Override
+//  @SideOnly(Side.CLIENT)
+//  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+//    int meta = world.getBlockMetadata(x, y, z);
+//    int frontSide = meta & 7;
+//    if ((side ^ 1) == frontSide || side == 1) {
+//      TileEntity tile = world.getTileEntity(x, y, z);
+//      if (tile instanceof TileQueryBuilder) {
+//        if (((TileQueryBuilder) tile).isConnectedToMainframe()) {
+//          return side == 1 ? top : front;
+//        }
+//      }
+//      return side == 1 ? blockIcon : front_off;
+//    } else {
+//      return getIcon(side, meta);
+//    }
+//  }
 
   @Override
   @SideOnly(Side.CLIENT)

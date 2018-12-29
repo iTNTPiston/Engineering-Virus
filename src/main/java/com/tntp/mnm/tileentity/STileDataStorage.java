@@ -67,6 +67,8 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
   public int putIn(int id, int qty) {
     if (isTransferringData)
       return qty;
+    if (qty == 0)
+      return 0;
     int additionalSpace = 0;// space needed to store the definition
     int stock = 0;// stored
 

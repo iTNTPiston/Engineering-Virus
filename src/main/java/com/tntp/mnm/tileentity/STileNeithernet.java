@@ -32,7 +32,8 @@ public class STileNeithernet extends STile {
   /**
    * For Client to render only! For server use, always call connectToMainframe()
    */
-  private boolean connectedToMainframe;
+  // 0 - off 1 - connected 2 - booting debug mode 3 - debugging
+  private int mainframeStatus;
 
   public STileNeithernet() {
     rescanTotal = RESCAN;
@@ -81,9 +82,17 @@ public class STileNeithernet extends STile {
   }
 
   public void rescanSubtypes() {
-    connectedToMainframe = connectToMainframe() != null;
-    this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), EVENT_MF_CONNECTION,
-        connectedToMainframe ? 1 : 0);
+    Mainframe mf = connectToMainframe();
+    int status = 0;
+    if (mf != null) {
+      status = 1;
+      if (mf.isReadyToDebug())
+        status = 3;
+      else if (mf.isBootingDebug())
+        status = 2;
+    }
+    mainframeStatus = status;
+    this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), EVENT_MF_CONNECTION, status);
   }
 
   /**
@@ -128,6 +137,7 @@ public class STileNeithernet extends STile {
       pipe.writeToNBT(pipeTag);
       tag.setTag("pipe", pipeTag);
     }
+    tag.setInteger("mf_status", mainframeStatus);
   }
 
   @Override
@@ -141,6 +151,7 @@ public class STileNeithernet extends STile {
       pipe = new NeitherPipe(0, 0, 0);
       pipe.readFromNBT(pipeTag);
     }
+    mainframeStatus = tag.getInteger("mf_status");
   }
 
   /**
@@ -174,13 +185,13 @@ public class STileNeithernet extends STile {
   }
 
   @SideOnly(Side.CLIENT)
-  public boolean isConnectedToMainframe() {
-    return connectedToMainframe;
+  public int getMainframeStatus() {
+    return mainframeStatus;
   }
 
-  public void setConnectedToMainframe(boolean connected) {
-    if (connectedToMainframe != connected) {
-      connectedToMainframe = connected;
+  public void setMainframeStatus(int s) {
+    if (mainframeStatus != s) {
+      mainframeStatus = s;
       if (worldObj != null)
         worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
     }
@@ -189,7 +200,7 @@ public class STileNeithernet extends STile {
   @Override
   public boolean receiveClientEvent(int id, int param) {
     if (id == EVENT_MF_CONNECTION) {
-      setConnectedToMainframe(param == 1);
+      setMainframeStatus(param);
       return true;
     }
     return false;

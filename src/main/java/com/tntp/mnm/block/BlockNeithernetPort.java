@@ -53,16 +53,16 @@ public class BlockNeithernetPort extends SBlockModelSpecial implements ITileEnti
     off = reg.registerIcon(tex + "_off");
   }
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-    TileEntity tile = world.getTileEntity(x, y, z);
-    if (tile instanceof TileNeithernetPort) {
-      if (((TileNeithernetPort) tile).isConnectedToMainframe()) {
-        return blockIcon;
-      }
-    }
-    return off;
-  }
+//  @Override
+//  @SideOnly(Side.CLIENT)
+//  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+//    TileEntity tile = world.getTileEntity(x, y, z);
+//    if (tile instanceof TileNeithernetPort) {
+//      if (((TileNeithernetPort) tile).isConnectedToMainframe()) {
+//        return blockIcon;
+//      }
+//    }
+//    return off;
+//  }
 
 }

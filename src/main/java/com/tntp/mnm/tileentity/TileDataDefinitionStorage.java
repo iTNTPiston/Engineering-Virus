@@ -1,9 +1,13 @@
 package com.tntp.mnm.tileentity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 import com.tntp.mnm.api.db.ItemDef;
+import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
@@ -35,6 +39,40 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
 
   public List<ItemDef> getDefinedItems() {
     return definedItems;
+  }
+
+  public void dumpDefinitions(Queue<ItemDef> queue) {
+    if (isTransferringData)
+      return;
+    while (getUsedSpace() + 4 <= getTotalSpaceFromDisks() && !queue.isEmpty()) {
+      definedItems.add(queue.poll());
+    }
+    markDirty();
+  }
+
+  /**
+   * This is a safety action. This should never has any effect
+   */
+  public void removeNullDefinitions() {
+    if (isTransferringData)
+      return;
+    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
+      ItemDef def = iter.next();
+      if (def.stack == null || def.stack.stackSize <= 0 || def.stack.getItem() == null)
+        iter.remove();
+    }
+    markDirty();
+  }
+
+  public void removeDefinitionsNotIn(Set<Integer> definitionsToKeep) {
+    if (isTransferringData)
+      return;
+    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
+      ItemDef def = iter.next();
+      if (!definitionsToKeep.contains(def.id))
+        iter.remove();
+    }
+    markDirty();
   }
 
   /**
@@ -87,6 +125,17 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
       return true;// defined
     }
     return false;
+  }
+
+  public void undefineItem(int id) {
+    if (isTransferringData)
+      return;
+    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
+      ItemDef def = iter.next();
+      if (def.id == id)
+        iter.remove();
+    }
+    markDirty();
   }
 
   public void writeToNBT(NBTTagCompound tag) {
@@ -153,7 +202,11 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
 
   @Override
   public boolean onPreTransferToDiskKey(ItemStack validDiskKey) {
-    return true;
+    Mainframe mf = connectToMainframe();
+    if (mf != null) {
+      return mf.verifyDefinitionCanBeTakenOut(definedItems);
+    }
+    return false;
   }
 
   @Override
