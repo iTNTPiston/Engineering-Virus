@@ -53,14 +53,15 @@ public class GuiContQueryBuilder extends GuiCont {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
+    super.drawGuiContainerForegroundLayer(mx, my);
+    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     // draw overriden stack size
     for (int i = 12; i < 27; i++) {
       Slot s = (Slot) this.inventorySlots.inventorySlots.get(i);
       this.drawOverridenDisplaySize(s);
       this.drawSelectedSize(s.getStack(), s.xDisplayPosition, s.yDisplayPosition);
     }
-    super.drawGuiContainerForegroundLayer(mx, my);
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
     mx -= guiLeft;
     my -= guiTop;
 

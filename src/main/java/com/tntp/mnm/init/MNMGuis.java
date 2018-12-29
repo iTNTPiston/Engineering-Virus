@@ -43,6 +43,7 @@ public class MNMGuis {
     assignGuiID("GuiContBasicGroupMappingStorage");
     assignGuiID("GuiContGroupMapper");
     assignGuiID("GuiDiskKey");
+    assignGuiID("GuiContDataIntegrityChipset");
 
     NetworkRegistry.INSTANCE.registerGuiHandler(MNMMod.MODID, guiHandler);
 

@@ -8,6 +8,7 @@ import com.tntp.mnm.gui.GuiTabType;
 import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.item.SItemTool;
 import com.tntp.mnm.tileentity.STileData;
+import com.tntp.mnm.util.KeyUtil;
 import com.tntp.mnm.util.LocalUtil;
 
 import cpw.mods.fml.relauncher.Side;
@@ -196,7 +197,7 @@ public class ItemDiskKey extends SItemTool {
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.type_arg_s",
           LocalUtil.localize("mnm.tooltip.disk_key.type." + type)));
       tooltip.add(LocalUtil.localize("mnm.tooltip.disk_key.space_arg_d", space));
-      if (player.isSneaking()) {
+      if (KeyUtil.isShiftDown()) {
         tooltip.add(getStoredMFID(stack));
       }
     }

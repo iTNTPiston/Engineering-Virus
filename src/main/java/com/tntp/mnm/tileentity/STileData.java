@@ -77,7 +77,7 @@ public abstract class STileData extends STileNeithernetInventory {
   public void ejectDisks() {
     // server only
     int side = getBlockMetadata() & 7;
-    int[] off = DirUtil.OFFSETS[side];
+    int[] off = DirUtil.OFFSETS[side ^ 1];
     int x = xCoord + off[0];
     int y = yCoord + off[1];
     int z = zCoord + off[2];
