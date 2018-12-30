@@ -87,6 +87,9 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     tooltiped = tooltipHelper(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.debug", 13, 20);
     tooltiped = tooltipHelper(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.execute", 49, 20);
     tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.check_null_", 13, 52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.remove_empty_", 31, 52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.trim_", 49, 52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.organize_", 67, 52);
 
   }
 
@@ -128,6 +131,9 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     } else if (withInRect(x, y, 49, 20, 16, 16)) {
       // send 1 for execute
       this.playButtonSound();
+      if (flag != 0 && category != -1)
+        MNMNetwork.network
+            .sendToServer(new MSGuiDataIntegrityChipset(this.inventorySlots.windowId, category + 1, flag));
 
     } else {
       boolean executed = false;
@@ -163,6 +169,10 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     case 5:
       flag = flag ^ 8;
       break;
+    }
+    // reset category if all buttons are cleared
+    if (flag == 0) {
+      category = -1;
     }
   }
 

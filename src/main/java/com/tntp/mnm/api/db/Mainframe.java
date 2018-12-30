@@ -620,10 +620,23 @@ public class Mainframe {
     }
     // define new
     int id = defineNew(stack, newID);
-    // change mapping
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataGroupMapping) {
-        ((STileDataGroupMapping) tile).modifyMapping(oldID, id);
+    if (id != -1) {
+      // change mapping
+      for (STileNeithernet tile : allNnetTiles) {
+        if (tile instanceof STileDataGroupMapping) {
+          ((STileDataGroupMapping) tile).modifyMapping(oldID, id);
+        }
+      }
+
+      // change storage
+      for (STileNeithernet tile : allNnetTiles) {
+        if (tile instanceof STileDataStorage) {
+          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData();
+          Integer oldQty = map.remove(oldID);
+          if (oldQty != null) {
+            map.put(newID, oldQty);
+          }
+        }
       }
     }
     return id;
