@@ -19,6 +19,8 @@ import com.tntp.mnm.gui.process.ITileProcess;
 import com.tntp.mnm.gui.structure.ContainerStructure;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMGuis;
+import com.tntp.mnm.network.MCChatMsg;
+import com.tntp.mnm.network.MNMNetwork;
 import com.tntp.mnm.tileentity.STileHeatNode;
 import com.tntp.mnm.tileentity.STileNeithernet;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
@@ -27,6 +29,7 @@ import com.tntp.mnm.util.BlockUtil;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -97,8 +100,11 @@ public class HandlerServer implements IGuiHandler {
       } else if (tile instanceof ITileSecuredCont) {
         Security s = ((ITileSecuredCont) tile).getSecurity();
         ItemStack using = player.getCurrentEquippedItem();
-        if (s.securityCheck(using))
+        if (s.securityCheck(using)) {
           canOpen = true;
+        } else {
+          MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.security.secured"), (EntityPlayerMP) player);
+        }
       } else if (tile instanceof ITileCont) {
         canOpen = true;
       }

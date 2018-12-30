@@ -113,6 +113,11 @@ Blocks
 		Group Mapper
 		组配对机
 		
+	#NAME
+		data_integrity_chipset
+		Data Integrity Chipset
+		数据完整性芯片集
+		
 	#SUFFIX
 	
 #RETURN tile
@@ -434,6 +439,87 @@ Mod Specific
 				清空后的磁盘将被弹出!
 				
 		#RETURN disk_key
+		#GROUP
+			data_integrity_chipset
+			#NAME
+				debug
+				Debug Mode
+				调试模式
+				
+			#NAME
+				definition
+				Definition:
+				定义:
+				
+			#GROUP
+				definition
+				#NAMEENUM
+					check_null_
+					Remove NULLs
+					§7Remove definitions that has NULL Item
+					§7This is a safety check, nothing
+					§7 should happen, but is recommended.
+					
+					移除空值
+					§7移除对应NULL物品的定义
+					§7这是一个安全检查, 什么都不应发生
+					§7但建议始终执行此项
+					
+				#NAMEENUM
+					remove_empty_
+					Remove Empty
+					§7Remove definitions whose items are not
+					§7 currently stored.
+					
+					移除未储存
+					§7移除对应物品没有库存的定义
+					
+				#NAMEENUM
+					trim_
+					Reorganize Content
+					§7Re-define items to fill gaps
+					§7Mappings and storage will automatically
+					§7 update, as well as chips and scripts. 
+					§7If a gap has corresponding items stored,
+					§7 it will not be moved.
+					
+					整理内容
+					§7重定义物品以填补空隙
+					§7配对和存储会自动更新,
+					§7芯片和脚本也是如此
+					§7如果一个空隙有对应的库存
+					§7则不移动此空隙
+					
+				#NAMEENUM
+					organize_
+					Reorganize Storage
+					§7Reorganize physical data
+					§7Put as much data as possible in one
+					§7 storage before moving on to the next
+					
+					整理数据
+					§7重新整理磁盘内容
+					§7将尽可能多的数据放在同一存储
+					§7填满一个存储后才填入下一个
+			
+			#RETURN definition
+			#NAME
+				execute
+				Execute
+				执行
+				
+			#NAME
+				items
+				Items
+				物品数据
+				
+			#NAME
+				mapping
+				Mapping
+				组配对
+				
+		#RETURN data_intergity_chipset
+					
 	#RETURN gui
 	
 	Tooltips
@@ -486,11 +572,44 @@ Mod Specific
 					mapping
 					Mapping
 					配对
+					
+				#NAME
+					definition
+					Definition
+					定义
+					
+				#NAME
+					items
+					Items
+					物品数据
 			
 			#RETURN type
 		#RETURN disk_key		
 	#RETURN tooltip
 			
+	Messages
+	
+	#GROUP
+		message
+		#GROUP
+			security
+			#NAME
+				reset
+				Security Reset.
+				方块安全数据已重置
+				
+			#NAME
+				secured
+				Access Denied.
+				无法识别身份
+				
+			#NAME
+				set
+				Security Set.
+				方块安全数据已配置
+		
+		#RETURN security
+	#RETURN message
 	
 #RETURN mnm
 #END
