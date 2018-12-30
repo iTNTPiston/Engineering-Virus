@@ -602,6 +602,11 @@ Mod Specific
 				方块安全数据已配置
 		
 		#RETURN security
+		#NAME
+			mfid
+			Mainframe ID:
+			主机代码: 
+			
 	#RETURN message
 	
 #RETURN mnm
