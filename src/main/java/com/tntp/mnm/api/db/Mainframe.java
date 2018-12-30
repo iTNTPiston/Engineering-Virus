@@ -49,6 +49,8 @@ public class Mainframe {
   private int maxID;
   private boolean scanedInTick;
 
+  private boolean integrityProblem;
+
   public Mainframe(TileCentralProcessor cpu, String mainframeRandomID) {
     this.cpu = cpu;
     neithernetPorts = new ArrayList<Port<STileNeithernet>>();
@@ -71,30 +73,36 @@ public class Mainframe {
 
   public void scan() {
     if (!scanedInTick) {
-      scanedInTick = true;
-      // clear structure list
-      // structureList.clear();
-      // scan structure first (ports)
-      for (Port<STileNeithernet> port : neithernetPorts) {
-        port.setMainframe(null);
-      }
-      neithernetPorts.clear();
-      for (Port<STilePOB> port : boardPorts) {
-        port.setMainframe(null);
-      }
-      boardPorts.clear();
-      boolean[][] alreadyScanned = new boolean[MAX_HORIZONTAL * 2 + 1][MAX_HORIZONTAL * 2 + 1];
-      // update the list of ports
-      scanBoardAt(cpu.xCoord, cpu.yCoord, cpu.zCoord, alreadyScanned, MAX_HORIZONTAL, MAX_HORIZONTAL);
+      if (isValid()) {
+        if (!cpu.isDebugModeOn()) {
+          integrityProblem = false;
+        }
+        scanedInTick = true;
 
-      allNnetTiles.clear();
-      // scan for all nnet tiles by iterating ports
-      for (Port<STileNeithernet> nnetport : neithernetPorts) {
-        STileNeithernet portTile = nnetport.getTile();
-        portTile.addFinalTilesTo(allNnetTiles);
-      }
+        // clear structure list
+        // structureList.clear();
+        // scan structure first (ports)
+        for (Port<STileNeithernet> port : neithernetPorts) {
+          port.setMainframe(null);
+        }
+        neithernetPorts.clear();
+        for (Port<STilePOB> port : boardPorts) {
+          port.setMainframe(null);
+        }
+        boardPorts.clear();
+        boolean[][] alreadyScanned = new boolean[MAX_HORIZONTAL * 2 + 1][MAX_HORIZONTAL * 2 + 1];
+        // update the list of ports
+        scanBoardAt(cpu.xCoord, cpu.yCoord, cpu.zCoord, alreadyScanned, MAX_HORIZONTAL, MAX_HORIZONTAL);
 
-      checkDefinitions();
+        allNnetTiles.clear();
+        // scan for all nnet tiles by iterating ports
+        for (Port<STileNeithernet> nnetport : neithernetPorts) {
+          STileNeithernet portTile = nnetport.getTile();
+          portTile.addFinalTilesTo(allNnetTiles);
+        }
+
+        checkDefinitions();
+      }
     }
   }
 
@@ -110,8 +118,12 @@ public class Mainframe {
     } else if (block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
       TileEntity tile = world.getTileEntity(x, y, z);
       valid = true;
-      if (tile == cpu) {
-        // structureList.add(cpu.getBlockType());
+      if (tile instanceof TileCentralProcessor) {
+        if (tile != cpu) {
+          // cannot have multiple cpus
+          startDebugging();
+          return;
+        }
       } else if (tile instanceof TileNeithernetPort) {
         Port<STileNeithernet> p = ((TileNeithernetPort) tile).getPort();
         p.setMainframe(this);
@@ -150,6 +162,9 @@ public class Mainframe {
   public void insertItemStack(ItemStack... stack) {
     // make sure the tile data is up-to-date
     scan();
+    if (integrityProblem) {
+      return;
+    }
     System.out.println("Inserting ItemStacks");
     // get definition of all itesm
     int[] def = new int[stack.length];
@@ -184,6 +199,8 @@ public class Mainframe {
   public ItemStack takeItemStack(int id, int qty) {
     // check
     scan();
+    if (integrityProblem)
+      return null;
     // define item
     ItemStack stack = getDefItemStack(id);
     if (stack == null)
@@ -214,6 +231,8 @@ public class Mainframe {
   public ItemStack[] getQuantityFor(Set<Integer> idSet, List<Integer> validIDs) {
     // check
     scan();
+    if (integrityProblem)
+      return new ItemStack[0];
 
     HashMap<Integer, ItemStack> qtyMap = new HashMap<Integer, ItemStack>();
     // integrity check, define all ids
@@ -254,6 +273,8 @@ public class Mainframe {
     if (id < 0)
       return null;
     scan();
+    if (integrityProblem)
+      return null;
     // scan data definers for definition
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
@@ -278,13 +299,32 @@ public class Mainframe {
       return -1;
     // check tile data
     scan();
+    if (integrityProblem)
+      return -1;
     // scan for existing definition first
+    int foundID = -1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
         int id = ((TileDataDefinitionStorage) tile).getItemDefID(stack);
-        if (id >= 0)
-          return id;// found definition
+        if (id >= 0) {
+          if (foundID == -1) {
+            foundID = id;// found definition
+          } else {
+            startDebugging();// integrity violated
+            integrityProblem = true;
+            return -1;
+          }
+        }
       }
+    }
+    if (foundID != -1) {
+      ItemStack idStack = getDefItemStack(foundID);
+      if (!ItemUtil.areItemAndTagEqual(stack, idStack)) {
+        startDebugging();
+        integrityProblem = true;
+        foundID = -1;
+      }
+      return foundID;
     }
 
     // if definition not found, define new
@@ -312,6 +352,8 @@ public class Mainframe {
     if (newID < 0)
       return -1;
     scan();
+    if (integrityProblem)
+      return -1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
         boolean defined = ((TileDataDefinitionStorage) tile).defineItem(stack, newID);
@@ -325,6 +367,8 @@ public class Mainframe {
 
   public GroupSearchResult getGroup(String name) {
     scan();
+    if (integrityProblem)
+      return null;
     GroupSearchResult result = new GroupSearchResult(name);
     String prefix = name;
     List<ItemStack> allGroups = new ArrayList<ItemStack>();
@@ -388,6 +432,8 @@ public class Mainframe {
     if (groupName == null || groupName.length() == 0)
       return;
     scan();
+    if (integrityProblem)
+      return;
     groupName = groupName.toLowerCase();
     // search tile data group
     for (Port<STilePOB> port : boardPorts) {
@@ -399,7 +445,9 @@ public class Mainframe {
   }
 
   public boolean sendQueryToCPU(QueryExecuter query) {
-    if (cpu != null)
+    if (integrityProblem)
+      return false;
+    if (isValid())
       return cpu.addQuery(query);
     return false;
   }
@@ -424,6 +472,8 @@ public class Mainframe {
           if (treemap.get(d.id) == null) {
             treemap.put(d.id, d.stack);
           } else {
+            startDebugging();
+            integrityProblem = true;
             // integrity violated
           }
         }
@@ -461,6 +511,8 @@ public class Mainframe {
    * @param stack
    */
   public void addToGroup(String group, ItemStack stack) {
+    if (integrityProblem)
+      return;
     int def = defineItem(stack);
     if (def < 0)
       return;
@@ -474,6 +526,8 @@ public class Mainframe {
   }
 
   public void removeFromGroup(String group, ItemStack stack) {
+    if (integrityProblem)
+      return;
     int def = defineItem(stack);
     if (def < 0)
       return;
@@ -487,6 +541,8 @@ public class Mainframe {
   }
 
   public void removeFromAllGroups(ItemStack stack) {
+    if (integrityProblem)
+      return;
     int def = defineItem(stack);
     if (def < 0)
       return;
@@ -518,6 +574,8 @@ public class Mainframe {
     if (!isReadyToDebug())
       return;
     scan();
+    if (integrityProblem)
+      return;
     if ((flag & 1) == 1) {
       // remove null definitions
       // Item should not have null definition, this is a safety action
@@ -612,6 +670,8 @@ public class Mainframe {
   private int redefineItem(int oldID, int newID, ItemStack stack) {
     // later this could cause MQL and MCS (Mainframe Crafting Script) to change
     scan();
+    if (integrityProblem)
+      return -1;
     // undefine all
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
@@ -682,6 +742,8 @@ public class Mainframe {
    */
   public boolean verifyDefinitionCanBeTakenOut(List<ItemDef> defs) {
     scan();
+    if (integrityProblem)
+      return false;
     LinkedList<Integer> idOnly = new LinkedList<Integer>();
     for (ItemDef d : defs) {
       idOnly.add(d.id);
@@ -700,6 +762,16 @@ public class Mainframe {
         break;
     }
     return idOnly.isEmpty();
+  }
+
+  public int getStatus() {
+    if (integrityProblem)
+      return 2;
+    if (isBootingDebug())
+      return 2;
+    if (isReadyToDebug())
+      return 3;
+    return 1;
   }
 
 }

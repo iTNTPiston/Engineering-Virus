@@ -233,12 +233,14 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
     Mainframe mf = connectToMainframe();
     if (mf != null) {
       GroupSearchResult result = mf.getGroup(str);
-      cachedGroupChips = new ItemStack[result.getGroupChipList().size()];
-      result.getGroupChipList().toArray(cachedGroupChips);
-      cachedItemsInGroup = result.getGroupItems();
-      cachedItemsInGroupDef = result.getGroupItemsDef();
-      cachedCurrentGroupIcon = result.getCurrentGroup();
-      currentGroupName = str;
+      if (result != null) {
+        cachedGroupChips = new ItemStack[result.getGroupChipList().size()];
+        result.getGroupChipList().toArray(cachedGroupChips);
+        cachedItemsInGroup = result.getGroupItems();
+        cachedItemsInGroupDef = result.getGroupItemsDef();
+        cachedCurrentGroupIcon = result.getCurrentGroup();
+        currentGroupName = str;
+      }
     } else {
       cachedGroupChips = new ItemStack[5];
       currentFirstGroupIndex = 0;
