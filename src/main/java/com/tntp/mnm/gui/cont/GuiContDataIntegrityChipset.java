@@ -134,7 +134,8 @@ public class GuiContDataIntegrityChipset extends GuiCont {
       if (flag != 0 && category != -1)
         MNMNetwork.network
             .sendToServer(new MSGuiDataIntegrityChipset(this.inventorySlots.windowId, category + 1, flag));
-
+      flag = 0;
+      category = -1;
     } else {
       boolean executed = false;
       for (int i = 0; i < 4 && !executed; i++) {

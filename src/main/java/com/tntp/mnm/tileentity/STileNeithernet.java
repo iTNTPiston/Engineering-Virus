@@ -85,11 +85,7 @@ public class STileNeithernet extends STile {
     Mainframe mf = connectToMainframe();
     int status = 0;
     if (mf != null) {
-      status = 1;
-      if (mf.isReadyToDebug())
-        status = 3;
-      else if (mf.isBootingDebug())
-        status = 2;
+      status = mf.getStatus();
     }
     mainframeStatus = status;
     this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), EVENT_MF_CONNECTION, status);
