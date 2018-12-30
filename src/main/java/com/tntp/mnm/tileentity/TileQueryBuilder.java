@@ -208,6 +208,8 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   }
 
   public void scrollGroupTo(int firstGroupIndex) {
+    if (cachedGroupChips == null)
+      return;
     if (firstGroupIndex + 5 > cachedGroupChips.length) {
       firstGroupIndex = cachedGroupChips.length - 5;
     }
