@@ -45,7 +45,7 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     this.mc.getTextureManager().bindTexture(foreground);
     if (!buttonsEnable) {
       this.drawTexturedModalRect(guiLeft + 48, guiTop + 19, xSize + 18, 0, 18, 18);
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < 3; i++) {
         this.drawTexturedModalRect(guiLeft + 12 + i * 18, guiTop + 51, xSize + 18, 0, 18, 18);
       }
     } else {
@@ -53,7 +53,7 @@ public class GuiContDataIntegrityChipset extends GuiCont {
         this.drawTexturedModalRect(guiLeft + 48, guiTop + 19, xSize + 18, 0, 18, 18);
       }
       if (category == 0) {
-        for (int i = 1, j = 0; j < 4; i *= 2, j++) {
+        for (int i = 1, j = 0; j < 3; i *= 2, j++) {
           if ((flag & i) == i)
             this.drawTexturedModalRect(guiLeft + 12 + j * 18, guiTop + 51, xSize, 18, 18, 18);
         }
@@ -80,8 +80,7 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), accessor, 49, 20);
     itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), accessor, 13, 52);
     itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), key, 31, 52);
-    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), key, 49, 52);
-    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), disk, 67, 52);
+    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), disk, 49, 52);
 
     boolean tooltiped = false;
     tooltiped = tooltipHelper(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.debug", 13, 20);
@@ -89,7 +88,6 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.check_null_", 13, 52);
     tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.remove_empty_", 31, 52);
     tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.trim_", 49, 52);
-    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.organize_", 67, 52);
 
   }
 
@@ -138,7 +136,7 @@ public class GuiContDataIntegrityChipset extends GuiCont {
       category = -1;
     } else {
       boolean executed = false;
-      for (int i = 0; i < 4 && !executed; i++) {
+      for (int i = 0; i < 3 && !executed; i++) {
         if (withInRect(x, y, 13 + i * 18, 52, 16, 16)) {
           click(2 + i);
           executed = true;
@@ -150,7 +148,7 @@ public class GuiContDataIntegrityChipset extends GuiCont {
   public void click(int button) {
     if (!buttonsEnable)
       return;
-    if (button >= 2 && button <= 5) {
+    if (button >= 2 && button <= 4) {
       if (category != 0) {
         flag = 0;
         category = 0;
@@ -166,9 +164,6 @@ public class GuiContDataIntegrityChipset extends GuiCont {
       break;
     case 4:
       flag = flag ^ 4;
-      break;
-    case 5:
-      flag = flag ^ 8;
       break;
     }
     // reset category if all buttons are cleared
