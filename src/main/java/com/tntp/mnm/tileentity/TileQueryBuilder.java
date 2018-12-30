@@ -76,6 +76,8 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   }
 
   public void updateSelectedItems() {
+    if (cachedItemsInGroupDef == null)
+      return;
     for (int i = 12; i < 27; i++) {
       int defIndex = currentScrollIndex * 5 + i - 12;
       if (defIndex < cachedItemsInGroupDef.length && getStackInSlot(i) != null) {
