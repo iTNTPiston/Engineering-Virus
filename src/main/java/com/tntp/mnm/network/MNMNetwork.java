@@ -25,6 +25,8 @@ public class MNMNetwork {
       regMS(MSGuiDataDefinitionRequest.class);
       regMS(MSGuiGroupMapper.class);
       regMS(MSGuiDiskKey.class);
+      regMS(MSGuiDataIntegrityChipset.class);
+
       if (clientSide) {
         // regMCC all messages received on client side
         regMCC(MCChatMsg.class, new MCChatMsgHandler());

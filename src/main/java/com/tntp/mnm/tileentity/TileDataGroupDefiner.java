@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.cont.ITileCont;
+import com.tntp.mnm.gui.cont.ITileDataCont;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
 import com.tntp.mnm.init.MNMItems;
 import com.tntp.mnm.item.ItemDataGroupChip;
@@ -12,25 +13,10 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileDataGroupDefiner extends STilePOB implements ITileSecuredCont {
-  private Security security;
+public class TileDataGroupDefiner extends STilePOB implements ITileDataCont {
 
   public TileDataGroupDefiner() {
     super(2);
-    security = new Security(this);
-  }
-
-  @Override
-  public void writeToNBT(NBTTagCompound tag) {
-    super.writeToNBT(tag);
-    security.writeToNBT(tag);
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound tag) {
-    super.readFromNBT(tag);
-    security = new Security(this);
-    security.readFromNBT(tag);
   }
 
   public void defineGroup(String groupName) {
@@ -57,8 +43,8 @@ public class TileDataGroupDefiner extends STilePOB implements ITileSecuredCont {
   }
 
   @Override
-  public Security getSecurity() {
-    return security;
+  public boolean canReadData() {
+    return true;
   }
 
 }

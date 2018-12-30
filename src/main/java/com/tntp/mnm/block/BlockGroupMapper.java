@@ -1,6 +1,7 @@
 package com.tntp.mnm.block;
 
 import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileGroupMapper;
 import com.tntp.mnm.tileentity.TileQueryBuilder;
 import com.tntp.mnm.util.BlockUtil;
@@ -22,6 +23,7 @@ public class BlockGroupMapper extends SBlockContainer {
   private IIcon top;
   private IIcon front;
   private IIcon front_off;
+  private IIcon front_debug;
 
   public BlockGroupMapper() {
     super(Material.iron);
@@ -56,26 +58,32 @@ public class BlockGroupMapper extends SBlockContainer {
     port = reg.registerIcon(MNMMod.MODID + ":neithernet_port_block");
     front = reg.registerIcon(tex + "_front");
     front_off = reg.registerIcon(tex + "_front_off");
+    front_debug = reg.registerIcon(tex + "_front_debug");
     top = reg.registerIcon(tex + "_top");
   }
 
-//  @Override
-//  @SideOnly(Side.CLIENT)
-//  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-//    int meta = world.getBlockMetadata(x, y, z);
-//    int frontSide = meta & 7;
-//    if ((side ^ 1) == frontSide || side == 1) {
-//      TileEntity tile = world.getTileEntity(x, y, z);
-//      if (tile instanceof TileGroupMapper) {
-//        if (((TileGroupMapper) tile).isConnectedToMainframe()) {
-//          return side == 1 ? top : front;
-//        }
-//      }
-//      return side == 1 ? blockIcon : front_off;
-//    } else {
-//      return getIcon(side, meta);
-//    }
-//  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+    int meta = world.getBlockMetadata(x, y, z);
+    int frontSide = meta & 7;
+    if ((side ^ 1) == frontSide || side == 1) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof TileGroupMapper) {
+        switch (((TileGroupMapper) tile).getMainframeStatus()) {
+        case 1:
+          return side == 1 ? top : front;
+        case 2:
+        case 3:
+          return side == 1 ? top : front_debug;
+
+        }
+      }
+      return side == 1 ? blockIcon : front_off;
+    } else {
+      return getIcon(side, meta);
+    }
+  }
 
   @Override
   @SideOnly(Side.CLIENT)

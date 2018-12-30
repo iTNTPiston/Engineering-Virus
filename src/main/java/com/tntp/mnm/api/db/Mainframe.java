@@ -636,6 +636,9 @@ public class Mainframe {
   public void startDebugging() {
     if (isValid()) {
       cpu.setDebugMode(true);
+      for (STileNeithernet tile : allNnetTiles) {
+        tile.rescanCD = 0;
+      }
     }
   }
 

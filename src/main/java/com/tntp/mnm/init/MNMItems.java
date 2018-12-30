@@ -30,6 +30,7 @@ public class MNMItems {
   public static final ItemDataGroupChip data_group_chip = null;
 
   public static final ItemDisk disk_4mb = null;
+  public static final ItemDisk disk_64mb = null;
   public static final ItemIDCard id_card = null;
   public static final ItemEraserCard eraser_card = null;
   public static final ItemDiskKey disk_key = null;

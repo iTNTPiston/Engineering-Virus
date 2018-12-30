@@ -1,6 +1,9 @@
 package com.tntp.mnm.block;
 
 import com.tntp.mnm.core.MNMMod;
+import com.tntp.mnm.tileentity.STileData;
+import com.tntp.mnm.tileentity.STileNeithernet;
+import com.tntp.mnm.tileentity.TileBasicGroupMappingStorage;
 import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileGroupMapper;
 import com.tntp.mnm.util.BlockUtil;
@@ -18,8 +21,7 @@ import net.minecraft.world.World;
 
 public class BlockDataDefinitionStorage extends SBlockContainer {
   private IIcon port;
-  private IIcon[] front;
-  private IIcon[] front_off;
+  private IIcon[][] front;
 
   public BlockDataDefinitionStorage() {
     super(Material.iron);
@@ -36,33 +38,34 @@ public class BlockDataDefinitionStorage extends SBlockContainer {
     String tex = this.getTextureName();
     this.blockIcon = reg.registerIcon(MNMMod.MODID + ":machine_0");
     port = reg.registerIcon(MNMMod.MODID + ":neithernet_port_block");
-    front = new IIcon[6];
-    front_off = new IIcon[6];
-    for (int i = 0; i < 6; i++) {
-      front[i] = reg.registerIcon(tex + "_front_" + i);
-      front_off[i] = reg.registerIcon(tex + "_front_" + i + "_off");
+    front = new IIcon[4][6];
+
+    for (int i = 0; i < front.length; i++) {
+      for (int j = 0; j < front[i].length; j++) {
+        front[i][j] = reg.registerIcon(tex + "/" + i + "/" + j);
+      }
     }
   }
 
-//  @Override
-//  @SideOnly(Side.CLIENT)
-//  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-//    int meta = world.getBlockMetadata(x, y, z);
-//    int frontSide = meta & 7;
-//    if ((side ^ 1) == frontSide) {
-//      TileEntity tile = world.getTileEntity(x, y, z);
-//      if (tile instanceof TileDataDefinitionStorage) {
-//        int diskNum = ((TileDataDefinitionStorage) tile).getNumDisk();
-//        if (diskNum >= 0 && diskNum < 6) {
-//          boolean connected = ((TileDataDefinitionStorage) tile).isConnectedToMainframe();
-//          return connected ? front[diskNum] : front_off[diskNum];
-//        }
-//      }
-//      return front_off[0];
-//    } else {
-//      return getIcon(side, meta);
-//    }
-//  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+    int meta = world.getBlockMetadata(x, y, z);
+    int frontSide = meta & 7;
+    if ((side ^ 1) == frontSide) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof TileDataDefinitionStorage) {
+        int diskNum = ((STileData) tile).getNumDisk();
+        if (diskNum >= 0 && diskNum < front.length) {
+          int s = ((STileNeithernet) tile).getMainframeStatus();
+          return front[s][diskNum];
+        }
+      }
+      return front[0][0];
+    } else {
+      return getIcon(side, meta);
+    }
+  }
 
   @Override
   @SideOnly(Side.CLIENT)
@@ -74,7 +77,7 @@ public class BlockDataDefinitionStorage extends SBlockContainer {
       return port;
     }
     if ((side ^ 1) == fronts) {
-      return front[5];
+      return front[1][5];
     }
     return blockIcon;
   }

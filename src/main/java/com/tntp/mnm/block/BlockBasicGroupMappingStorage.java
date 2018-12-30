@@ -21,8 +21,7 @@ import net.minecraft.world.World;
 public class BlockBasicGroupMappingStorage extends SBlockContainer {
 
   private IIcon port;
-  private IIcon[] front;
-  private IIcon[] front_off;
+  private IIcon[][] front;
 
   public BlockBasicGroupMappingStorage() {
     super(Material.iron);
@@ -39,33 +38,34 @@ public class BlockBasicGroupMappingStorage extends SBlockContainer {
     String tex = this.getTextureName();
     this.blockIcon = reg.registerIcon(MNMMod.MODID + ":machine_0");
     port = reg.registerIcon(MNMMod.MODID + ":neithernet_port_block");
-    front = new IIcon[4];
-    front_off = new IIcon[front.length];
+    front = new IIcon[4][4];
+
     for (int i = 0; i < front.length; i++) {
-      front[i] = reg.registerIcon(tex + "_front_" + i);
-      front_off[i] = reg.registerIcon(tex + "_front_" + i + "_off");
+      for (int j = 0; j < front[i].length; j++) {
+        front[i][j] = reg.registerIcon(tex + "/" + i + "/" + j);
+      }
     }
   }
 
-//  @Override
-//  @SideOnly(Side.CLIENT)
-//  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-//    int meta = world.getBlockMetadata(x, y, z);
-//    int frontSide = meta & 7;
-//    if ((side ^ 1) == frontSide) {
-//      TileEntity tile = world.getTileEntity(x, y, z);
-//      if (tile instanceof TileBasicGroupMappingStorage) {
-//        int diskNum = ((STileData) tile).getNumDisk();
-//        if (diskNum >= 0 && diskNum < front.length) {
-//          boolean connected = ((STileNeithernet) tile).isConnectedToMainframe();
-//          return connected ? front[diskNum] : front_off[diskNum];
-//        }
-//      }
-//      return front_off[0];
-//    } else {
-//      return getIcon(side, meta);
-//    }
-//  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+    int meta = world.getBlockMetadata(x, y, z);
+    int frontSide = meta & 7;
+    if ((side ^ 1) == frontSide) {
+      TileEntity tile = world.getTileEntity(x, y, z);
+      if (tile instanceof TileBasicGroupMappingStorage) {
+        int diskNum = ((STileData) tile).getNumDisk();
+        if (diskNum >= 0 && diskNum < front.length) {
+          int s = ((STileNeithernet) tile).getMainframeStatus();
+          return front[s][diskNum];
+        }
+      }
+      return front[0][0];
+    } else {
+      return getIcon(side, meta);
+    }
+  }
 
   @Override
   @SideOnly(Side.CLIENT)
@@ -77,7 +77,7 @@ public class BlockBasicGroupMappingStorage extends SBlockContainer {
       return port;
     }
     if ((side ^ 1) == fronts) {
-      return front[front.length - 1];
+      return front[1][3];
     }
     return blockIcon;
   }

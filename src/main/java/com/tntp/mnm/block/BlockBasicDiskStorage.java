@@ -41,7 +41,7 @@ public class BlockBasicDiskStorage extends SBlockContainer {
     front = new IIcon[4][2];
 
     for (int i = 0; i < front.length; i++) {
-      for (int j = 0; j < front[j].length; j++) {
+      for (int j = 0; j < front[i].length; j++) {
         front[i][j] = reg.registerIcon(tex + "/" + i + "/" + j);
       }
     }

@@ -27,7 +27,7 @@ public class STileNeithernet extends STile {
   private NeitherPipe pipe;
   private static int RESCAN = 200;
   private int rescanTotal;
-  private int rescanCD;
+  public int rescanCD;
   private boolean rescaned;
   /**
    * For Client to render only! For server use, always call connectToMainframe()
