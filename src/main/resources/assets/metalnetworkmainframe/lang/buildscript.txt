@@ -296,6 +296,11 @@ Mod Specific
 					§7Normal Speed: 400t at 20 EK/t
 					§7Boosted Speed: 240t at 40 EK/t
 					
+					§7使用EK同时最多熔炼4个物品
+					§7第二层和烟囱为可选, 提供速度加成
+					§7正常速度: 400t 消耗 20 EK/t
+					§7增幅速度: 240t 消耗 40 EK/t
+					
 				#NAME
 					down_pipe
 					§7EK Input
