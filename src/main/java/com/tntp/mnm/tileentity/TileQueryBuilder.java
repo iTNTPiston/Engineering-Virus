@@ -47,6 +47,13 @@ public class TileQueryBuilder extends STileNeithernetInventory implements ITileS
   }
 
   @Override
+  public void onBreakingContainer() {
+    for (int i = 12; i < this.getSizeInventory(); i++) {
+      this.setInventorySlotContents(i, null);
+    }
+  }
+
+  @Override
   public void updateEntity() {
     super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {

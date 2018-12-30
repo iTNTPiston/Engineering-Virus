@@ -14,4 +14,12 @@ public class STile extends TileEntity {
   public boolean isValidInWorld() {
     return this.hasWorldObj() && this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
   }
+
+  /**
+   * Called by breakBlock() before items are dropped, useful for setting
+   * decorative slots to null
+   */
+  public void onBreakingContainer() {
+
+  }
 }

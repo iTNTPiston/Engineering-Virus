@@ -1,5 +1,6 @@
 package com.tntp.mnm.block;
 
+import com.tntp.mnm.tileentity.STile;
 import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.block.Block;
@@ -25,6 +26,9 @@ public abstract class SBlockContainer extends SBlock implements ITileEntityProvi
     TileEntity tile = (TileEntity) world.getTileEntity(x, y, z);
 
     if (tile instanceof IInventory) {
+      if (tile instanceof STile) {
+        ((STile) tile).onBreakingContainer();
+      }
       IInventory inventory = (IInventory) tile;
       for (int i1 = 0; i1 < inventory.getSizeInventory(); ++i1) {
         ItemStack itemstack = inventory.getStackInSlot(i1);

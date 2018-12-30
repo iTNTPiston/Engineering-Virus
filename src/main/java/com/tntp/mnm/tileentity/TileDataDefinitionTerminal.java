@@ -30,6 +30,13 @@ public class TileDataDefinitionTerminal extends STileNeithernetInventory impleme
   }
 
   @Override
+  public void onBreakingContainer() {
+    for (int i = 0; i < this.getSizeInventory(); i++) {
+      this.setInventorySlotContents(i, null);
+    }
+  }
+
+  @Override
   public void updateEntity() {
     super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {

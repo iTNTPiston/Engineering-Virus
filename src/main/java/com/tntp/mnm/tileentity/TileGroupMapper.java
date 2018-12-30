@@ -30,6 +30,13 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
   }
 
   @Override
+  public void onBreakingContainer() {
+    for (int i = 1; i < this.getSizeInventory(); i++) {
+      this.setInventorySlotContents(i, null);
+    }
+  }
+
+  @Override
   public String getContainerGui() {
     return "GuiContGroupMapper";
   }
