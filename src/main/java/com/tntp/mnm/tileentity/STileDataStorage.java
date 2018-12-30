@@ -23,7 +23,7 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
 
   @Override
   public int getUsedSpace() {
-    int size = map.size();
+    int size = 0;
     for (int value : map.values()) {
       size += spaceNeeded(value);
     }
@@ -50,7 +50,7 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
     // stored is less than or equal need
     if (stock <= qty) {
       qty -= stock;
-      map.remove(id);// take everything out
+      map.remove(id);// take all
     } else {
       // stored has more than need
       stock -= qty;
@@ -76,16 +76,11 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
       return qty;
     if (qty == 0)
       return 0;
-    int additionalSpace = 0;// space needed to store the definition
-    int stock = 0;// stored
 
-    if (!map.containsKey(id)) {
-      additionalSpace = 1;
-    } else {
-      stock = map.get(id);
-    }
+    int stock = map.containsKey(id) ? map.get(id) : 0;// stored
+
     // space left in the disks, counting definition
-    int spaceLeft = this.getTotalSpaceFromDisks() - this.getUsedSpace() - additionalSpace;
+    int spaceLeft = this.getTotalSpaceFromDisks() - this.getUsedSpace();
     // max qty to put
     int maximumPut = itemCapacity(spaceLeft);
 

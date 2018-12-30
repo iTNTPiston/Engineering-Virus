@@ -30,8 +30,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants.NBT;
 
 public class Mainframe {
   private static final int MAX_HORIZONTAL = 5, MAX_POB_RADIUS = 2;
@@ -52,16 +54,20 @@ public class Mainframe {
 
   private boolean integrityProblem;
 
+  private HashMap<Integer, ItemStack> itemDefinitions;
+  private int definitionTotalSpace;
+
   public Mainframe(TileCentralProcessor cpu, String mainframeRandomID) {
     this.cpu = cpu;
     neithernetPorts = new ArrayList<Port<STileNeithernet>>();
     allNnetTiles = new ArrayList<STileNeithernet>();
     boardPorts = new ArrayList<Port<STilePOB>>();
+    itemDefinitions = new HashMap<Integer, ItemStack>();
     this.mainframeRandomID = mainframeRandomID;
   }
 
   public boolean isValid() {
-    return cpu != null && cpu.isValidInWorld();
+    return cpu != null && cpu.isValidInWorld() && world != null;
   }
 
   public void setWorld(World w) {
@@ -70,6 +76,11 @@ public class Mainframe {
 
   public World getWorld() {
     return world;
+  }
+
+  public void markDirty() {
+    if (isValid())
+      cpu.markDirty();
   }
 
   public void scan() {
@@ -171,7 +182,7 @@ public class Mainframe {
     // get definition of all itesm
     int[] def = new int[stack.length];
     for (int i = 0; i < def.length; i++) {
-      def[i] = defineItem(stack[i]);
+      def[i] = defineItem(stack[i], true);
       System.out.println("Defined " + def[i]);
     }
 
@@ -196,6 +207,7 @@ public class Mainframe {
           break;
       }
     }
+    markDirty();
   }
 
   public ItemStack takeItemStack(int id, int qty) {
@@ -219,6 +231,7 @@ public class Mainframe {
     }
     int taken = qty - toBeTaken;
     stack.stackSize = taken;
+    markDirty();
     return stack;
   }
 
@@ -277,24 +290,26 @@ public class Mainframe {
     scan();
     if (integrityProblem)
       return null;
+    return ItemStack.copyItemStack(itemDefinitions.get(id));
     // scan data definers for definition
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefinitionStorage) {
-        ItemStack stack = ((TileDataDefinitionStorage) tile).getItemDef(this, id);
-        if (stack != null)
-          return stack;
-      }
-    }
-    return null;
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof TileDataDefinitionStorage) {
+//        ItemStack stack = ((TileDataDefinitionStorage) tile).getItemDef(this, id);
+//        if (stack != null)
+//          return stack;
+//      }
+//    }
+//    return null;
   }
 
   /**
-   * Get the definition of the itemstack, if none, a new definition will generate
+   * Get the definition of the itemstack, if none and defineNew is true, a new
+   * definition will generate
    * 
    * @param stack
    * @return the definition id of the stack, or -1 if space is full
    */
-  public int defineItem(ItemStack stack) {
+  public int defineItem(ItemStack stack, boolean defineNew) {
     if (maxID == Integer.MAX_VALUE - 1000)// integer overflow safety
       return -1;
     if (stack == null)
@@ -305,36 +320,41 @@ public class Mainframe {
       return -1;
     // scan for existing definition first
     int foundID = -1;
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefinitionStorage) {
-        int id = ((TileDataDefinitionStorage) tile).getItemDefID(this, stack);
-        if (id >= 0) {
-          if (foundID == -1) {
-            foundID = id;// found definition
-          } else {
-            startDebugging();// integrity violated
-            integrityProblem = true;
-            return -1;
-          }
+    for (Entry<Integer, ItemStack> def : itemDefinitions.entrySet()) {
+      if (ItemUtil.areItemAndTagEqual(def.getValue(), stack)) {
+        if (foundID == -1) {
+          foundID = def.getKey();// found definition
+        } else {
+          startDebugging();// integrity violated
+          integrityProblem = true;
+          return -1;
         }
       }
+      // if (tile instanceof TileDataDefinitionStorage) {
+      // int id = ((TileDataDefinitionStorage) tile).getItemDefID(this, stack);
+      // if (id >= 0) {
+
+      // }
+      // }
     }
     if (foundID != -1) {
-      ItemStack idStack = getDefItemStack(foundID);
-      if (!ItemUtil.areItemAndTagEqual(stack, idStack)) {
-        startDebugging();
-        integrityProblem = true;
-        foundID = -1;
-      }
+      // ItemStack idStack = getDefItemStack(foundID);
+      // if (!ItemUtil.areItemAndTagEqual(stack, idStack)) {
+      // startDebugging();
+      // integrityProblem = true;
+      // foundID = -1;
+      // }
       return foundID;
     }
+    if (defineNew) {
 
-    // if definition not found, define new
-    int id = defineNew(stack, maxID + 1);
-    if (id > maxID) {
-      // if the item is successfully defined, the id must be maxID+1
-      maxID = id;
-      return id;
+      // if definition not found, define new
+      int id = defineNew(stack, maxID + 1);
+      if (id > maxID) {
+        // if the item is successfully defined, the id must be maxID+1
+        maxID = id;
+        return id;
+      }
     }
 
     // cannot define
@@ -356,14 +376,21 @@ public class Mainframe {
     scan();
     if (integrityProblem)
       return -1;
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefinitionStorage) {
-        boolean defined = ((TileDataDefinitionStorage) tile).defineItem(this, stack, newID);
-        if (defined) {
-          return newID;
-        }
-      }
+    if (itemDefinitions.size() * 4 + 4 <= definitionTotalSpace) {
+      ItemStack s = stack.copy();
+      s.stackSize = 1;
+      itemDefinitions.put(newID, s);
+      markDirty();
+      return newID;
     }
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof TileDataDefinitionStorage) {
+//        boolean defined = ((TileDataDefinitionStorage) tile).defineItem(this, stack, newID);
+//        if (defined) {
+//          return newID;
+//        }
+//      }
+//    }
     return -1;
   }
 
@@ -464,35 +491,71 @@ public class Mainframe {
     scan();
     // scan data definers for definition
     int maxID = -1;
+
+    for (Entry<Integer, ItemStack> def : itemDefinitions.entrySet()) {
+      int id = def.getKey();
+      if (id > maxID) {
+        maxID = id;
+      }
+      treemap.put(id, def.getValue());
+    }
+    definitionTotalSpace = 0;
+    int space = itemDefinitions.size() * 4;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
-        List<ItemDef> list = ((TileDataDefinitionStorage) tile).getDefinedItems(this);
-        for (ItemDef d : list) {
-          if (d.id > maxID) {
-            maxID = d.id;
-          }
-          if (treemap.get(d.id) == null) {
-            treemap.put(d.id, d.stack);
+        TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
+        if (t.access(this)) {
+          int total = t.getTotalSpaceFromDisks();
+          definitionTotalSpace += total;
+          if (total >= space) {
+            t.setUsedSpace(this, space);
+            space = 0;
           } else {
-            startDebugging();
-            integrityProblem = true;
-            // integrity violated
+            t.setUsedSpace(this, total);
+            space -= total;
           }
         }
-      } else if (tile instanceof STileDataStorage) {
-        // Also search data because data may contain undefined items
-        HashMap<Integer, Integer> raw = ((STileDataStorage) tile).getData(this);
-        for (int id : raw.keySet()) {
-          if (!treemap.containsKey(id)) {
-            treemap.put(id, null);// put a place holder so to know the definition has item so it is occupied
-          }
-          if (id > maxID) {
-            maxID = id;
-          }
-        }
+//        List<ItemDef> list = ((TileDataDefinitionStorage) tile).getDefinedItems(this);
+//        for (ItemDef d : list) {
+//          if (d.id > maxID) {
+//            maxID = d.id;
+//          }
+//          if (treemap.get(d.id) == null) {
+//            treemap.put(d.id, d.stack);
+//          } else {
+//            startDebugging();
+//            integrityProblem = true;
+//            // integrity violated
+//          }
+//        }
       }
     }
     this.maxID = maxID;
+    if (space > 0) {
+      startDebugging();
+      integrityProblem = true;
+    }
+//    else if (tile instanceof STileDataStorage) {
+//      // Also search data because data may contain undefined items
+//      HashMap<Integer, Integer> raw = ((STileDataStorage) tile).getData(this);
+//      for (int id : raw.keySet()) {
+//        if (!treemap.containsKey(id)) {
+//          treemap.put(id, null);// put a place holder so to know the definition has item so it is occupied
+//          // even if the qty is 0
+//        }
+//        if (id > maxID) {
+//          maxID = id;
+//        }
+//      }
+//    }
+//    // Disallow storage without definition
+//    for (Entry<Integer, ItemStack> e : treemap.entrySet()) {
+//      if (e.getValue() == null) {
+//        startDebugging();
+//        integrityProblem = true;
+//        break;
+//      }
+//    }
     return treemap;
   }
 
@@ -515,7 +578,7 @@ public class Mainframe {
   public void addToGroup(String group, ItemStack stack) {
     if (integrityProblem)
       return;
-    int def = defineItem(stack);
+    int def = defineItem(stack, false);
     if (def < 0)
       return;
     GroupItemMapping gim = new GroupItemMapping(group, def);
@@ -530,7 +593,7 @@ public class Mainframe {
   public void removeFromGroup(String group, ItemStack stack) {
     if (integrityProblem)
       return;
-    int def = defineItem(stack);
+    int def = defineItem(stack, false);
     if (def < 0)
       return;
     GroupItemMapping gim = new GroupItemMapping(group, def);
@@ -545,7 +608,7 @@ public class Mainframe {
   public void removeFromAllGroups(ItemStack stack) {
     if (integrityProblem)
       return;
-    int def = defineItem(stack);
+    int def = defineItem(stack, false);
     if (def < 0)
       return;
     for (STileNeithernet tile : allNnetTiles) {
@@ -557,12 +620,39 @@ public class Mainframe {
   }
 
   public void writeToNBT(NBTTagCompound tag) {
-
+    tag.setBoolean("integrity_problem", integrityProblem);
+    NBTTagList list = new NBTTagList();
+    for (Entry<Integer, ItemStack> def : itemDefinitions.entrySet()) {
+      NBTTagCompound com = new NBTTagCompound();
+      if (def != null)
+        def.getValue().writeToNBT(com);
+      com.setInteger("MNM|ItemDefID", def.getKey());
+      list.appendTag(com);
+    }
+    tag.setTag("defined_items", list);
   }
 
   public void readFromNBT(NBTTagCompound tag) {
-
+    integrityProblem = tag.getBoolean("integrity_problem");
+    NBTTagList list = tag.getTagList("defined_items", NBT.TAG_COMPOUND);
+    itemDefinitions.clear();
+    for (int i = 0; i < list.tagCount(); i++) {
+      NBTTagCompound com = list.getCompoundTagAt(i);
+      ItemStack stack = ItemStack.loadItemStackFromNBT(com);
+      int id = com.getInteger("MNM|ItemDefID");
+      itemDefinitions.put(id, stack);
+    }
   }
+
+//@Override
+//public void writeDataToNBT(NBTTagCompound tag) {
+
+//}
+
+//@Override
+//public void readDataFromNBT(NBTTagCompound tag) {
+
+//}
 
   /**
    * flag: 1 - check null defs 2 - remove empty definitions, 4 - trim definitions
@@ -581,11 +671,16 @@ public class Mainframe {
     if ((flag & 1) == 1) {
       // remove null definitions
       // Item should not have null definition, this is a safety action
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof TileDataDefinitionStorage) {
-          ((TileDataDefinitionStorage) tile).removeNullDefinitions(this);
-        }
-      }
+      for (Iterator<Entry<Integer, ItemStack>> iter = itemDefinitions.entrySet().iterator(); iter.hasNext();) {
+        Entry<Integer, ItemStack> e = iter.next();
+        if (e.getValue() == null)
+          iter.remove();
+      } // for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof TileDataDefinitionStorage) {
+//          ((TileDataDefinitionStorage) tile).removeNullDefinitions(this);
+//        }
+//      }
+      // for(Iterator<Entry<ItemStack>>)
     }
 
     if ((flag & 2) == 2) {
@@ -598,11 +693,16 @@ public class Mainframe {
           allStoredItemsDef.addAll(map.keySet());
         }
       }
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof TileDataDefinitionStorage) {
-          ((TileDataDefinitionStorage) tile).removeDefinitionsNotIn(this, allStoredItemsDef);
-        }
+      for (Iterator<Entry<Integer, ItemStack>> iter = itemDefinitions.entrySet().iterator(); iter.hasNext();) {
+        Entry<Integer, ItemStack> e = iter.next();
+        if (!allStoredItemsDef.contains(e.getKey()))
+          iter.remove();
       }
+//      for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof TileDataDefinitionStorage) {
+//          ((TileDataDefinitionStorage) tile).removeDefinitionsNotIn(this, allStoredItemsDef);
+//        }
+//      }
     }
 
     if ((flag & 4) == 4) {
@@ -645,28 +745,28 @@ public class Mainframe {
 
     }
 
-    if ((flag & 8) == 8) {
-      // organize disk
-      // take all defs, put them together, them dump them back to disks
-      Queue<ItemDef> allDefined = new LinkedList<ItemDef>();
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof TileDataDefinitionStorage) {
-          TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
-          allDefined.addAll(t.getDefinedItems(this));
-          t.isTransferringData = true;
-          t.clearData();
-        }
-      }
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof TileDataDefinitionStorage) {
-          TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
-          t.isTransferringData = false;
-          t.dumpDefinitions(this, allDefined);
-        }
-        if (allDefined.isEmpty())
-          break;
-      }
-    }
+//    if ((flag & 8) == 8) {
+//      // organize disk
+//      // take all defs, put them together, them dump them back to disks
+//      Queue<ItemDef> allDefined = new LinkedList<ItemDef>();
+//      for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof TileDataDefinitionStorage) {
+//          TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
+//          allDefined.addAll(t.getDefinedItems(this));
+//          t.isTransferringData = true;
+//          t.clearData();
+//        }
+//      }
+//      for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof TileDataDefinitionStorage) {
+//          TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
+//          t.isTransferringData = false;
+//          t.dumpDefinitions(this, allDefined);
+//        }
+//        if (allDefined.isEmpty())
+//          break;
+//      }
+//    }
   }
 
   private int redefineItem(int oldID, int newID, ItemStack stack) {
@@ -675,11 +775,12 @@ public class Mainframe {
     if (integrityProblem)
       return -1;
     // undefine all
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof TileDataDefinitionStorage) {
-        ((TileDataDefinitionStorage) tile).undefineItem(this, oldID);
-      }
-    }
+    itemDefinitions.remove(oldID);
+    // for (STileNeithernet tile : allNnetTiles) {
+    // if (tile instanceof TileDataDefinitionStorage) {
+    // ((TileDataDefinitionStorage) tile).undefineItem(this, oldID);
+    // }
+    // }
     // define new
     int id = defineNew(stack, newID);
     if (id != -1) {
@@ -701,6 +802,7 @@ public class Mainframe {
         }
       }
     }
+    markDirty();
     return id;
   }
 
@@ -715,6 +817,7 @@ public class Mainframe {
         tile.rescanCD = 0;
       }
     }
+    markDirty();
   }
 
   public boolean isBootingDebug() {
@@ -732,39 +835,40 @@ public class Mainframe {
     if (isValid()) {
       cpu.setDebugMode(false);
     }
+    markDirty();
   }
 
-  /**
-   * Verify that for all defs, there is something that is stored<br>
-   * If nothing is stored with this definition, it cannot be taken out because
-   * otherwise the mf will lose this definition
-   * 
-   * @param defs
-   * @return
-   */
-  public boolean verifyDefinitionCanBeTakenOut(List<ItemDef> defs) {
-    scan();
-    if (integrityProblem)
-      return false;
-    LinkedList<Integer> idOnly = new LinkedList<Integer>();
-    for (ItemDef d : defs) {
-      idOnly.add(d.id);
-    }
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataStorage) {
-        STileDataStorage t = (STileDataStorage) tile;
-        HashMap<Integer, Integer> map = t.getData(this);
-        for (Iterator<Integer> iter = idOnly.iterator(); iter.hasNext();) {
-          Integer nextId = iter.next();
-          if (map.containsKey(nextId))
-            iter.remove();
-        }
-      }
-      if (idOnly.isEmpty())
-        break;
-    }
-    return idOnly.isEmpty();
-  }
+//  /**
+//   * Verify that for all defs, there is something that is stored<br>
+//   * If nothing is stored with this definition, it cannot be taken out because
+//   * otherwise the mf will lose this definition
+//   * 
+//   * @param defs
+//   * @return
+//   */
+//  public boolean verifyDefinitionCanBeTakenOut(List<ItemDef> defs) {
+//    scan();
+//    if (integrityProblem)
+//      return false;
+//    LinkedList<Integer> idOnly = new LinkedList<Integer>();
+//    for (ItemDef d : defs) {
+//      idOnly.add(d.id);
+//    }
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataStorage) {
+//        STileDataStorage t = (STileDataStorage) tile;
+//        HashMap<Integer, Integer> map = t.getData(this);
+//        for (Iterator<Integer> iter = idOnly.iterator(); iter.hasNext();) {
+//          Integer nextId = iter.next();
+//          if (map.containsKey(nextId))
+//            iter.remove();
+//        }
+//      }
+//      if (idOnly.isEmpty())
+//        break;
+//    }
+//    return idOnly.isEmpty();
+//  }
 
   public int getStatus() {
     if (integrityProblem)
@@ -776,64 +880,79 @@ public class Mainframe {
     return 1;
   }
 
-  /**
-   * Called by MRC to signal the Mainframe for recovery.
-   * <br>
-   * If the MF is recoverable, it will tell the CPU to create a new instance and
-   * attempt to recover from there. This way the new MFID will not match either
-   * this mainframe's ID or the MFID stored by STileData
-   * 
-   * @return
-   */
-  public boolean signalRecovery() {
+//  /**
+//   * Called by MRC to signal the Mainframe for recovery.
+//   * <br>
+//   * If the MF is recoverable, it will tell the CPU to create a new instance and
+//   * attempt to recover from there. This way the new MFID will not match either
+//   * this mainframe's ID or the MFID stored by STileData
+//   * 
+//   * @return
+//   */
+//  public boolean signalRecovery() {
+//    scan();
+//    if (integrityProblem)
+//      return false;
+//    // scan MFID
+//    String cachedMFID = null;
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileData) {
+//        String mfid = ((STileData) tile).getMFID();
+//        if (mfid != null) {
+//          if (cachedMFID == null) {
+//            cachedMFID = mfid;
+//          } else {
+//            if (!cachedMFID.equals(mfid)) {
+//              return false;
+//            }
+//          }
+//        }
+//      }
+//    }
+//    // Nothing has remembered MFID
+//    if (cachedMFID == null || cachedMFID.equals(mainframeRandomID))
+//      return false;
+//
+//    // Recoverable
+//    if (isValid()) {
+//      return cpu.resetMainframeForRecovery(cachedMFID);
+//    }
+//    return false;
+//  }
+
+//  /**
+//   * Attempt to fix different mainframeID<br>
+//   * All STileData with the oldID will be updated
+//   * to match the new mainframe's ID
+//   * 
+//   * @return true if any MFID is changed on STileData
+//   */
+//  public boolean recover(String oldID) {
+//    scan();
+//    if (integrityProblem)
+//      return false;
+//
+//    // start recovery
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileData) {
+//        ((STileData) tile).setMFID(oldID, mainframeRandomID);
+//      }
+//    }
+//    return true;
+//  }
+
+  public boolean canHarvest() {
     scan();
     if (integrityProblem)
       return false;
-    // scan MFID
-    String cachedMFID = null;
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileData) {
-        String mfid = ((STileData) tile).getMFID();
-        if (mfid != null) {
-          if (cachedMFID == null) {
-            cachedMFID = mfid;
-          } else {
-            if (!cachedMFID.equals(mfid)) {
-              return false;
-            }
-          }
-        }
-      }
-    }
-    // Nothing has remembered MFID
-    if (cachedMFID == null || cachedMFID.equals(mainframeRandomID))
+    if (!neithernetPorts.isEmpty())
       return false;
-
-    // Recoverable
-    if (isValid()) {
-      return cpu.resetMainframeForRecovery(cachedMFID);
-    }
-    return false;
-  }
-
-  /**
-   * Attempt to fix different mainframeID<br>
-   * All STileData with the oldID will be updated
-   * to match the new mainframe's ID
-   * 
-   * @return true if any MFID is changed on STileData
-   */
-  public boolean recover(String oldID) {
-    scan();
-    if (integrityProblem)
+    if (!allNnetTiles.isEmpty())
       return false;
-
-    // start recovery
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileData) {
-        ((STileData) tile).setMFID(oldID, mainframeRandomID);
-      }
-    }
+    if (!boardPorts.isEmpty())
+      return false;
+    if (!itemDefinitions.isEmpty())
+      return false;
     return true;
   }
 

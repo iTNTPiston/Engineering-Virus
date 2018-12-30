@@ -6,6 +6,8 @@ import com.tntp.mnm.network.MCChatMsg;
 import com.tntp.mnm.network.MNMNetwork;
 import com.tntp.mnm.tileentity.STileData;
 import com.tntp.mnm.tileentity.TileCentralProcessor;
+import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
+import com.tntp.mnm.tileentity.TileDefinitionRecoveryChipset;
 import com.tntp.mnm.tileentity.TileMainframeRecoveryChipset;
 import com.tntp.mnm.util.ClientUtil;
 import com.tntp.mnm.util.LocalUtil;
@@ -26,33 +28,63 @@ public class ItemAccessor extends SItemTool {
       float hitY, float hitZ) {
     TileEntity tile = world.getTileEntity(x, y, z);
     if (tile instanceof TileMainframeRecoveryChipset) {
-      if (world.isRemote) {
-        ClientUtil.printChatMessage(LocalUtil.localize("mnm.message.mainframe_recovery_chipset.init"));
-      } else {
-        boolean successful = ((TileMainframeRecoveryChipset) tile).attemptToRecover();
-        String mes;
-        if (successful) {
-          mes = "mnm.message.mainframe_recovery_chipset.successful";
-        } else {
-          mes = "mnm.message.mainframe_recovery_chipset.failed";
-        }
-        MNMNetwork.network.sendTo(new MCChatMsg(mes, false), (EntityPlayerMP) player);
-      }
-      return true;
+//      if (world.isRemote) {
+//        ClientUtil.printChatMessage(LocalUtil.localize("mnm.message.mainframe_recovery_chipset.init"));
+//      } else {
+//        boolean successful = ((TileMainframeRecoveryChipset) tile).attemptToRecover();
+//        String mes;
+//        if (successful) {
+//          mes = "mnm.message.mainframe_recovery_chipset.successful";
+//        } else {
+//          mes = "mnm.message.mainframe_recovery_chipset.failed";
+//        }
+//        MNMNetwork.network.sendTo(new MCChatMsg(mes, false), (EntityPlayerMP) player);
+//      }
+//      return true;
+      return false;
     } else if (tile instanceof STileData) {
       if (!world.isRemote) {
         String MFID = ((STileData) tile).getMFID();
         MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.mfid", false), (EntityPlayerMP) player);
-        MNMNetwork.network.sendTo(new MCChatMsg(MFID, true), (EntityPlayerMP) player);
+
+        if (MFID != null) {
+          MNMNetwork.network.sendTo(new MCChatMsg(MFID, true), (EntityPlayerMP) player);
+        } else {
+          MNMNetwork.network.sendTo(new MCChatMsg("NULL", true), (EntityPlayerMP) player);
+        }
+//        if (tile instanceof TileDataDefinitionStorage) {
+//          int defver = ((TileDataDefinitionStorage) tile).getDefVersion();
+//          MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.defver", false), (EntityPlayerMP) player);
+//          MNMNetwork.network.sendTo(new MCChatMsg("" + defver, true), (EntityPlayerMP) player);
+//        }
       }
       return true;
     } else if (tile instanceof TileCentralProcessor) {
       if (!world.isRemote) {
         String MFID = ((TileCentralProcessor) tile).getMainframe().mainframeRandomID;
+        // int defver = ((TileCentralProcessor) tile).getMainframe().getDefVersion();
         MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.mfid", false), (EntityPlayerMP) player);
         MNMNetwork.network.sendTo(new MCChatMsg(MFID, true), (EntityPlayerMP) player);
+        // MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.defver", false),
+        // (EntityPlayerMP) player);
+        // MNMNetwork.network.sendTo(new MCChatMsg("" + defver, true), (EntityPlayerMP)
+        // player);
       }
       return true;
+    } else if (tile instanceof TileDefinitionRecoveryChipset) {
+//      if (world.isRemote) {
+//        ClientUtil.printChatMessage(LocalUtil.localize("mnm.message.definition_recovery_chipset.init"));
+//      } else {
+//        boolean successful = ((TileDefinitionRecoveryChipset) tile).attemptToRecover();
+//        String mes;
+//        if (successful) {
+//          mes = "mnm.message.definition_recovery_chipset.successful";
+//        } else {
+//          mes = "mnm.message.definition_recovery_chipset.failed";
+//        }
+//        MNMNetwork.network.sendTo(new MCChatMsg(mes, false), (EntityPlayerMP) player);
+//      }
+      return false;
     }
     return false;
   }

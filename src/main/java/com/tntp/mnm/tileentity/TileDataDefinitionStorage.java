@@ -22,138 +22,150 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont, ITileDiskKeyable {
+public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont {
 
-  private List<ItemDef> definedItems;
+  private int usedSpace;
   private Security security;
 
   public TileDataDefinitionStorage() {
     super(5);
     security = new Security(this);
-    definedItems = new ArrayList<ItemDef>();
   }
 
   @Override
   public int getUsedSpace() {
-    return definedItems.size() * 4;
+    return usedSpace;
   }
 
-  public List<ItemDef> getDefinedItems(Mainframe mf) {
-    if (!checkAndRememberMainframe(mf))
-      return Collections.emptyList();
-    return definedItems;
-  }
-
-  public void dumpDefinitions(Mainframe mf, Queue<ItemDef> queue) {
-    if (isTransferringData)
-      return;
+  public void setUsedSpace(Mainframe mf, int space) {
     if (!checkAndRememberMainframe(mf))
       return;
-    while (getUsedSpace() + 4 <= getTotalSpaceFromDisks() && !queue.isEmpty()) {
-      definedItems.add(queue.poll());
-    }
+    usedSpace = space;
     markDirty();
   }
 
-  /**
-   * This is a safety action. This should never has any effect
-   */
-  public void removeNullDefinitions(Mainframe mf) {
-    if (isTransferringData)
-      return;
-    if (!checkAndRememberMainframe(mf))
-      return;
-    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
-      ItemDef def = iter.next();
-      if (def.stack == null || def.stack.stackSize <= 0 || def.stack.getItem() == null)
-        iter.remove();
-    }
-    markDirty();
-  }
-
-  public void removeDefinitionsNotIn(Mainframe mf, Set<Integer> definitionsToKeep) {
-    if (isTransferringData)
-      return;
-    if (!checkAndRememberMainframe(mf))
-      return;
-    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
-      ItemDef def = iter.next();
-      if (!definitionsToKeep.contains(def.id))
-        iter.remove();
-    }
-    markDirty();
-  }
-
-  /**
-   * 
-   * @param stack
-   * @return the new ID if not defined,-1 if disk full, or the defined id
-   *         otherwise
-   */
-  public int getItemDefID(Mainframe mf, ItemStack stack) {
-    if (isTransferringData)
-      return -1;
-    if (!checkAndRememberMainframe(mf))
-      return -1;
-    for (int i = 0; i < definedItems.size(); i++) {
-      if (ItemUtil.areItemAndTagEqual(definedItems.get(i).stack, stack)) {
-        return definedItems.get(i).id;
-      }
-    }
-    return -1;
-  }
-
-  /**
-   * Return a new copy of the defined item
-   * 
-   * @param id
-   * @return
-   */
-  public ItemStack getItemDef(Mainframe mf, int id) {
-    if (isTransferringData)
-      return null;
-    if (!checkAndRememberMainframe(mf))
-      return null;
-    for (int i = 0; i < definedItems.size(); i++) {
-      if (definedItems.get(i).id == id) {
-        ItemStack s = definedItems.get(i).stack.copy();
-        s.stackSize = 1;
-        return s;
-      }
-    }
-    return null;
-  }
-
-  public boolean defineItem(Mainframe mf, ItemStack stack, int id) {
-    if (isTransferringData)
-      return false;
+  public boolean access(Mainframe mf) {
     if (!checkAndRememberMainframe(mf))
       return false;
-    if (getUsedSpace() + 4 <= getTotalSpaceFromDisks()) {
-      ItemDef item = new ItemDef();
-      ItemStack s = stack.copy();
-      s.stackSize = 1;
-      item.id = id;
-      item.stack = s;
-      definedItems.add(item);
-      markDirty();
-      return true;// defined
-    }
-    return false;
+    return true;
   }
 
-  public void undefineItem(Mainframe mf, int id) {
-    if (isTransferringData)
-      return;
-    if (!checkAndRememberMainframe(mf))
-      return;
-    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
-      ItemDef def = iter.next();
-      if (def.id == id)
-        iter.remove();
-    }
-    markDirty();
-  }
+//  public List<ItemDef> getDefinedItems(Mainframe mf) {
+//    if (!checkAndRememberMainframe(mf))
+//      return Collections.emptyList();
+//    return definedItems;
+//  }
+
+//  public void dumpDefinitions(Mainframe mf, Queue<ItemDef> queue) {
+//    if (isTransferringData)
+//      return;
+//    if (!checkAndRememberMainframe(mf))
+//      return;
+//    while (getUsedSpace() + 4 <= getTotalSpaceFromDisks() && !queue.isEmpty()) {
+//      definedItems.add(queue.poll());
+//    }
+//    markDirty();
+//  }
+
+//  /**
+//   * This is a safety action. This should never has any effect
+//   */
+//  public void removeNullDefinitions(Mainframe mf) {
+//    if (isTransferringData)
+//      return;
+//    if (!checkAndRememberMainframe(mf))
+//      return;
+//    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
+//      ItemDef def = iter.next();
+//      if (def.stack == null || def.stack.stackSize <= 0 || def.stack.getItem() == null)
+//        iter.remove();
+//    }
+//    markDirty();
+//  }
+
+//  public void removeDefinitionsNotIn(Mainframe mf, Set<Integer> definitionsToKeep) {
+//    if (isTransferringData)
+//      return;
+//    if (!checkAndRememberMainframe(mf))
+//      return;
+//    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
+//      ItemDef def = iter.next();
+//      if (!definitionsToKeep.contains(def.id))
+//        iter.remove();
+//    }
+//    markDirty();
+//  }
+
+//  /**
+//   * 
+//   * @param stack
+//   * @return the new ID if not defined,-1 if disk full, or the defined id
+//   *         otherwise
+//   */
+//  public int getItemDefID(Mainframe mf, ItemStack stack) {
+//    if (isTransferringData)
+//      return -1;
+//    if (!checkAndRememberMainframe(mf))
+//      return -1;
+//    for (int i = 0; i < definedItems.size(); i++) {
+//      if (ItemUtil.areItemAndTagEqual(definedItems.get(i).stack, stack)) {
+//        return definedItems.get(i).id;
+//      }
+//    }
+//    return -1;
+//  }
+
+//  /**
+//   * Return a new copy of the defined item
+//   * 
+//   * @param id
+//   * @return
+//   */
+//  public ItemStack getItemDef(Mainframe mf, int id) {
+//    if (isTransferringData)
+//      return null;
+//    if (!checkAndRememberMainframe(mf))
+//      return null;
+//    for (int i = 0; i < definedItems.size(); i++) {
+//      if (definedItems.get(i).id == id) {
+//        ItemStack s = definedItems.get(i).stack.copy();
+//        s.stackSize = 1;
+//        return s;
+//      }
+//    }
+//    return null;
+//  }
+
+//  public boolean defineItem(Mainframe mf, ItemStack stack, int id) {
+//    if (isTransferringData)
+//      return false;
+//    if (!checkAndRememberMainframe(mf))
+//      return false;
+//    if (getUsedSpace() + 4 <= getTotalSpaceFromDisks()) {
+//      ItemDef item = new ItemDef();
+//      ItemStack s = stack.copy();
+//      s.stackSize = 1;
+//      item.id = id;
+//      item.stack = s;
+//      definedItems.add(item);
+//      markDirty();
+//      return true;// defined
+//    }
+//    return false;
+//  }
+
+//  public void undefineItem(Mainframe mf, int id) {
+//    if (isTransferringData)
+//      return;
+//    if (!checkAndRememberMainframe(mf))
+//      return;
+//    for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
+//      ItemDef def = iter.next();
+//      if (def.id == id)
+//        iter.remove();
+//    }
+//    markDirty();
+//  }
 
   public void writeToNBT(NBTTagCompound tag) {
     super.writeToNBT(tag);
@@ -185,59 +197,49 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
 
   @Override
   public void writeDataToNBT(NBTTagCompound tag) {
-    NBTTagList list = new NBTTagList();
-    for (int i = 0; i < definedItems.size(); i++) {
-      NBTTagCompound com = new NBTTagCompound();
-      definedItems.get(i).toNBT(com);
-      list.appendTag(com);
-    }
-    tag.setTag("defined_items", list);
+    // TODO Auto-generated method stub
+
   }
 
   @Override
   public void readDataFromNBT(NBTTagCompound tag) {
-    NBTTagList list = tag.getTagList("defined_items", NBT.TAG_COMPOUND);
-    definedItems = new ArrayList<ItemDef>();
-    for (int i = 0; i < list.tagCount(); i++) {
-      NBTTagCompound com = list.getCompoundTagAt(i);
-      ItemDef def = new ItemDef();
-      def.fromNBT(com);
-      definedItems.add(def);
-    }
+    // TODO Auto-generated method stub
+
   }
 
   @Override
   public void clearData() {
-    definedItems.clear();
-    markDirty();
-  }
-
-  @Override
-  public String diskKeyType() {
-    return "definition";
-  }
-
-  @Override
-  public boolean onPreTransferToDiskKey(ItemStack validDiskKey) {
-    Mainframe mf = connectToMainframe();
-    if (mf != null) {
-      return mf.verifyDefinitionCanBeTakenOut(definedItems);
-    }
-    return false;
-  }
-
-  @Override
-  public void onPostTransferToDiskKey(ItemStack validDiskKey) {
-  }
-
-  @Override
-  public boolean onPreTransferFromDiskKey(ItemStack validDiskKey) {
-    return true;
-  }
-
-  @Override
-  public void onPostTransferFromDiskKey(ItemStack validDiskKey) {
+    // TODO Auto-generated method stub
 
   }
+
+//  @Override
+//  public void writeDataToNBT(NBTTagCompound tag) {
+//    NBTTagList list = new NBTTagList();
+//    for (int i = 0; i < definedItems.size(); i++) {
+//      NBTTagCompound com = new NBTTagCompound();
+//      definedItems.get(i).toNBT(com);
+//      list.appendTag(com);
+//    }
+//    tag.setTag("defined_items", list);
+//  }
+
+//  @Override
+//  public void readDataFromNBT(NBTTagCompound tag) {
+//    NBTTagList list = tag.getTagList("defined_items", NBT.TAG_COMPOUND);
+//    definedItems = new ArrayList<ItemDef>();
+//    for (int i = 0; i < list.tagCount(); i++) {
+//      NBTTagCompound com = list.getCompoundTagAt(i);
+//      ItemDef def = new ItemDef();
+//      def.fromNBT(com);
+//      definedItems.add(def);
+//    }
+//  }
+
+//  @Override
+//  public void clearData() {
+//    definedItems.clear();
+//    markDirty();
+//  }
 
 }

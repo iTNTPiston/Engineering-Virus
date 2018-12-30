@@ -11,6 +11,8 @@ public class BlockCentralProcessor extends SBlockModelSpecial implements ITileEn
 
   public BlockCentralProcessor() {
     super(Material.iron);
+    this.setBlockUnbreakable();
+    setResistance(6000000.0F);
     this.setBlockBounds(0, 0, 0, 1, 1 / 4f, 1);
   }
 

@@ -95,6 +95,7 @@ public class TileCentralProcessor extends STile {
       // debug mode disallow new query to be queued.
       System.out.println("Query Queued");
       queue.add(query);
+      markDirty();
       return true;
     }
     return false;
@@ -150,13 +151,14 @@ public class TileCentralProcessor extends STile {
     return build.toString();
   }
 
-  /**
-   * Create a new instance of the mainframe
-   */
-  public boolean resetMainframeForRecovery(String oldID) {
-    mainframe = new Mainframe(this, generateRandomMainframeID());
-    mainframe.setWorld(worldObj);
-    mainframe.scan();
-    return mainframe.recover(oldID);
-  }
+//  /**
+//   * Create a new instance of the mainframe
+//   */
+//  public boolean resetMainframeForRecovery(String oldID) {
+//    mainframe.setWorld(null);
+//    mainframe = new Mainframe(this, generateRandomMainframeID());
+//    mainframe.setWorld(worldObj);
+//    mainframe.scan();
+//    return mainframe.recover(oldID);
+//  }
 }

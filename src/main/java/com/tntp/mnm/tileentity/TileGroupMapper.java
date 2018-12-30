@@ -166,7 +166,7 @@ public class TileGroupMapper extends STileNeithernetInventory implements ITileSe
     Mainframe mf = connectToMainframe();
     int def = -1;
     if (mf != null) {
-      def = mf.defineItem(toSearch);
+      def = mf.defineItem(toSearch, false);
     }
     if (def < 0)
       toSearch = null;
