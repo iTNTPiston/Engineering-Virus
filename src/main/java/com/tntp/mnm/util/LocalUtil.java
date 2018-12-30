@@ -15,7 +15,7 @@ public class LocalUtil {
     ArrayList<String> list = new ArrayList<String>();
     for (int i = 0;; i++) {
       String k = key + i;
-      String loc = localize(k, objects);
+      String loc = I18n.format(k, objects);
       if (k.equals(loc))
         break;
       list.add(loc);
