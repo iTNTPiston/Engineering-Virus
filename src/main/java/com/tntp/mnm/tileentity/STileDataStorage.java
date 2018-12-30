@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,9 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
     return size;
   }
 
-  public HashMap<Integer, Integer> getData() {
+  public HashMap<Integer, Integer> getData(Mainframe mf) {
+    if (!checkAndRememberMainframe(mf))
+      return new HashMap<Integer, Integer>();
     return map;
   }
 
@@ -37,8 +40,10 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
    * 
    * @return quantity left to be taken away
    */
-  public int takeAway(int id, int qty) {
+  public int takeAway(Mainframe mf, int id, int qty) {
     if (isTransferringData)
+      return qty;
+    if (!checkAndRememberMainframe(mf))
       return qty;
     // how much is stored
     int stock = map.containsKey(id) ? map.get(id) : 0;
@@ -64,8 +69,10 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
    * @param qty
    * @return qty that cannot be put in
    */
-  public int putIn(int id, int qty) {
+  public int putIn(Mainframe mf, int id, int qty) {
     if (isTransferringData)
+      return qty;
+    if (!checkAndRememberMainframe(mf))
       return qty;
     if (qty == 0)
       return 0;
@@ -95,8 +102,10 @@ public class STileDataStorage extends STileData implements ITileDiskKeyable {
     return qty;
   }
 
-  public int findQuantityFor(int id) {
+  public int findQuantityFor(Mainframe mf, int id) {
     if (isTransferringData)
+      return 0;
+    if (!checkAndRememberMainframe(mf))
       return 0;
     Integer qty = map.get(id);
     if (qty == null)

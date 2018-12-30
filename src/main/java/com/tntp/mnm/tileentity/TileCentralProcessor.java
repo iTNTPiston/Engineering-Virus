@@ -51,6 +51,10 @@ public class TileCentralProcessor extends STile {
     maxQueueSize = 10;
   }
 
+  public Mainframe getMainframe() {
+    return mainframe;
+  }
+
   public void updateEntity() {
     super.updateEntity();
     if (worldObj != null && !worldObj.isRemote) {
@@ -144,5 +148,15 @@ public class TileCentralProcessor extends STile {
       build.append(next);
     }
     return build.toString();
+  }
+
+  /**
+   * Create a new instance of the mainframe
+   */
+  public boolean resetMainframeForRecovery(String oldID) {
+    mainframe = new Mainframe(this, generateRandomMainframeID());
+    mainframe.setWorld(worldObj);
+    mainframe.scan();
+    return mainframe.recover(oldID);
   }
 }

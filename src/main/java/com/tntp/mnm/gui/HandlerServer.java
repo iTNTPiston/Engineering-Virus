@@ -103,7 +103,7 @@ public class HandlerServer implements IGuiHandler {
         if (s.securityCheck(using)) {
           canOpen = true;
         } else {
-          MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.security.secured"), (EntityPlayerMP) player);
+          MNMNetwork.network.sendTo(new MCChatMsg("mnm.message.security.secured", false), (EntityPlayerMP) player);
         }
       } else if (tile instanceof ITileCont) {
         canOpen = true;

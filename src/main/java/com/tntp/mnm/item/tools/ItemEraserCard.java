@@ -24,10 +24,10 @@ public class ItemEraserCard extends SItemTool implements ISecurityItem {
         Security s = ((ITileSecuredCont) tile).getSecurity();
         if (s.securityCheck(stack)) {
           s.resetSecurity();
-          MCChatMsg mes = new MCChatMsg("mnm.message.security.reset");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.reset", false);
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         } else {
-          MCChatMsg mes = new MCChatMsg("mnm.message.security.secured");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.secured", false);
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         }
       }

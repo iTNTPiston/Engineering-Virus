@@ -50,6 +50,7 @@ public class BlockBasicDiskStorage extends SBlockContainer {
   @Override
   @SideOnly(Side.CLIENT)
   public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+
     int meta = world.getBlockMetadata(x, y, z);
     int frontSide = meta & 7;
     if ((side ^ 1) == frontSide) {

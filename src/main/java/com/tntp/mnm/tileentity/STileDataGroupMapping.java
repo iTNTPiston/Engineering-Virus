@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.tntp.mnm.api.db.GroupItemMapping;
+import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 
 import net.minecraft.item.ItemStack;
@@ -26,8 +27,10 @@ public class STileDataGroupMapping extends STileData implements ITileDiskKeyable
     return definedItems.size() * 4;
   }
 
-  public boolean addMapping(GroupItemMapping def) {
+  public boolean addMapping(Mainframe mf, GroupItemMapping def) {
     if (isTransferringData)
+      return false;
+    if (!checkAndRememberMainframe(mf))
       return false;
     if (this.getUsedSpace() + 4 <= this.getTotalSpaceFromDisks()) {
       definedItems.add(def);
@@ -37,15 +40,19 @@ public class STileDataGroupMapping extends STileData implements ITileDiskKeyable
     return false;
   }
 
-  public void removeMapping(GroupItemMapping def) {
+  public void removeMapping(Mainframe mf, GroupItemMapping def) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     definedItems.remove(def);
     markDirty();
   }
 
-  public void modifyMapping(int oldID, int newID) {
+  public void modifyMapping(Mainframe mf, int oldID, int newID) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     ArrayList<GroupItemMapping> change = new ArrayList<GroupItemMapping>();
     for (Iterator<GroupItemMapping> iter = definedItems.iterator(); iter.hasNext();) {
@@ -62,8 +69,10 @@ public class STileDataGroupMapping extends STileData implements ITileDiskKeyable
     markDirty();
   }
 
-  public void removeAll(int definition) {
+  public void removeAll(Mainframe mf, int definition) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     for (Iterator<GroupItemMapping> iter = definedItems.iterator(); iter.hasNext();) {
       GroupItemMapping gim = iter.next();
@@ -73,7 +82,9 @@ public class STileDataGroupMapping extends STileData implements ITileDiskKeyable
     markDirty();
   }
 
-  public void findMapping(Set<Integer> itemIDS, String groupName) {
+  public void findMapping(Mainframe mf, Set<Integer> itemIDS, String groupName) {
+    if (!checkAndRememberMainframe(mf))
+      return;
     for (GroupItemMapping mapping : definedItems) {
       if (mapping.groupId.equals(groupName)) {
         itemIDS.add(mapping.itemId);

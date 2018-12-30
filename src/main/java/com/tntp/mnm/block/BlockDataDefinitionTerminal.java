@@ -19,9 +19,7 @@ import net.minecraft.world.World;
 public class BlockDataDefinitionTerminal extends SBlockContainer {
   private IIcon port;
   private IIcon top;
-  private IIcon front;
-  private IIcon front_off;
-  private IIcon front_debug;
+  private IIcon[] front;
 
   public BlockDataDefinitionTerminal() {
     super(Material.iron);
@@ -54,10 +52,11 @@ public class BlockDataDefinitionTerminal extends SBlockContainer {
     String tex = this.getTextureName();
     this.blockIcon = reg.registerIcon(MNMMod.MODID + ":machine_0");
     port = reg.registerIcon(MNMMod.MODID + ":neithernet_port_block");
-    front = reg.registerIcon(tex + "_front");
-    front_off = reg.registerIcon(tex + "_front_off");
-    front_debug = reg.registerIcon(tex + "_front_debug");
-    top = reg.registerIcon(tex + "_top");
+    front = new IIcon[4];
+    for (int i = 0; i < front.length; i++) {
+      front[i] = reg.registerIcon(tex + "/front_" + i);
+    }
+    top = reg.registerIcon(tex + "/top");
   }
 
   @Override
@@ -68,16 +67,12 @@ public class BlockDataDefinitionTerminal extends SBlockContainer {
     if ((side ^ 1) == frontSide || side == 1) {
       TileEntity tile = world.getTileEntity(x, y, z);
       if (tile instanceof TileDataDefinitionTerminal) {
-        switch (((TileDataDefinitionTerminal) tile).getMainframeStatus()) {
-        case 1:
-          return side == 1 ? top : front;
-        case 2:
-        case 3:
-          return side == 1 ? top : front_debug;
-
+        int status = ((TileDataDefinitionTerminal) tile).getMainframeStatus();
+        if (status > 0) {
+          return side == 1 ? top : front[status];
         }
       }
-      return side == 1 ? blockIcon : front_off;
+      return side == 1 ? blockIcon : front[0];
     } else {
       return getIcon(side, meta);
     }
@@ -93,7 +88,7 @@ public class BlockDataDefinitionTerminal extends SBlockContainer {
       return port;
     }
     if ((side ^ 1) == fronts) {
-      return front;
+      return front[1];
     }
     if (side == 1)
       return top;

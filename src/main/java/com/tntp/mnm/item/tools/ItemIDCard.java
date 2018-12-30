@@ -35,10 +35,10 @@ public class ItemIDCard extends SItemTool implements ISecurityItem {
         if (!s.isSecured()) {
           int code = SecurityUtil.getCode(stack);
           s.setSecurityCode(code);
-          MCChatMsg mes = new MCChatMsg("mnm.message.security.set");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.set", false);
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         } else {
-          MCChatMsg mes = new MCChatMsg("mnm.message.security.secured");
+          MCChatMsg mes = new MCChatMsg("mnm.message.security.secured", false);
           MNMNetwork.network.sendTo(mes, (EntityPlayerMP) player);
         }
       }

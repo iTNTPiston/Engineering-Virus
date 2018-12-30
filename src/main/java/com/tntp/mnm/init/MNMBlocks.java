@@ -15,6 +15,7 @@ import com.tntp.mnm.block.BlockGroupMapper;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatDistributor;
 import com.tntp.mnm.block.BlockHeatPipe;
+import com.tntp.mnm.block.BlockMainframeRecoveryChipset;
 import com.tntp.mnm.block.BlockMotherboard;
 import com.tntp.mnm.block.BlockNeithernetCable;
 import com.tntp.mnm.block.BlockNeithernetPort;
@@ -33,6 +34,7 @@ import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileGroupMapper;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
+import com.tntp.mnm.tileentity.TileMainframeRecoveryChipset;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 import com.tntp.mnm.tileentity.TileQueryBuilder;
 import com.tntp.mnm.tileentity.TileSecurityEncoder;
@@ -59,6 +61,8 @@ public class MNMBlocks {
   public static final Block data_group_definer = null;
   public static final Block security_encoder = null;
   public static final Block data_group_chipset = null;
+  public static final Block data_integrity_chipset = null;
+  public static final Block mainframe_recovery_chipset = null;
 
   public static final Block query_builder = null;
 
@@ -85,6 +89,8 @@ public class MNMBlocks {
     regTileEntity(TileDataGroupChipset.class);
     regBlock(new BlockDataIntegrityChipset(), "data_integrity_chipset");
     regTileEntity(TileDataIntegrityChipset.class);
+    regBlock(new BlockMainframeRecoveryChipset(), "mainframe_recovery_chipset");
+    regTileEntity(TileMainframeRecoveryChipset.class);
 
     regBlock(new BlockNeithernetCable(), "neithernet_cable");
     regBlock(new BlockNeithernetPort(), "neithernet_port");

@@ -1,5 +1,6 @@
 package com.tntp.mnm.tileentity;
 
+import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
 import com.tntp.mnm.item.disk.ItemDisk;
 import com.tntp.mnm.util.DirUtil;
@@ -18,6 +19,11 @@ public abstract class STileData extends STileNeithernetInventory {
    */
   public boolean isTransferringData;
   public boolean pendingDiskEjection;
+
+  /**
+   * which mainframe this tile stores data for
+   */
+  private String mainframeID;
 
   public STileData(int size) {
     super(size);
@@ -138,12 +144,15 @@ public abstract class STileData extends STileNeithernetInventory {
   public void readFromNBT(NBTTagCompound tag) {
     super.readFromNBT(tag);
     readDataFromNBT(tag);
+    mainframeID = tag.getString("mainframe_id");
   }
 
   @Override
   public void writeToNBT(NBTTagCompound tag) {
     super.writeToNBT(tag);
     writeDataToNBT(tag);
+    if (mainframeID != null && mainframeID.length() > 0)
+      tag.setString("mainframe_id", mainframeID);
   }
 
   public boolean hasData() {
@@ -151,5 +160,58 @@ public abstract class STileData extends STileNeithernetInventory {
   }
 
   public abstract void clearData();
+
+  /**
+   * Check if this mainframe should be allowed to access data
+   * 
+   * @param mf
+   * @return true if the mainframe is nonnull and equal to connectToMainframe(),
+   *         and, either
+   *         there is no data or its ID matches dataID
+   */
+  public boolean checkMainframe(Mainframe mf) {
+    if (mf == null)
+      return false;
+    if (mf != connectToMainframe())
+      return false;
+    if (!hasData())
+      return true;
+    if (mf.mainframeRandomID.equals(mainframeID))
+      return true;
+    return false;
+  }
+
+  /**
+   * Check if the mf is allowed to access. If it is, then remember it so that only
+   * this mf can access later
+   * 
+   * @param mf
+   * @return
+   */
+  public boolean checkAndRememberMainframe(Mainframe mf) {
+    if (checkMainframe(mf)) {
+      mainframeID = mf.mainframeRandomID;
+      return true;
+    }
+    return false;
+  }
+
+  public String getMFID() {
+    return mainframeID;
+  }
+
+  /**
+   * Change MFID if the oldID mathces
+   * 
+   * @param oldID
+   * @param newID
+   * @return
+   */
+  public void setMFID(String oldID, String newID) {
+    if (mainframeID == null || mainframeID.equals(oldID)) {
+      mainframeID = newID;
+      markDirty();
+    }
+  }
 
 }

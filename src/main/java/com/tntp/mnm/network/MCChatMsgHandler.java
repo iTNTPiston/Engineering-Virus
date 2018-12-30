@@ -11,7 +11,8 @@ public class MCChatMsgHandler implements IMessageHandler<MCChatMsg, IMessage> {
 
   @Override
   public IMessage onMessage(MCChatMsg message, MessageContext ctx) {
-    ClientUtil.printChatMessage(LocalUtil.localize(message.getStr1()));
+    String mes = message.isLocalized() ? message.getStr1() : LocalUtil.localize(message.getStr1());
+    ClientUtil.printChatMessage(mes);
     return null;
   }
 

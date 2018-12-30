@@ -1,6 +1,7 @@
 package com.tntp.mnm.tileentity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
@@ -37,12 +38,16 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
     return definedItems.size() * 4;
   }
 
-  public List<ItemDef> getDefinedItems() {
+  public List<ItemDef> getDefinedItems(Mainframe mf) {
+    if (!checkAndRememberMainframe(mf))
+      return Collections.emptyList();
     return definedItems;
   }
 
-  public void dumpDefinitions(Queue<ItemDef> queue) {
+  public void dumpDefinitions(Mainframe mf, Queue<ItemDef> queue) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     while (getUsedSpace() + 4 <= getTotalSpaceFromDisks() && !queue.isEmpty()) {
       definedItems.add(queue.poll());
@@ -53,8 +58,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
   /**
    * This is a safety action. This should never has any effect
    */
-  public void removeNullDefinitions() {
+  public void removeNullDefinitions(Mainframe mf) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
       ItemDef def = iter.next();
@@ -64,8 +71,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
     markDirty();
   }
 
-  public void removeDefinitionsNotIn(Set<Integer> definitionsToKeep) {
+  public void removeDefinitionsNotIn(Mainframe mf, Set<Integer> definitionsToKeep) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
       ItemDef def = iter.next();
@@ -81,8 +90,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
    * @return the new ID if not defined,-1 if disk full, or the defined id
    *         otherwise
    */
-  public int getItemDefID(ItemStack stack) {
+  public int getItemDefID(Mainframe mf, ItemStack stack) {
     if (isTransferringData)
+      return -1;
+    if (!checkAndRememberMainframe(mf))
       return -1;
     for (int i = 0; i < definedItems.size(); i++) {
       if (ItemUtil.areItemAndTagEqual(definedItems.get(i).stack, stack)) {
@@ -98,8 +109,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
    * @param id
    * @return
    */
-  public ItemStack getItemDef(int id) {
+  public ItemStack getItemDef(Mainframe mf, int id) {
     if (isTransferringData)
+      return null;
+    if (!checkAndRememberMainframe(mf))
       return null;
     for (int i = 0; i < definedItems.size(); i++) {
       if (definedItems.get(i).id == id) {
@@ -111,8 +124,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
     return null;
   }
 
-  public boolean defineItem(ItemStack stack, int id) {
+  public boolean defineItem(Mainframe mf, ItemStack stack, int id) {
     if (isTransferringData)
+      return false;
+    if (!checkAndRememberMainframe(mf))
       return false;
     if (getUsedSpace() + 4 <= getTotalSpaceFromDisks()) {
       ItemDef item = new ItemDef();
@@ -127,8 +142,10 @@ public class TileDataDefinitionStorage extends STileData implements ITileSecured
     return false;
   }
 
-  public void undefineItem(int id) {
+  public void undefineItem(Mainframe mf, int id) {
     if (isTransferringData)
+      return;
+    if (!checkAndRememberMainframe(mf))
       return;
     for (Iterator<ItemDef> iter = definedItems.iterator(); iter.hasNext();) {
       ItemDef def = iter.next();

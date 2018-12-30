@@ -15,6 +15,7 @@ import java.util.TreeMap;
 import com.tntp.mnm.init.MNMBlocks;
 import com.tntp.mnm.init.MNMItems;
 import com.tntp.mnm.item.ItemDataGroupChip;
+import com.tntp.mnm.tileentity.STileData;
 import com.tntp.mnm.tileentity.STileDataGroupMapping;
 import com.tntp.mnm.tileentity.STileDataStorage;
 import com.tntp.mnm.tileentity.STileNeithernet;
@@ -121,6 +122,7 @@ public class Mainframe {
       if (tile instanceof TileCentralProcessor) {
         if (tile != cpu) {
           // cannot have multiple cpus
+          integrityProblem = true;
           startDebugging();
           return;
         }
@@ -182,7 +184,7 @@ public class Mainframe {
             continue;
           if (stack[i] == null)
             continue;
-          int left = ((STileDataStorage) tile).putIn(def[i], stack[i].stackSize);
+          int left = ((STileDataStorage) tile).putIn(this, def[i], stack[i].stackSize);
           if (left == 0) {
             stack[i] = null;
           } else {
@@ -209,7 +211,7 @@ public class Mainframe {
 
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof STileDataStorage) {
-        toBeTaken = ((STileDataStorage) tile).takeAway(id, toBeTaken);
+        toBeTaken = ((STileDataStorage) tile).takeAway(this, id, toBeTaken);
         if (toBeTaken == 0) {
           break;// finished
         }
@@ -247,7 +249,7 @@ public class Mainframe {
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof STileDataStorage) {
         for (Entry<Integer, ItemStack> e : qtyMap.entrySet()) {
-          int qty = ((STileDataStorage) tile).findQuantityFor(e.getKey());
+          int qty = ((STileDataStorage) tile).findQuantityFor(this, e.getKey());
           e.getValue().stackSize += qty;
         }
       }
@@ -278,7 +280,7 @@ public class Mainframe {
     // scan data definers for definition
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
-        ItemStack stack = ((TileDataDefinitionStorage) tile).getItemDef(id);
+        ItemStack stack = ((TileDataDefinitionStorage) tile).getItemDef(this, id);
         if (stack != null)
           return stack;
       }
@@ -305,7 +307,7 @@ public class Mainframe {
     int foundID = -1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
-        int id = ((TileDataDefinitionStorage) tile).getItemDefID(stack);
+        int id = ((TileDataDefinitionStorage) tile).getItemDefID(this, stack);
         if (id >= 0) {
           if (foundID == -1) {
             foundID = id;// found definition
@@ -356,7 +358,7 @@ public class Mainframe {
       return -1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
-        boolean defined = ((TileDataDefinitionStorage) tile).defineItem(stack, newID);
+        boolean defined = ((TileDataDefinitionStorage) tile).defineItem(this, stack, newID);
         if (defined) {
           return newID;
         }
@@ -405,7 +407,7 @@ public class Mainframe {
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof STileDataGroupMapping) {
           for (String group : groupNames)
-            ((STileDataGroupMapping) tile).findMapping(allIDs, group);
+            ((STileDataGroupMapping) tile).findMapping(this, allIDs, group);
         }
       }
     }
@@ -464,7 +466,7 @@ public class Mainframe {
     int maxID = -1;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
-        List<ItemDef> list = ((TileDataDefinitionStorage) tile).getDefinedItems();
+        List<ItemDef> list = ((TileDataDefinitionStorage) tile).getDefinedItems(this);
         for (ItemDef d : list) {
           if (d.id > maxID) {
             maxID = d.id;
@@ -479,7 +481,7 @@ public class Mainframe {
         }
       } else if (tile instanceof STileDataStorage) {
         // Also search data because data may contain undefined items
-        HashMap<Integer, Integer> raw = ((STileDataStorage) tile).getData();
+        HashMap<Integer, Integer> raw = ((STileDataStorage) tile).getData(this);
         for (int id : raw.keySet()) {
           if (!treemap.containsKey(id)) {
             treemap.put(id, null);// put a place holder so to know the definition has item so it is occupied
@@ -519,7 +521,7 @@ public class Mainframe {
     GroupItemMapping gim = new GroupItemMapping(group, def);
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof STileDataGroupMapping) {
-        if (((STileDataGroupMapping) tile).addMapping(gim))
+        if (((STileDataGroupMapping) tile).addMapping(this, gim))
           return;// once successful, return
       }
     }
@@ -534,7 +536,7 @@ public class Mainframe {
     GroupItemMapping gim = new GroupItemMapping(group, def);
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof STileDataGroupMapping) {
-        ((STileDataGroupMapping) tile).removeMapping(gim);
+        ((STileDataGroupMapping) tile).removeMapping(this, gim);
         // do not break here because the same mapping can exist across different drives
       }
     }
@@ -548,7 +550,7 @@ public class Mainframe {
       return;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof STileDataGroupMapping) {
-        ((STileDataGroupMapping) tile).removeAll(def);
+        ((STileDataGroupMapping) tile).removeAll(this, def);
         // do not break here because the same mapping can exist across different drives
       }
     }
@@ -581,7 +583,7 @@ public class Mainframe {
       // Item should not have null definition, this is a safety action
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof TileDataDefinitionStorage) {
-          ((TileDataDefinitionStorage) tile).removeNullDefinitions();
+          ((TileDataDefinitionStorage) tile).removeNullDefinitions(this);
         }
       }
     }
@@ -592,13 +594,13 @@ public class Mainframe {
       HashSet<Integer> allStoredItemsDef = new HashSet<Integer>();
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof STileDataStorage) {
-          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData();
+          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData(this);
           allStoredItemsDef.addAll(map.keySet());
         }
       }
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof TileDataDefinitionStorage) {
-          ((TileDataDefinitionStorage) tile).removeDefinitionsNotIn(allStoredItemsDef);
+          ((TileDataDefinitionStorage) tile).removeDefinitionsNotIn(this, allStoredItemsDef);
         }
       }
     }
@@ -650,7 +652,7 @@ public class Mainframe {
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof TileDataDefinitionStorage) {
           TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
-          allDefined.addAll(t.getDefinedItems());
+          allDefined.addAll(t.getDefinedItems(this));
           t.isTransferringData = true;
           t.clearData();
         }
@@ -659,7 +661,7 @@ public class Mainframe {
         if (tile instanceof TileDataDefinitionStorage) {
           TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
           t.isTransferringData = false;
-          t.dumpDefinitions(allDefined);
+          t.dumpDefinitions(this, allDefined);
         }
         if (allDefined.isEmpty())
           break;
@@ -675,7 +677,7 @@ public class Mainframe {
     // undefine all
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
-        ((TileDataDefinitionStorage) tile).undefineItem(oldID);
+        ((TileDataDefinitionStorage) tile).undefineItem(this, oldID);
       }
     }
     // define new
@@ -684,14 +686,14 @@ public class Mainframe {
       // change mapping
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof STileDataGroupMapping) {
-          ((STileDataGroupMapping) tile).modifyMapping(oldID, id);
+          ((STileDataGroupMapping) tile).modifyMapping(this, oldID, id);
         }
       }
 
       // change storage
       for (STileNeithernet tile : allNnetTiles) {
         if (tile instanceof STileDataStorage) {
-          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData();
+          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData(this);
           Integer oldQty = map.remove(oldID);
           if (oldQty != null) {
             map.put(newID, oldQty);
@@ -751,7 +753,7 @@ public class Mainframe {
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof STileDataStorage) {
         STileDataStorage t = (STileDataStorage) tile;
-        HashMap<Integer, Integer> map = t.getData();
+        HashMap<Integer, Integer> map = t.getData(this);
         for (Iterator<Integer> iter = idOnly.iterator(); iter.hasNext();) {
           Integer nextId = iter.next();
           if (map.containsKey(nextId))
@@ -772,6 +774,67 @@ public class Mainframe {
     if (isReadyToDebug())
       return 3;
     return 1;
+  }
+
+  /**
+   * Called by MRC to signal the Mainframe for recovery.
+   * <br>
+   * If the MF is recoverable, it will tell the CPU to create a new instance and
+   * attempt to recover from there. This way the new MFID will not match either
+   * this mainframe's ID or the MFID stored by STileData
+   * 
+   * @return
+   */
+  public boolean signalRecovery() {
+    scan();
+    if (integrityProblem)
+      return false;
+    // scan MFID
+    String cachedMFID = null;
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileData) {
+        String mfid = ((STileData) tile).getMFID();
+        if (mfid != null) {
+          if (cachedMFID == null) {
+            cachedMFID = mfid;
+          } else {
+            if (!cachedMFID.equals(mfid)) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    // Nothing has remembered MFID
+    if (cachedMFID == null || cachedMFID.equals(mainframeRandomID))
+      return false;
+
+    // Recoverable
+    if (isValid()) {
+      return cpu.resetMainframeForRecovery(cachedMFID);
+    }
+    return false;
+  }
+
+  /**
+   * Attempt to fix different mainframeID<br>
+   * All STileData with the oldID will be updated
+   * to match the new mainframe's ID
+   * 
+   * @return true if any MFID is changed on STileData
+   */
+  public boolean recover(String oldID) {
+    scan();
+    if (integrityProblem)
+      return false;
+
+    // start recovery
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileData) {
+        ((STileData) tile).setMFID(oldID, mainframeRandomID);
+      }
+    }
+    return true;
   }
 
 }
