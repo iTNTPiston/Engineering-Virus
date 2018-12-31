@@ -7,7 +7,6 @@ import com.tntp.mnm.util.ItemUtil;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * A Query with take/put

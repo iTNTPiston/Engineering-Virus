@@ -1,26 +1,14 @@
 package com.tntp.mnm.tileentity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
-import java.util.Set;
 
-import com.tntp.mnm.api.db.ItemDef;
 import com.tntp.mnm.api.db.Mainframe;
 import com.tntp.mnm.api.security.Security;
 import com.tntp.mnm.gui.SlotDecorative;
 import com.tntp.mnm.gui.cont.ITileSecuredCont;
-import com.tntp.mnm.gui.diskkey.ITileDiskKeyable;
-import com.tntp.mnm.item.disk.ItemDisk;
-import com.tntp.mnm.util.ItemUtil;
 
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.util.Constants.NBT;
 
 public class TileDataDefinitionStorage extends STileData implements ITileSecuredCont {
 

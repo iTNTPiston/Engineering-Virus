@@ -1,6 +1,5 @@
 package com.tntp.mnm.api.db;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GroupItemMapping {

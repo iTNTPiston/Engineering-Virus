@@ -9,14 +9,12 @@ import com.tntp.mnm.block.BlockDataDefinitionTerminal;
 import com.tntp.mnm.block.BlockDataGroupChipset;
 import com.tntp.mnm.block.BlockDataGroupDefiner;
 import com.tntp.mnm.block.BlockDataIntegrityChipset;
-import com.tntp.mnm.block.BlockDefinitionRecoveryChipset;
 import com.tntp.mnm.block.BlockFirewall;
 import com.tntp.mnm.block.BlockGeoThermalSmelter;
 import com.tntp.mnm.block.BlockGroupMapper;
 import com.tntp.mnm.block.BlockHeatCollectorFirewall;
 import com.tntp.mnm.block.BlockHeatDistributor;
 import com.tntp.mnm.block.BlockHeatPipe;
-import com.tntp.mnm.block.BlockMainframeRecoveryChipset;
 import com.tntp.mnm.block.BlockMotherboard;
 import com.tntp.mnm.block.BlockNeithernetCable;
 import com.tntp.mnm.block.BlockNeithernetPort;
@@ -31,12 +29,10 @@ import com.tntp.mnm.tileentity.TileDataDefinitionTerminal;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileDataGroupDefiner;
 import com.tntp.mnm.tileentity.TileDataIntegrityChipset;
-import com.tntp.mnm.tileentity.TileDefinitionRecoveryChipset;
 import com.tntp.mnm.tileentity.TileGeoThermalSmelter;
 import com.tntp.mnm.tileentity.TileGroupMapper;
 import com.tntp.mnm.tileentity.TileHeatCollectorFirewall;
 import com.tntp.mnm.tileentity.TileHeatDistributor;
-import com.tntp.mnm.tileentity.TileMainframeRecoveryChipset;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 import com.tntp.mnm.tileentity.TileQueryBuilder;
 import com.tntp.mnm.tileentity.TileSecurityEncoder;
@@ -91,10 +87,6 @@ public class MNMBlocks {
     regTileEntity(TileDataGroupChipset.class);
     regBlock(new BlockDataIntegrityChipset(), "data_integrity_chipset");
     regTileEntity(TileDataIntegrityChipset.class);
-    regBlock(new BlockMainframeRecoveryChipset(), "mainframe_recovery_chipset");
-    regTileEntity(TileMainframeRecoveryChipset.class);
-    regBlock(new BlockDefinitionRecoveryChipset(), "definition_recovery_chipset");
-    regTileEntity(TileDefinitionRecoveryChipset.class);
 
     regBlock(new BlockNeithernetCable(), "neithernet_cable");
     regBlock(new BlockNeithernetPort(), "neithernet_port");
@@ -112,19 +104,6 @@ public class MNMBlocks {
     regBlock(new BlockGroupMapper(), "group_mapper");
     regTileEntity(TileGroupMapper.class);
 
-    // GameRegistry.registerBlock(new BlockNetworkMainframe(false),
-    // "networkMainframeOff");
-    // GameRegistry.registerBlock(new BlockNetworkMainframe(true),
-    // "networkMainframeOn");
-    // GameRegistry.registerBlock(new BlockCentralProcessor(), "centralProcessor");
-    // GameRegistry.registerTileEntity(TileCentralProcessor.class,
-    // "tileCentralProcessor");
-    // GameRegistry.registerBlock(new BlockAuxiliaryComputingUnit(),
-    // "auxiliaryComputingUnit");
-    // GameRegistry.registerBlock(new BlockMainframeCasing(),
-    // "blockMainframeCasing");
-    // GameRegistry.registerBlock(new BlockMainframeCasingFramed(),
-    // "blockMainframeCasingFramed");
   }
 
   private static void regBlock(Block b, String name) {
