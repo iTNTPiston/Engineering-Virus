@@ -516,7 +516,7 @@ public class Mainframe {
     storageUsedSpace = 0;
     for (ItemStack stack : itemStorage.values()) {
       if (stack != null)
-        storageUsedSpace += stack.stackSize;
+        storageUsedSpace += spaceNeeded(stack.stackSize);
     }
 
     // re-calculate total space
