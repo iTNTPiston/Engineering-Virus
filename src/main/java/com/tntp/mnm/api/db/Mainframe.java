@@ -37,6 +37,8 @@ import net.minecraftforge.common.util.Constants.NBT;
 public class Mainframe {
   private static final int MAX_HORIZONTAL = 5, MAX_POB_RADIUS = 2;
   private static final int ITEM_PER_BYTE = 128;
+  private static final int BYTE_PER_MAPPING = 2;
+  private static final int BYTE_PER_DEFINITION = 4;
   public final String mainframeRandomID;
   private World world;
   private TileCentralProcessor cpu;
@@ -62,6 +64,9 @@ public class Mainframe {
   private int definitionTotalSpace;
   private int storageUsedSpace;
   private int storageTotalSpace;
+  private HashMap<String, Set<Integer>> groupMapping;
+  private int mappingUsedSpace;
+  private int mappingTotalSpace;
 
   public Mainframe(TileCentralProcessor cpu, String mainframeRandomID) {
     this.cpu = cpu;
@@ -69,6 +74,7 @@ public class Mainframe {
     allNnetTiles = new ArrayList<STileNeithernet>();
     boardPorts = new ArrayList<Port<STilePOB>>();
     itemStorage = new HashMap<Integer, ItemStack>();
+    groupMapping = new HashMap<String, Set<Integer>>();
     this.mainframeRandomID = mainframeRandomID;
   }
 
@@ -450,20 +456,27 @@ public class Mainframe {
     }
 
     // search for items in group using data group mapping
-    Set<Integer> allIDs = new HashSet<Integer>();
+    Set<Integer> allIDsInGroup = new HashSet<Integer>();
     if (prefix.length() == 0) {
       // get everything
-      allIDs.addAll(checkDefinitions().keySet());
+      allIDsInGroup.addAll(checkDefinitions().keySet());
     } else {
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof STileDataGroupMapping) {
-          for (String group : groupNames)
-            ((STileDataGroupMapping) tile).findMapping(this, allIDs, group);
+      for (String group : groupNames) {
+        Set<Integer> mapping = groupMapping.get(group);
+        if (mapping != null) {
+          allIDsInGroup.addAll(mapping);
         }
       }
+
+//      for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof STileDataGroupMapping) {
+//          for (String group : groupNames)
+//            ((STileDataGroupMapping) tile).findMapping(this, allIDsInGroup, group);
+//        }
+//      }
     }
     List<Integer> groupItemDef = new ArrayList<Integer>();
-    result.setGroupItems(getQuantityFor(allIDs, groupItemDef));
+    result.setGroupItems(getQuantityFor(allIDsInGroup, groupItemDef));
     // convert to array
     int[] d = new int[groupItemDef.size()];
     int i = 0;
@@ -605,7 +618,7 @@ public class Mainframe {
       treemap.put(id, def.getValue());
     }
     definitionTotalSpace = 0;
-    int space = itemStorage.size() * 4;
+    int space = itemStorage.size() * BYTE_PER_DEFINITION;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
         TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
@@ -642,6 +655,41 @@ public class Mainframe {
     return stacks;
   }
 
+  public void checkGroupMapping() {
+    scan();
+    // re-calculate used space
+    mappingUsedSpace = 0;
+    for (Set<Integer> mapping : groupMapping.values()) {
+      mappingUsedSpace += mapping.size() * BYTE_PER_MAPPING;
+    }
+
+    // re-calculate total space
+    int spaceNeeded = mappingUsedSpace;
+    mappingTotalSpace = 0;
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataGroupMapping) {
+        STileDataGroupMapping t = (STileDataGroupMapping) tile;
+        if (t.access(this)) {
+          int total = t.getTotalSpaceFromDisks();
+          mappingTotalSpace += total;
+          if (total >= spaceNeeded) {
+            t.setUsedSpace(this, spaceNeeded);
+            spaceNeeded = 0;
+          } else {
+            t.setUsedSpace(this, total);
+            spaceNeeded -= total;
+          }
+        }
+      }
+    }
+
+    if (spaceNeeded > 0) {
+      startDebugging();
+      integrityProblem = true;
+    }
+
+  }
+
   /**
    * Add the stack to the group, even if the group doesn't exist. However if the
    * stack is not defined nothing will happen
@@ -655,12 +703,26 @@ public class Mainframe {
     int def = defineItem(stack, false);
     if (def < 0)
       return;
-    GroupItemMapping gim = new GroupItemMapping(group, def);
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataGroupMapping) {
-        if (((STileDataGroupMapping) tile).addMapping(this, gim))
-          return;// once successful, return
+    addToGroup(group, def);
+//    GroupItemMapping gim = new GroupItemMapping(group, def);
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataGroupMapping) {
+//        if (((STileDataGroupMapping) tile).addMapping(this, gim))
+//          return;// once successful, return
+//      }
+//    }
+  }
+
+  private void addToGroup(String group, int id) {
+    if (mappingUsedSpace + BYTE_PER_MAPPING <= mappingTotalSpace) {
+      Set<Integer> mapping = groupMapping.get(group);
+      if (mapping == null) {
+        mapping = new HashSet<Integer>();
+        groupMapping.put(group, mapping);
       }
+      mapping.add(id);
+      mappingUsedSpace += mappingTotalSpace;
+      markDirty();
     }
   }
 
@@ -670,13 +732,24 @@ public class Mainframe {
     int def = defineItem(stack, false);
     if (def < 0)
       return;
-    GroupItemMapping gim = new GroupItemMapping(group, def);
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataGroupMapping) {
-        ((STileDataGroupMapping) tile).removeMapping(this, gim);
-        // do not break here because the same mapping can exist across different drives
-      }
-    }
+    removeFromGroup(group, def);
+//    GroupItemMapping gim = new GroupItemMapping(group, def);
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataGroupMapping) {
+//        ((STileDataGroupMapping) tile).removeMapping(this, gim);
+//        // do not break here because the same mapping can exist across different drives
+//      }
+//    }
+  }
+
+  private void removeFromGroup(String group, int id) {
+    scan();
+    if (integrityProblem)
+      return;
+    Set<Integer> mapping = groupMapping.get(group);
+    if (mapping != null)
+      mapping.remove(id);
+    markDirty();
   }
 
   public void removeFromAllGroups(ItemStack stack) {
@@ -685,12 +758,28 @@ public class Mainframe {
     int def = defineItem(stack, false);
     if (def < 0)
       return;
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataGroupMapping) {
-        ((STileDataGroupMapping) tile).removeAll(this, def);
-        // do not break here because the same mapping can exist across different drives
+    removeFromAllGroups(def);
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataGroupMapping) {
+//        ((STileDataGroupMapping) tile).removeAll(this, def);
+//        // do not break here because the same mapping can exist across different drives
+//      }
+//    }
+  }
+
+  private void removeFromAllGroups(int id) {
+    scan();
+    if (integrityProblem)
+      return;
+    for (Set<Integer> mapping : groupMapping.values()) {
+      for (Iterator<Integer> iter = mapping.iterator(); iter.hasNext();) {
+        Integer i = iter.next();
+        if (i == id) {
+          iter.remove();
+        }
       }
     }
+    markDirty();
   }
 
   public void writeToNBT(NBTTagCompound tag) {
@@ -698,12 +787,29 @@ public class Mainframe {
     NBTTagList list = new NBTTagList();
     for (Entry<Integer, ItemStack> def : itemStorage.entrySet()) {
       NBTTagCompound com = new NBTTagCompound();
-      if (def != null)
+      if (def.getValue() != null)
         def.getValue().writeToNBT(com);
       com.setInteger("MNM|ItemDefID", def.getKey());
       list.appendTag(com);
     }
     tag.setTag("stored_items", list);
+    NBTTagList mapping = new NBTTagList();
+    for (Entry<String, Set<Integer>> m : groupMapping.entrySet()) {
+      Set<Integer> mappingSet = m.getValue();
+      if (!mappingSet.isEmpty()) {
+        NBTTagCompound com = new NBTTagCompound();
+        com.setString("group_name", m.getKey());
+        int[] arr = new int[mappingSet.size()];
+        int i = 0;
+        for (Integer def : mappingSet) {
+          arr[i] = def;
+          i++;
+        }
+        com.setIntArray("mapped_ids", arr);
+        mapping.appendTag(com);
+      }
+    }
+    tag.setTag("group_mapping", mapping);
   }
 
   public void readFromNBT(NBTTagCompound tag) {
@@ -715,6 +821,19 @@ public class Mainframe {
       ItemStack stack = ItemStack.loadItemStackFromNBT(com);
       int id = com.getInteger("MNM|ItemDefID");
       itemStorage.put(id, stack);
+    }
+
+    NBTTagList mapping = tag.getTagList("group_mapping", NBT.TAG_COMPOUND);
+    groupMapping.clear();
+    for (int i = 0; i < mapping.tagCount(); i++) {
+      NBTTagCompound com = mapping.getCompoundTagAt(i);
+      String group = com.getString("group_name");
+      int[] def = com.getIntArray("mapped_ids");
+      Set<Integer> mappingSet = new HashSet<Integer>();
+      for (int id : def) {
+        mappingSet.add(id);
+      }
+      groupMapping.put(group, mappingSet);
     }
   }
 
@@ -743,7 +862,8 @@ public class Mainframe {
     }
 
     if ((flag & 2) == 2) {
-      // remove definitions whose items are not currently stored
+      // remove definitions that is not currently used.
+      // aka not stored, not mapped, not in any MQL or MCS
 
 //      HashSet<Integer> allStoredItemsDef = new HashSet<Integer>();
 //      for (STileNeithernet tile : allNnetTiles) {
@@ -752,14 +872,30 @@ public class Mainframe {
 //          allStoredItemsDef.addAll(map.keySet());
 //        }
 //      }
-      for (Iterator<Entry<Integer, ItemStack>> iter = itemStorage.entrySet().iterator(); iter.hasNext();) {
-        Entry<Integer, ItemStack> e = iter.next();
-        if (e.getValue() != null && e.getValue().stackSize <= 0)
+      for (Iterator<Integer> iter = itemStorage.keySet().iterator(); iter.hasNext();) {
+        Integer id = iter.next();
+        if (!isDefinitionUsed(id))
           iter.remove();
       }
     }
 
     if ((flag & 4) == 4) {
+      // remove unstored definition
+      // this will also remove all mappings, reset all MQL and MCS with that
+      // definition
+      for (Iterator<Entry<Integer, ItemStack>> iter = itemStorage.entrySet().iterator(); iter.hasNext();) {
+        Entry<Integer, ItemStack> e = iter.next();
+        int id = e.getKey();
+        ItemStack stack = e.getValue();
+        if (stack != null && stack.stackSize <= 0) {
+          iter.remove();
+          propagateUndefiningItem(id);
+        }
+
+      }
+    }
+
+    if ((flag & 8) == 8) {
       // trim definitions
       // remove unused gaps. for example if 1 2 4 are defined and 3 is not (maybe
       // removed), it will redefine 4 to be 3
@@ -801,23 +937,64 @@ public class Mainframe {
 
   }
 
+  /**
+   * Determine if the id is currently being referred to by anything in the MF
+   * 
+   * @param id
+   * @return true if there is something stored, or there is a mapping with that id
+   */
+  private boolean isDefinitionUsed(int id) {
+    // check storage
+    ItemStack stored = itemStorage.get(id);
+    if (stored != null && stored.stackSize > 0)
+      return true;
+
+    // check mapping
+    for (Set<Integer> mapping : groupMapping.values()) {
+      if (mapping.contains(id))
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Remove everything that refers to this id. Does not check storage
+   * 
+   * @param id
+   */
+  private void propagateUndefiningItem(int id) {
+    // check mapping
+    for (Set<Integer> mapping : groupMapping.values()) {
+      mapping.remove(id);
+    }
+  }
+
   private int redefineItem(int oldID, int newID, ItemStack stack) {
     // later this could cause MQL and MCS (Mainframe Crafting Script) to change
     scan();
     if (integrityProblem)
       return -1;
-    // undefine all
+    // force remove everything with newID
+    // Although, if the system is properly used, nothing should happen.
+    propagateUndefiningItem(newID);
+    // undefine
     ItemStack stored = itemStorage.remove(oldID);
 
     // define new
     int id = defineNew(stack, newID);
     if (id != -1) {
       // change mapping
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof STileDataGroupMapping) {
-          ((STileDataGroupMapping) tile).modifyMapping(this, oldID, id);
+      for (Set<Integer> mapping : groupMapping.values()) {
+        if (mapping.contains(oldID)) {
+          mapping.remove(oldID);
+          mapping.add(id);
         }
       }
+//      for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof STileDataGroupMapping) {
+//          ((STileDataGroupMapping) tile).modifyMapping(this, oldID, id);
+//        }
+//      }
       // change storage
       itemStorage.get(id).stackSize = stored.stackSize;
     }
