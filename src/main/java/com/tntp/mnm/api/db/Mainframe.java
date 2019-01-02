@@ -24,6 +24,7 @@ import com.tntp.mnm.tileentity.TileDataDefinitionStorage;
 import com.tntp.mnm.tileentity.TileDataGroupChipset;
 import com.tntp.mnm.tileentity.TileNeithernetPort;
 import com.tntp.mnm.util.ItemUtil;
+import com.tntp.mnm.util.RandomUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -35,6 +36,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 
 public class Mainframe {
   private static final int MAX_HORIZONTAL = 5, MAX_POB_RADIUS = 2;
+  private static final int ITEM_PER_BYTE = 128;
   public final String mainframeRandomID;
   private World world;
   private TileCentralProcessor cpu;
@@ -52,15 +54,21 @@ public class Mainframe {
 
   private boolean integrityProblem;
 
-  private HashMap<Integer, ItemStack> itemDefinitions;
+  /**
+   * Stores both definition and stacksize. key is the definition, value is the
+   * stack with a stacksize.
+   */
+  private HashMap<Integer, ItemStack> itemStorage;
   private int definitionTotalSpace;
+  private int storageUsedSpace;
+  private int storageTotalSpace;
 
   public Mainframe(TileCentralProcessor cpu, String mainframeRandomID) {
     this.cpu = cpu;
     neithernetPorts = new ArrayList<Port<STileNeithernet>>();
     allNnetTiles = new ArrayList<STileNeithernet>();
     boardPorts = new ArrayList<Port<STilePOB>>();
-    itemDefinitions = new HashMap<Integer, ItemStack>();
+    itemStorage = new HashMap<Integer, ItemStack>();
     this.mainframeRandomID = mainframeRandomID;
   }
 
@@ -182,53 +190,89 @@ public class Mainframe {
       def[i] = defineItem(stack[i], true);
     }
 
-    // scan all neithernet tiles for data storage
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataStorage) {
-        boolean done = true;
-        for (int i = 0; i < def.length; i++) {
-          if (def[i] < 0)
-            continue;
-          if (stack[i] == null)
-            continue;
-          int left = ((STileDataStorage) tile).putIn(this, def[i], stack[i].stackSize);
-          if (left == 0) {
-            stack[i] = null;
-          } else {
-            stack[i].stackSize = left;
-            done = false;
-          }
-        }
-        if (done)
-          break;
+    if (integrityProblem) {// catch integrity problem caused by definition
+      return;
+    }
+
+    for (int i = 0; i < def.length; i++) {
+      if (def[i] < 0 || stack[i] == null || stack[i].stackSize <= 0)
+        continue;
+      // check space needed
+      ItemStack storedStack = itemStorage.get(def[i]);
+      int spaceBefore = spaceNeeded(storedStack.stackSize);
+      int qtyAfter = storedStack.stackSize + stack[i].stackSize;
+      int spaceAfter = spaceNeeded(qtyAfter);
+      int spaceAdded = spaceAfter - spaceBefore;
+      if (storageUsedSpace + spaceAdded <= storageTotalSpace) {
+        // if there is space
+        storedStack.stackSize = qtyAfter;
+        storageUsedSpace += spaceAdded;
+        markDirty();
       }
     }
-    markDirty();
+
+//    // scan all neithernet tiles for data storage
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataStorage) {
+//        boolean done = true;
+//        for (int i = 0; i < def.length; i++) {
+//          if (def[i] < 0)
+//            continue;
+//          if (stack[i] == null)
+//            continue;
+//          int left = ((STileDataStorage) tile).putIn(this, def[i], stack[i].stackSize);
+//          if (left == 0) {
+//            stack[i] = null;
+//          } else {
+//            stack[i].stackSize = left;
+//            done = false;
+//          }
+//        }
+//        if (done)
+//          break;
+//      }
+//    }
+//    markDirty();
   }
 
   public ItemStack takeItemStack(int id, int qty) {
+    if (qty == 0)
+      return null;
     // check
     scan();
     if (integrityProblem)
       return null;
     // define item
-    ItemStack stack = getDefItemStack(id);
-    if (stack == null)
-      return null;
-    int toBeTaken = qty;
-
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataStorage) {
-        toBeTaken = ((STileDataStorage) tile).takeAway(this, id, toBeTaken);
-        if (toBeTaken == 0) {
-          break;// finished
-        }
-      }
-    }
-    int taken = qty - toBeTaken;
-    stack.stackSize = taken;
+//    ItemStack stack = getDefItemStack(id);
+//    if (stack == null)
+//      return null;
+    // get storage directly
+    ItemStack stored = itemStorage.get(id);
+    if (stored == null)
+      return null;// definition not found
+    int spaceBefore = spaceNeeded(stored.stackSize);
+    ItemStack taken = stored.splitStack(qty);
+    int spaceAfter = spaceNeeded(stored.stackSize);
+    int spaceDecrease = spaceAfter - spaceBefore;// this should have a negative sign. after < before
+    storageUsedSpace += spaceDecrease;
     markDirty();
-    return stack;
+    return taken;
+//    // take
+//
+//    int toBeTaken = qty;
+//
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataStorage) {
+//        toBeTaken = ((STileDataStorage) tile).takeAway(this, id, toBeTaken);
+//        if (toBeTaken == 0) {
+//          break;// finished
+//        }
+//      }
+//    }
+//    int taken = qty - toBeTaken;
+//    stack.stackSize = taken;
+//    markDirty();
+//    return stack;
   }
 
   /**
@@ -244,37 +288,36 @@ public class Mainframe {
     scan();
     if (integrityProblem)
       return new ItemStack[0];
+    ArrayList<ItemStack> allValidQty = new ArrayList<ItemStack>(idSet.size());
 
-    HashMap<Integer, ItemStack> qtyMap = new HashMap<Integer, ItemStack>();
+    // HashMap<Integer, ItemStack> qtyMap = new HashMap<Integer, ItemStack>();
     // integrity check, define all ids
     for (Integer id : idSet) {
-      ItemStack s = getDefItemStack(id);
-      if (s != null) {
-        s.stackSize = 0;
-        qtyMap.put(id, s);
+      ItemStack stored = itemStorage.get(id);
+      if (stored != null) {
+        allValidQty.add(stored.copy());
+        validIDs.add(id);
       }
     }
     // fill the stacksize
-    for (STileNeithernet tile : allNnetTiles) {
-      if (tile instanceof STileDataStorage) {
-        for (Entry<Integer, ItemStack> e : qtyMap.entrySet()) {
-          int qty = ((STileDataStorage) tile).findQuantityFor(this, e.getKey());
-          e.getValue().stackSize += qty;
-        }
-      }
-    }
+//    for (STileNeithernet tile : allNnetTiles) {
+//      if (tile instanceof STileDataStorage) {
+//        for (Entry<Integer, ItemStack> e : qtyMap.entrySet()) {
+//          int qty = ((STileDataStorage) tile).findQuantityFor(this, e.getKey());
+//          e.getValue().stackSize += qty;
+//        }
+//      }
+//    }
 
     // to array
-    ItemStack[] array = new ItemStack[qtyMap.size()];
+    ItemStack[] array = new ItemStack[allValidQty.size()];
     int i = 0;
-    for (Entry<Integer, ItemStack> e : qtyMap.entrySet()) {
-      ItemStack s = e.getValue();
-      array[i] = s;
-      NBTTagCompound tag = s.hasTagCompound() ? s.getTagCompound() : new NBTTagCompound();
-      tag.setInteger("MNM|OverridenDisplaySize", s.stackSize);
-      s.stackSize = 1;
-      s.setTagCompound(tag);
-      validIDs.add(e.getKey());
+    for (ItemStack e : allValidQty) {
+      array[i] = e;
+      NBTTagCompound tag = e.hasTagCompound() ? e.getTagCompound() : new NBTTagCompound();
+      tag.setInteger("MNM|OverridenDisplaySize", e.stackSize);
+      e.stackSize = 1;
+      e.setTagCompound(tag);
       i++;
     }
     return array;
@@ -286,7 +329,12 @@ public class Mainframe {
     scan();
     if (integrityProblem)
       return null;
-    return ItemStack.copyItemStack(itemDefinitions.get(id));
+    ItemStack copy = ItemStack.copyItemStack(itemStorage.get(id));
+    // set the definition copy's stacksize to 1.
+    // If no def is found, copy will be null
+    if (copy != null)
+      copy.stackSize = 1;
+    return copy;
   }
 
   /**
@@ -307,11 +355,13 @@ public class Mainframe {
       return -1;
     // scan for existing definition first
     int foundID = -1;
-    for (Entry<Integer, ItemStack> def : itemDefinitions.entrySet()) {
+    for (Entry<Integer, ItemStack> def : itemStorage.entrySet()) {
       if (ItemUtil.areItemAndTagEqual(def.getValue(), stack)) {
+        // found a matching stack
         if (foundID == -1) {
           foundID = def.getKey();// found definition
         } else {
+          // there are two def id with the same itemstack
           startDebugging();// integrity violated
           integrityProblem = true;
           return -1;
@@ -352,10 +402,10 @@ public class Mainframe {
     scan();
     if (integrityProblem)
       return -1;
-    if (itemDefinitions.size() * 4 + 4 <= definitionTotalSpace) {
+    if (itemStorage.size() * 4 + 4 <= definitionTotalSpace) {
       ItemStack s = stack.copy();
-      s.stackSize = 1;
-      itemDefinitions.put(newID, s);
+      s.stackSize = 0;
+      itemStorage.put(newID, s);
       markDirty();
       return newID;
     }
@@ -450,6 +500,87 @@ public class Mainframe {
   }
 
   /**
+   * Update the storage space info and lose item if there is not enough space
+   */
+  public void checkStorage() {
+    scan();
+    if (integrityProblem)
+      return;
+    // re-calculate used space
+    storageUsedSpace = 0;
+    for (ItemStack stack : itemStorage.values()) {
+      if (stack != null)
+        storageUsedSpace += stack.stackSize;
+    }
+
+    // re-calculate total space
+    int spaceNeeded = storageUsedSpace;
+    storageTotalSpace = 0;
+    for (STileNeithernet tile : allNnetTiles) {
+      if (tile instanceof STileDataStorage) {
+        STileDataStorage t = (STileDataStorage) tile;
+        if (t.access(this)) {
+          int total = t.getTotalSpaceFromDisks();
+          storageTotalSpace += total;
+          if (total >= spaceNeeded) {
+            t.setUsedSpace(this, spaceNeeded);
+            spaceNeeded = 0;
+          } else {
+            t.setUsedSpace(this, total);
+            spaceNeeded -= total;
+          }
+        }
+      }
+    }
+
+    // check if used < total
+    if (spaceNeeded > 0) {
+      randomlyLoseItems();
+    }
+  }
+
+  /**
+   * 
+   * @param stackSize
+   * @return how much space is needed for the stacksize
+   */
+  private int spaceNeeded(int stackSize) {
+    return (int) Math.ceil(stackSize / (double) ITEM_PER_BYTE);
+  }
+
+  /**
+   * How many items can be put into the given space
+   * 
+   * @param dataspace
+   * @return
+   */
+  private int itemCapacity(int dataspace) {
+    if (dataspace < 0)
+      return 0;
+    return dataspace * ITEM_PER_BYTE;
+  }
+
+  /**
+   * called when usedspace > totalspace, will lose 1 byte of storage
+   */
+  private void randomlyLoseItems() {
+    int random = RandomUtil.RAND.nextInt(itemStorage.size());
+    for (ItemStack s : itemStorage.values()) {
+      if (random <= 0) {
+        if (s.stackSize <= ITEM_PER_BYTE) {
+          s.stackSize = 0;
+        } else {
+          s.stackSize -= ITEM_PER_BYTE;
+        }
+        markDirty();
+        break;
+      } else {
+        random--;
+      }
+    }
+  }
+
+  /**
    * 
    * @return an ordered map (TreeMap) containing all definitions that exist and
    *         their itemstacks
@@ -460,7 +591,7 @@ public class Mainframe {
     // scan data definers for definition
     int maxID = -1;
 
-    for (Entry<Integer, ItemStack> def : itemDefinitions.entrySet()) {
+    for (Entry<Integer, ItemStack> def : itemStorage.entrySet()) {
       int id = def.getKey();
       if (id > maxID) {
         maxID = id;
@@ -468,7 +599,7 @@ public class Mainframe {
       treemap.put(id, def.getValue());
     }
     definitionTotalSpace = 0;
-    int space = itemDefinitions.size() * 4;
+    int space = itemStorage.size() * 4;
     for (STileNeithernet tile : allNnetTiles) {
       if (tile instanceof TileDataDefinitionStorage) {
         TileDataDefinitionStorage t = (TileDataDefinitionStorage) tile;
@@ -498,7 +629,9 @@ public class Mainframe {
     Map<Integer, ItemStack> map = checkDefinitions();
     ItemStack[] stacks = new ItemStack[maxID + 1];
     for (Entry<Integer, ItemStack> e : map.entrySet()) {
-      stacks[e.getKey()] = e.getValue();
+      ItemStack defStack = e.getValue().copy();
+      defStack.stackSize = 1;
+      stacks[e.getKey()] = defStack;
     }
     return stacks;
   }
@@ -557,25 +690,25 @@ public class Mainframe {
   public void writeToNBT(NBTTagCompound tag) {
     tag.setBoolean("integrity_problem", integrityProblem);
     NBTTagList list = new NBTTagList();
-    for (Entry<Integer, ItemStack> def : itemDefinitions.entrySet()) {
+    for (Entry<Integer, ItemStack> def : itemStorage.entrySet()) {
       NBTTagCompound com = new NBTTagCompound();
       if (def != null)
         def.getValue().writeToNBT(com);
       com.setInteger("MNM|ItemDefID", def.getKey());
       list.appendTag(com);
     }
-    tag.setTag("defined_items", list);
+    tag.setTag("stored_items", list);
   }
 
   public void readFromNBT(NBTTagCompound tag) {
     integrityProblem = tag.getBoolean("integrity_problem");
-    NBTTagList list = tag.getTagList("defined_items", NBT.TAG_COMPOUND);
-    itemDefinitions.clear();
+    NBTTagList list = tag.getTagList("stored_items", NBT.TAG_COMPOUND);
+    itemStorage.clear();
     for (int i = 0; i < list.tagCount(); i++) {
       NBTTagCompound com = list.getCompoundTagAt(i);
       ItemStack stack = ItemStack.loadItemStackFromNBT(com);
       int id = com.getInteger("MNM|ItemDefID");
-      itemDefinitions.put(id, stack);
+      itemStorage.put(id, stack);
     }
   }
 
@@ -596,7 +729,7 @@ public class Mainframe {
     if ((flag & 1) == 1) {
       // remove null definitions
       // Item should not have null definition, this is a safety action
-      for (Iterator<Entry<Integer, ItemStack>> iter = itemDefinitions.entrySet().iterator(); iter.hasNext();) {
+      for (Iterator<Entry<Integer, ItemStack>> iter = itemStorage.entrySet().iterator(); iter.hasNext();) {
         Entry<Integer, ItemStack> e = iter.next();
         if (e.getValue() == null)
           iter.remove();
@@ -605,17 +738,17 @@ public class Mainframe {
 
     if ((flag & 2) == 2) {
       // remove definitions whose items are not currently stored
-      // get entire disk content, then use it to check
-      HashSet<Integer> allStoredItemsDef = new HashSet<Integer>();
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof STileDataStorage) {
-          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData(this);
-          allStoredItemsDef.addAll(map.keySet());
-        }
-      }
-      for (Iterator<Entry<Integer, ItemStack>> iter = itemDefinitions.entrySet().iterator(); iter.hasNext();) {
+
+//      HashSet<Integer> allStoredItemsDef = new HashSet<Integer>();
+//      for (STileNeithernet tile : allNnetTiles) {
+//        if (tile instanceof STileDataStorage) {
+//          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData(this);
+//          allStoredItemsDef.addAll(map.keySet());
+//        }
+//      }
+      for (Iterator<Entry<Integer, ItemStack>> iter = itemStorage.entrySet().iterator(); iter.hasNext();) {
         Entry<Integer, ItemStack> e = iter.next();
-        if (!allStoredItemsDef.contains(e.getKey()))
+        if (e.getValue() != null && e.getValue().stackSize <= 0)
           iter.remove();
       }
     }
@@ -668,7 +801,7 @@ public class Mainframe {
     if (integrityProblem)
       return -1;
     // undefine all
-    itemDefinitions.remove(oldID);
+    ItemStack stored = itemStorage.remove(oldID);
 
     // define new
     int id = defineNew(stack, newID);
@@ -679,17 +812,8 @@ public class Mainframe {
           ((STileDataGroupMapping) tile).modifyMapping(this, oldID, id);
         }
       }
-
       // change storage
-      for (STileNeithernet tile : allNnetTiles) {
-        if (tile instanceof STileDataStorage) {
-          HashMap<Integer, Integer> map = ((STileDataStorage) tile).getData(this);
-          Integer oldQty = map.remove(oldID);
-          if (oldQty != null) {
-            map.put(newID, oldQty);
-          }
-        }
-      }
+      itemStorage.get(id).stackSize = stored.stackSize;
     }
     markDirty();
     return id;
@@ -747,7 +871,7 @@ public class Mainframe {
       return false;
     if (!boardPorts.isEmpty())
       return false;
-    if (!itemDefinitions.isEmpty())
+    if (!itemStorage.isEmpty())
       return false;
     return true;
   }
