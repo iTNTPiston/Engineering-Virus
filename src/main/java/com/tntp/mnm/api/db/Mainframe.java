@@ -208,6 +208,7 @@ public class Mainframe {
         // if there is space
         storedStack.stackSize = qtyAfter;
         storageUsedSpace += spaceAdded;
+        stack[i] = null;
         markDirty();
       }
     }
