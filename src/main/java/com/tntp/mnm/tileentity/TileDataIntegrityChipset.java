@@ -94,6 +94,10 @@ public class TileDataIntegrityChipset extends STilePOB implements ITileDataCont 
         if (mf.isReadyToDebug()) {
           mf.organizeDefinitions(flag);
         }
+      } else if (buttonID == 2) {
+        if (mf.isReadyToDebug()) {
+          mf.organizeMapping(flag);
+        }
       }
     }
   }

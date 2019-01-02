@@ -471,13 +471,24 @@ Mod Specific
 					§7但建议始终执行此项
 					
 				#NAMEENUM
-					remove_empty_
-					Remove Empty
-					§7Remove definitions whose items are not
-					§7 currently stored.
+					remove_unreferred_
+					Remove Unreferred
+					§7Remove definitions that are not
+					§7 stored or referred to.
 					
-					移除未储存
-					§7移除对应物品没有库存的定义
+					移除未引用
+					§7移除没有库存或没有被引用的定义
+					
+				#NAMEENUM
+					remove_unstored_
+					Remove Unstored
+					§7Remove definitions that are not
+					§7 stored.
+					§cALL reference will reset or be deleted.
+					
+					移除未存储
+					§7移除没有库存的定义
+					§c所有引用定义的东西将被重置或删除
 					
 				#NAMEENUM
 					trim_
@@ -496,15 +507,32 @@ Mod Specific
 					§7则不移动此空隙
 			
 			#RETURN definition
+			#GROUP
+				mapping
+				#NAMEENUM
+					check_empty_
+					Check Empty
+					§7Remove mappings with an empty group
+					§7This is a recommended safety action.
+					
+					移除空值
+					§7移除组名为空的配对
+					§7这是一个推荐的安全检查
+					
+				#NAMEENUM
+					remove_repeated_
+					Remove Repeated
+					§7Remove the super mapping if
+					§7 there exists a sub mapping
+					
+					移除重复
+					§7如果下层配对存在, 则移除高层配对
+					
+			#RETURN mapping
 			#NAME
 				execute
 				Execute
 				执行
-				
-			#NAME
-				items
-				Items
-				物品数据
 				
 			#NAME
 				mapping

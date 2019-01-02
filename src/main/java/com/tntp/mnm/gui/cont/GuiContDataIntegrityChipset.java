@@ -45,17 +45,25 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     this.mc.getTextureManager().bindTexture(foreground);
     if (!buttonsEnable) {
       this.drawTexturedModalRect(guiLeft + 48, guiTop + 19, xSize + 18, 0, 18, 18);
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < 4; i++) {
         this.drawTexturedModalRect(guiLeft + 12 + i * 18, guiTop + 51, xSize + 18, 0, 18, 18);
+      }
+      for (int i = 0; i < 2; i++) {
+        this.drawTexturedModalRect(guiLeft + 12 + i * 18, guiTop + 83, xSize + 18, 0, 18, 18);
       }
     } else {
       if (flag == 0 || category == -1) {
         this.drawTexturedModalRect(guiLeft + 48, guiTop + 19, xSize + 18, 0, 18, 18);
       }
       if (category == 0) {
-        for (int i = 1, j = 0; j < 3; i *= 2, j++) {
+        for (int i = 1, j = 0; j < 4; i *= 2, j++) {
           if ((flag & i) == i)
             this.drawTexturedModalRect(guiLeft + 12 + j * 18, guiTop + 51, xSize, 18, 18, 18);
+        }
+      } else if (category == 1) {
+        for (int i = 1, j = 0; j < 2; i *= 2, j++) {
+          if ((flag & i) == i)
+            this.drawTexturedModalRect(guiLeft + 12 + j * 18, guiTop + 83, xSize, 18, 18, 18);
         }
       }
     }
@@ -65,7 +73,6 @@ public class GuiContDataIntegrityChipset extends GuiCont {
   protected void drawGuiContainerForegroundLayer(int mx, int my) {
     int color = RenderUtil.argb(255, 20, 20, 20);
     this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data_integrity_chipset.definition"), 13, 39, color);
-    this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data_integrity_chipset.items"), 107, 39, 0xFF141414);
     this.fontRendererObj.drawString(LocalUtil.localize("mnm.gui.data_integrity_chipset.mapping"), 13, 71, 0xFF141414);
     super.drawGuiContainerForegroundLayer(mx, my);
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -80,14 +87,23 @@ public class GuiContDataIntegrityChipset extends GuiCont {
     itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), accessor, 49, 20);
     itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), accessor, 13, 52);
     itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), key, 31, 52);
-    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), disk, 49, 52);
+    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), key, 49, 52);
+    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), disk, 67, 52);
+    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), accessor, 13, 84);
+    itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, mc.getTextureManager(), key, 31, 84);
 
     boolean tooltiped = false;
     tooltiped = tooltipHelper(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.debug", 13, 20);
     tooltiped = tooltipHelper(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.execute", 49, 20);
     tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.check_null_", 13, 52);
-    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.remove_empty_", 31, 52);
-    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.trim_", 49, 52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.remove_unreferred_", 31,
+        52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.remove_unstored_", 49,
+        52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.definition.trim_", 67, 52);
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.mapping.check_empty_", 13, 84);
+
+    tooltiped = tooltipHelperList(tooltiped, mx, my, "mnm.gui.data_integrity_chipset.mapping.remove_repeated_", 31, 84);
 
   }
 
@@ -136,9 +152,15 @@ public class GuiContDataIntegrityChipset extends GuiCont {
       category = -1;
     } else {
       boolean executed = false;
-      for (int i = 0; i < 3 && !executed; i++) {
+      for (int i = 0; i < 4 && !executed; i++) {
         if (withInRect(x, y, 13 + i * 18, 52, 16, 16)) {
           click(2 + i);
+          executed = true;
+        }
+      }
+      for (int i = 0; i < 4 && !executed; i++) {
+        if (withInRect(x, y, 13 + i * 18, 84, 16, 16)) {
+          click(6 + i);
           executed = true;
         }
       }
@@ -148,22 +170,32 @@ public class GuiContDataIntegrityChipset extends GuiCont {
   public void click(int button) {
     if (!buttonsEnable)
       return;
-    if (button >= 2 && button <= 4) {
+    if (button >= 2 && button <= 5) {
       if (category != 0) {
         flag = 0;
         category = 0;
+      }
+    } else if (button >= 6 && button <= 7) {
+      if (category != 1) {
+        flag = 0;
+        category = 1;
       }
     }
     this.playButtonSound();
     switch (button) {
     case 2:
+    case 6:
       flag = flag ^ 1;
       break;
     case 3:
+    case 7:
       flag = flag ^ 2;
       break;
     case 4:
       flag = flag ^ 4;
+      break;
+    case 5:
+      flag = flag ^ 8;
       break;
     }
     // reset category if all buttons are cleared

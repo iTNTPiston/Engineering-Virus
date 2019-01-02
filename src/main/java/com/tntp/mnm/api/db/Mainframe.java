@@ -127,6 +127,7 @@ public class Mainframe {
 
         checkDefinitions();
         checkStorage();
+        checkGroupMapping();
       }
     }
   }
@@ -1000,6 +1001,45 @@ public class Mainframe {
     }
     markDirty();
     return id;
+  }
+
+  /**
+   * Organize mapping. Flag 1 will remove empty groups, Flag 2 will remove
+   * repeated
+   * 
+   * @param flag
+   */
+  public void organizeMapping(int flag) {
+    scan();
+    if (integrityProblem)
+      return;
+    if ((flag & 1) == 1) {
+      groupMapping.remove("");
+    }
+    if ((flag & 2) == 2) {
+      // remove repeated mapping in super groups
+      HashSet<String> operatedGroups = new HashSet<String>();
+      for (Entry<String, Set<Integer>> mapping : groupMapping.entrySet()) {
+        removeRepeatedMappingRecursion(operatedGroups, mapping.getKey(), mapping.getValue());
+      }
+    }
+    markDirty();
+  }
+
+  private void removeRepeatedMappingRecursion(HashSet<String> operated, String group, Set<Integer> subContained) {
+    if (operated.contains(group))
+      return;
+    operated.add(group);
+    int dotPos = group.lastIndexOf('.');
+    if (dotPos == -1)
+      return;
+    String superGroup = group.substring(0, dotPos);
+    Set<Integer> superMapping = groupMapping.get(superGroup);
+    if (superMapping != null) {
+      superMapping.removeAll(subContained);
+      subContained.addAll(superMapping);
+    }
+    removeRepeatedMappingRecursion(operated, superGroup, subContained);
   }
 
   /**
