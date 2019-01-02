@@ -120,6 +120,7 @@ public class Mainframe {
         }
 
         checkDefinitions();
+        checkStorage();
       }
     }
   }
