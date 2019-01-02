@@ -252,6 +252,9 @@ public class Mainframe {
     ItemStack stored = itemStorage.get(id);
     if (stored == null)
       return null;// definition not found
+    if (stored.stackSize < qty) {
+      qty = stored.stackSize;// if not enough, take whatever it has
+    }
     int spaceBefore = spaceNeeded(stored.stackSize);
     ItemStack taken = stored.splitStack(qty);
     int spaceAfter = spaceNeeded(stored.stackSize);
@@ -259,6 +262,7 @@ public class Mainframe {
     storageUsedSpace += spaceDecrease;
     markDirty();
     return taken;
+
 //    // take
 //
 //    int toBeTaken = qty;
